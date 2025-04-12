@@ -1,18 +1,23 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public abstract class Interactive : MonoBehaviour
 {
     protected bool playerCollision = false;
 
-    public void OnInteract(InputAction.CallbackContext context)
+    private void OnEnable()
     {
-        if (GameManager.Instance.State != GameState.GameActive || !context.performed)
-            return;
-        ActOnInteraction(context);
+        Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        player.OnPlayerInteraction.AddListener(OnInteract);
     }
 
-    protected abstract void ActOnInteraction(InputAction.CallbackContext context);
+    public void OnInteract()
+    {
+        if (GameManager.Instance.State != GameState.GameActive)
+            return;
+        ActOnInteraction();
+    }
+
+    protected abstract void ActOnInteraction();
     protected abstract void ActOnCollision();
 
     private void OnTriggerEnter(Collider other)

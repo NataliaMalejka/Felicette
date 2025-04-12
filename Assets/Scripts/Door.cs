@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-
 public class Door : Interactive //Teleport?
 {
     [SerializeField] private GameObject connectedDoor;
@@ -12,7 +10,7 @@ public class Door : Interactive //Teleport?
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    protected override void ActOnInteraction(InputAction.CallbackContext context)
+    protected override void ActOnInteraction()
     {
         if(playerCollision)
         {
