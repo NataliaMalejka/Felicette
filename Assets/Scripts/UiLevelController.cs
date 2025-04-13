@@ -38,10 +38,10 @@ public class UiLevelController : MonoBehaviour
 
     public void UpdateTime(float time, float maxTime)
     {
-        timeText.text = string.Format("Time: {0}/{1}",
+        timeText.text = string.Format("Time: {0} / {1}",
             Mathf.Clamp(Mathf.CeilToInt(time), 0, int.MaxValue).ToString(),
             Mathf.Clamp(Mathf.CeilToInt(maxTime), 0, int.MaxValue).ToString());
-        //TO DO UpdateTankSlider(time, maxTime);
+        UpdateTankSlider(time, maxTime);
     }
 
     public void ShowWinPanel(float timeLeft)
@@ -49,8 +49,8 @@ public class UiLevelController : MonoBehaviour
         winPanel.SetActive(true);
     }
 
-    public void UpdateTankSlider(int value, int maxValue)
+    public void UpdateTankSlider(float value, float maxValue)
     {
-        TankSlider.value = (float)value/(float)maxValue;
+        TankSlider.value = Mathf.Clamp((maxValue - value)/maxValue,0,1);
     }
 }
