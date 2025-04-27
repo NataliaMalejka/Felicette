@@ -5,10 +5,18 @@ public class Grid : MonoBehaviour
     public Puzzle[,] puzzles;
 
     [SerializeField, Tooltip("Size of the puzzle grid.")]
-    int gridSizeX;
+    private int gridSizeX;
+    public int GridSizeX
+    {
+        get { return gridSizeX; }
+    }
 
     [SerializeField, Tooltip("Size of the puzzle grid.")]
-    int gridSizeY;
+    private int gridSizeY;
+    public int GridSizeY
+    {
+        get { return gridSizeY; }
+    }
 
     [SerializeField, Tooltip("Size of individual cell.")]
     public float cellSize;

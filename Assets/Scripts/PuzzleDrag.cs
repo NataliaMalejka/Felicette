@@ -57,9 +57,11 @@ public class PuzzleDrag : MonoBehaviour
             return;
         }
 
-        Vector2 pointerPos = Mouse.current != null
-            ? Mouse.current.position.ReadValue()
-            : Touchscreen.current.primaryTouch.position.ReadValue();
+        Vector2 pointerPos = GetPressedPosition();
+        if (pointerPos == Vector2.zero)
+        {
+            return;
+        }
 
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(pointerPos.x, pointerPos.y, zPosition));
         // TO DO (?) 2D -> //Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -118,15 +120,11 @@ public class PuzzleDrag : MonoBehaviour
         int endX = Mathf.RoundToInt(endPosition.x / grid.cellSize);
         int endY = Mathf.RoundToInt(endPosition.y / grid.cellSize);
 
-        //Check if already occupied
-        if (grid.GetPuzzleFromGrid(endX, endY) != null)
-        {
-            selectedPiece.transform.position = startPosition;
-            grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startX, startY);
-            SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzleFail);
-        }
-        //Check if the puzzle doesn't fit
-        else if(!selectedPiece.GetComponent<Puzzle>().FitsAt(endX, endY))
+        //Check if already occupied, Check if the puzzle doesn't fit, Check if out of bounds
+        if (grid.GetPuzzleFromGrid(endX, endY) != null
+            || !selectedPiece.GetComponent<Puzzle>().FitsAt(endX, endY)
+            || endX < 0 || endX >= grid.GridSizeX
+            || endY < 0 || endY >= grid.GridSizeY)
         {
             selectedPiece.transform.position = startPosition;
             grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startX, startY);
@@ -154,9 +152,11 @@ public class PuzzleDrag : MonoBehaviour
         //Move Piece
         if (selectedPiece != null)
         {
-            Vector2 pointerPos = Mouse.current != null
-                ? Mouse.current.position.ReadValue()
-                : Touchscreen.current.primaryTouch.position.ReadValue();
+            Vector2 pointerPos = GetPressedPosition();
+            if (pointerPos == Vector2.zero)
+            {
+                return;
+            }
             // TO DO (?) - 2D -> //Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(pointerPos.x, pointerPos.y, zPosition));
             Plane plane = new Plane(Vector3.forward, new Vector3(0, 0, zPosition)); 
@@ -170,6 +170,19 @@ public class PuzzleDrag : MonoBehaviour
         }
     }
     
+    private Vector2 GetPressedPosition()
+    {
+        if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.isPressed)
+        {
+            return Touchscreen.current.primaryTouch.position.ReadValue();
+        }
+        else if (Mouse.current != null && Mouse.current.leftButton.isPressed)
+        {
+            return Mouse.current.position.ReadValue();
+        }
+        return Vector2.zero;
+    }
+
     private void SetOrderInLayer(GameObject piece, int order)
     {
         var spriteRenderer = piece.GetComponent<SpriteRenderer>();

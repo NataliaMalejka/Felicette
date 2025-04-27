@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
-using NUnit.Framework;
 
 public class Player : MonoBehaviour
 {
@@ -18,7 +17,7 @@ public class Player : MonoBehaviour
     public UnityEvent<bool> OnPlayerDrag;
     private bool isDragging = false;
 
-    private void OnMove(InputValue value)
+    void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
     }
@@ -31,7 +30,7 @@ public class Player : MonoBehaviour
     }
 
     //Fires event 2 times, once when pressed and once when released
-    private void OnDrag(InputValue value)
+    void OnDrag(InputValue value)
     {
         if (GameManager.Instance.State != GameState.GameActive)
             return;
@@ -39,6 +38,26 @@ public class Player : MonoBehaviour
         if(value.isPressed)
             isDragging = true;
         OnPlayerDrag?.Invoke(isDragging);
+    }
+
+    public void OnMoveFromUI(bool isPressed, bool isLeft)
+    {
+        if (!isPressed)
+        {
+            moveInput = Vector2.zero;
+            return;
+        }
+        if (isLeft)
+            moveInput = new Vector2(-1, 0);
+        else
+            moveInput = new Vector2(1, 0);
+    }
+
+    public void OnInteractFromUI()
+    {
+        if (GameManager.Instance.State != GameState.GameActive)
+            return;
+        OnPlayerInteraction?.Invoke();
     }
 
     void FixedUpdate()

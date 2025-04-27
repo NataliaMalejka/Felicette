@@ -7,6 +7,7 @@ public class UiLevelController : MonoBehaviour
     [SerializeField] private GameObject generalUi;
     [SerializeField] private GameObject gameOverPanel; //TO DO - Or pause panel?
     [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject androidUi;
     [SerializeField] private TextMeshProUGUI timeText;
 
     //TO DO - represent time as for instance oxygen level
@@ -27,6 +28,10 @@ public class UiLevelController : MonoBehaviour
         if (generalUi != null)
         {
             generalUi.SetActive(true);
+        }
+        if (Application.platform == RuntimePlatform.Android && androidUi != null)
+        {
+            androidUi.SetActive(true);
         }
     }
 
