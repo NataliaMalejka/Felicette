@@ -1,32 +1,35 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using System.Linq;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private float velocity;
-    [SerializeField] private int leftBorder; //TO DO
-    [SerializeField] private int rightBorder; //TO DO
     [SerializeField] private Vector3 direction;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
-    private Vector3 oldPosition;
-    private Vector2 moveInput;
-
     public UnityEvent OnPlayerInteraction;
     public UnityEvent<bool> OnPlayerDrag;
+    public UnityEvent<Vector3> OnPlayerMoved;
     private bool isDragging = false;
+    private PlayerInput inputComponent;
+    private BoxCollider boxCollider;
+    private bool upDownMovementEnabled = false;
+    private Vector3 oldPosition;
 
-    void OnMove(InputValue value)
+    private void Start()
     {
-        moveInput = value.Get<Vector2>();
+        inputComponent = GetComponent<PlayerInput>();
+        boxCollider = GetComponent<BoxCollider>();
     }
 
     void OnInteract(InputValue value)
     {
-        if (GameManager.Instance.State != GameState.GameActive || !value.isPressed)
+        if (!value.isPressed)
             return;
-        OnPlayerInteraction?.Invoke();
+        HandleInteractInput();
     }
 
     //Fires event 2 times, once when pressed and once when released
@@ -40,59 +43,92 @@ public class Player : MonoBehaviour
         OnPlayerDrag?.Invoke(isDragging);
     }
 
-    public void OnMoveFromUI(bool isPressed, bool isLeft)
+    public void OnInteractFromUI()
     {
-        if (!isPressed)
-        {
-            moveInput = Vector2.zero;
-            return;
-        }
-        if (isLeft)
-            moveInput = new Vector2(-1, 0);
-        else
-            moveInput = new Vector2(1, 0);
+        HandleInteractInput();
     }
 
-    public void OnInteractFromUI()
+    private void HandleInteractInput()
     {
         if (GameManager.Instance.State != GameState.GameActive)
             return;
         OnPlayerInteraction?.Invoke();
     }
 
+    public void ToggleUpDownMovement()
+    {
+        upDownMovementEnabled = !upDownMovementEnabled;
+    }
+
+    private List<Collider> CheckCollidingTiles()
+    {
+        List<Collider> hits = Physics.OverlapBox(transform.position, boxCollider.size, transform.rotation).ToList();
+        //To do - Handle corner cases (GET ITT??) (lock movement while dragging??)
+        List<Collider> pieces = new List<Collider>();
+        foreach (Collider hit in hits)
+        {
+            if (hit.gameObject != gameObject && hit.CompareTag("Piece"))
+            {
+                pieces.Add(hit);
+            }
+        }
+        return pieces;
+    }
+
+    bool IsPlayerFullyInsideAnyCell(List<Collider> pieceColliders)
+    {
+        foreach (Collider cell in pieceColliders)
+        {
+            Bounds cellBounds = cell.bounds;
+
+            if (cellBounds.Contains(transform.position))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void MovePlayer()
+    {
+        Vector2 moveInput = inputComponent.actions["Move"].ReadValue<Vector2>();
+        if(moveInput == Vector2.zero)
+            return;
+
+        float timeVelocity = velocity * Time.deltaTime;
+        oldPosition = transform.position;
+        transform.Translate(moveInput.x != 0 ? moveInput.x * timeVelocity : 0,
+                            upDownMovementEnabled && moveInput.y != 0 ? moveInput.y * timeVelocity : 0,
+                            0);
+        List<Collider> pieceColliders = CheckCollidingTiles();
+        if(pieceColliders.Count == 0)
+        {
+            Debug.LogWarning("Player out of bounds.");
+            transform.position = oldPosition; 
+            return;
+        }
+        // Check bounds and corner cutting
+        if(!IsPlayerFullyInsideAnyCell(pieceColliders) ||
+            (pieceColliders.Count == 2 &&
+            pieceColliders[0].transform.position.x != pieceColliders[1].transform.position.x &&
+            pieceColliders[0].transform.position.y != pieceColliders[1].transform.position.y))
+        {
+            transform.position = oldPosition; 
+            return;
+        }
+
+        if (moveInput.x != 0)
+        {
+            spriteRenderer.flipX = moveInput.x < 0;
+        }
+        OnPlayerMoved?.Invoke(transform.position);
+    }
+
     void FixedUpdate()
     {
-        if(moveInput != Vector2.zero)
+        if (GameManager.Instance.State == GameState.GameActive)
         {
-            float horizontalInput = moveInput.x;
-            if (horizontalInput != 0 && GameManager.Instance.State == GameState.GameActive)
-            {
-                Ray ray = new Ray(transform.position, new Vector3(direction.x * horizontalInput, direction.y, direction.z));
-                RaycastHit raycastHit;
-
-                if (Physics.Raycast(ray, out raycastHit))
-                {
-                    if (raycastHit.transform.gameObject.CompareTag("Piece") 
-                        || raycastHit.transform.gameObject.CompareTag("Door") 
-                        || raycastHit.transform.gameObject.CompareTag("Rocket")) //TO DO Replace Tag with "Interactive" (?)
-                    {
-                        oldPosition = transform.position;
-                        transform.Translate(horizontalInput * velocity * Time.deltaTime, 0, 0);
-                        
-                        if (transform.position.x < leftBorder)
-                            transform.position = new Vector3(leftBorder, transform.position.y, transform.position.z);
-
-                        if (transform.position.x > rightBorder)
-                            transform.position = new Vector3(rightBorder, transform.position.y, transform.position.z);
-
-                        transform.position = new Vector3(Mathf.Clamp(transform.position.x, leftBorder, rightBorder), transform.position.y, transform.position.z);
-                        spriteRenderer.flipX = horizontalInput < 0;
-
-                        if (!raycastHit.transform.gameObject.GetComponent<Puzzle>().isPlaced)
-                            transform.position = oldPosition;
-                    }
-                }
-            }
+            MovePlayer();
         }
     }
 }
