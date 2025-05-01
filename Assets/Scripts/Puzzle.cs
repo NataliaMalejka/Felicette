@@ -36,27 +36,31 @@ public class Puzzle : MonoBehaviour
         Debug.LogWarning("Puzzle: Start() - Only one Grid object should be present in the scene."); 
         grid = GameObject.FindWithTag("Grid").GetComponent<Grid>();
         player = GameObject.FindWithTag("Player");
+        player.GetComponent<Player>().OnPlayerMoved.AddListener(OnPlayerMoved);
 
         gridSizeX = grid.GetGridSizeX();
         gridSizeY = grid.GetGridSizeY();
 
+        // TO DO - Is it quicker to create and use an array instead of accessing transform.childCount and GetChild() directly every time?
         children = new GameObject[this.transform.childCount];
         for (int i = 0; i < this.transform.childCount; i++)
         {
             children[i] = this.transform.GetChild(i).gameObject;
         }
 
+        //Run once to set the initial visibility of the puzzle
+        OnPlayerMoved(player.transform.position);
+
         connections = new Connection[] { left, right, up, down };
     }
 
-    // Might be worth to replace this with events or something similar instead of checking every update
-    void FixedUpdate()
+    private void OnPlayerMoved(Vector3 playerPosition)
     {
-        puzzlePosition = this.transform.position;
-        playerPosition = player.transform.position;
+        if (GameManager.Instance.State != GameState.GameActive)
+            return;
 
-        bool isNearby = Mathf.Abs(playerPosition.y - puzzlePosition.y) < 0.1f && Mathf.Abs(playerPosition.x - puzzlePosition.x) <= 1.0f;
-
+        bool isNearby = Mathf.Abs(playerPosition.y - transform.position.y) < 0.1f 
+                        && Mathf.Abs(playerPosition.x - transform.position.x) <= 1.0f;
         if ((isNearby || alwaysVisible) && isPlaced)
         {
             foreach (GameObject child in children)
@@ -67,7 +71,6 @@ public class Puzzle : MonoBehaviour
             foreach (GameObject child in children)
                 child.SetActive(false);
         }
-            
     }
 
     public bool FitsAt(int x, int y)
