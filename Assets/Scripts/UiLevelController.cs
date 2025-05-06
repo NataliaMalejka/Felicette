@@ -14,6 +14,7 @@ public class UiLevelController : MonoBehaviour
     [SerializeField] private Slider TankSlider;
     //TO DO - Equipment panel UI
     [SerializeField] private GameObject equipmentPanel;
+    [SerializeField] private GraphicRaycaster graphicRaycaster;
     
     private void Start()
     {
@@ -28,6 +29,11 @@ public class UiLevelController : MonoBehaviour
         if (generalUi != null)
         {
             generalUi.SetActive(true);
+        }
+        if (equipmentPanel != null)
+        {
+            equipmentPanel.SetActive(true);
+            equipmentPanel.GetComponent<EquipmentManager>().SetGraphicRaycaster(graphicRaycaster);
         }
         if (Application.platform == RuntimePlatform.Android && androidUi != null)
         {
@@ -57,5 +63,10 @@ public class UiLevelController : MonoBehaviour
     public void UpdateTankSlider(float value, float maxValue)
     {
         TankSlider.value = Mathf.Clamp((maxValue - value)/maxValue,0,1);
+    }
+
+    public EquipmentManager GetEquipmentManager()
+    {
+        return equipmentPanel.GetComponent<EquipmentManager>();
     }
 }

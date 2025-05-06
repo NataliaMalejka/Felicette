@@ -5,6 +5,7 @@ public class PuzzleDrag : MonoBehaviour
 {
     private GameObject selectedPiece;
     private GameObject pieceImage;
+    private EquipmentManager equipment;
 
     private Vector3 offset;
     private float zPosition = 0f;
@@ -20,12 +21,14 @@ public class PuzzleDrag : MonoBehaviour
 
     private bool isDragging = false;
     private bool isHolding = false;
+    private bool isInEquipment = false;
 
     private void Start()
     {
         Debug.LogWarning("PuzzleDrag: Start() - Only one Grid object should be present in the scene."); 
         grid = GameObject.FindWithTag("Grid").GetComponent<Grid>();
         player = GameObject.FindWithTag("Player");
+        equipment = GameManager.Instance.GetUiControllerHandle().GetEquipmentManager();
         player.GetComponent<Player>().OnPlayerDrag.AddListener(OnDrag);
     }
 
@@ -64,7 +67,7 @@ public class PuzzleDrag : MonoBehaviour
         }
 
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(pointerPos.x, pointerPos.y, zPosition));
-        // TO DO (?) 2D -> //Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        // TO DO (? rather not) 2D -> //Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit hit;
 
         //Collision Check
@@ -75,14 +78,26 @@ public class PuzzleDrag : MonoBehaviour
 
             startPosition = selectedPiece.transform.position;
 
-            //Grid Position
-            startX = Mathf.RoundToInt(startPosition.x / grid.cellSize);
-            startY = Mathf.RoundToInt(startPosition.y / grid.cellSize);
+            // Check if the piece is in equipment and not in the grid
+            if (equipment.CheckIfPointHoversOverSlot(selectedPiece.transform.position, checkForEmpty: false))
+            {
+                isInEquipment = true;
+                puzzle = selectedPiece.GetComponent<Puzzle>();
+                puzzle.isPlaced = false;
+                puzzle.ExpandToDefaultSize();
+            }
+            else
+            {
+                isInEquipment = false;
+                //Grid Position
+                startX = Mathf.RoundToInt(startPosition.x / grid.cellSize);
+                startY = Mathf.RoundToInt(startPosition.y / grid.cellSize);
 
-            //Get the puzzle and remove it from the grid for now
-            puzzle = grid.GetPuzzleFromGrid(startX, startY);
-            grid.SetPuzzle(null, startX, startY);
-            puzzle.isPlaced = false;
+                //Get the puzzle and remove it from the grid for now
+                puzzle = grid.GetPuzzleFromGrid(startX, startY);
+                grid.SetPuzzle(null, startX, startY);
+                puzzle.isPlaced = false;
+            }
 
             if ((puzzle.portable && (int)player.transform.position.x != (int)puzzle.transform.position.x)
                 || (puzzle.portable && (int)player.transform.position.y != (int)puzzle.transform.position.y))
@@ -101,7 +116,8 @@ public class PuzzleDrag : MonoBehaviour
                 SoundsManager.Instance.PlaySound(SoundsManager.Sounds.TakePuzzleFail);
                 selectedPiece.transform.position = startPosition;
                 puzzle.isPlaced = true;
-                grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startX, startY);
+                if(!isInEquipment)
+                    grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startX, startY);
                 selectedPiece = null;
             }
         }   
@@ -116,28 +132,45 @@ public class PuzzleDrag : MonoBehaviour
 
         endPosition = selectedPiece.transform.position;
 
-        //Grid Position
-        int endX = Mathf.RoundToInt(endPosition.x / grid.cellSize);
-        int endY = Mathf.RoundToInt(endPosition.y / grid.cellSize);
-
-        //Check if already occupied, Check if the puzzle doesn't fit, Check if out of bounds
-        if (grid.GetPuzzleFromGrid(endX, endY) != null
-            || !selectedPiece.GetComponent<Puzzle>().FitsAt(endX, endY)
-            || endX < 0 || endX >= grid.GridSizeX
-            || endY < 0 || endY >= grid.GridSizeY)
+        //CHECK UI FIRST
+        if(equipment.CheckIfPointHoversOverSlot(selectedPiece.transform.position, checkForEmpty: true, previousTargetSlot: isInEquipment))
         {
-            selectedPiece.transform.position = startPosition;
-            grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startX, startY);
-            SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzleFail);
-        }
-        //Success
-        else
-        {
-            grid.SetPuzzle(puzzle, endX, endY);
-            selectedPiece.transform.position = new Vector3(endX * grid.cellSize, endY * grid.cellSize, zPosition);
+            selectedPiece.transform.position = equipment.SetTargetSlotAsOccupied(startPosition);
+            puzzle.Shrink();
             SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzle); 
         }
+        else
+        {
+            //Grid Position
+            int endX = Mathf.RoundToInt(endPosition.x / grid.cellSize);
+            int endY = Mathf.RoundToInt(endPosition.y / grid.cellSize);
 
+            //Check if already occupied, Check if the puzzle doesn't fit, Check if out of bounds
+            if (grid.GetPuzzleFromGrid(endX, endY) != null
+                || !selectedPiece.GetComponent<Puzzle>().FitsAt(endX, endY)
+                || endX < 0 || endX >= grid.GridSizeX
+                || endY < 0 || endY >= grid.GridSizeY)
+            {
+                selectedPiece.transform.position = startPosition;
+                if(isInEquipment)
+                    puzzle.Shrink();            
+                else
+                    grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startX, startY);
+                SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzleFail);
+            }
+            //Success
+            else
+            {
+                if(isInEquipment)
+                {
+                    isInEquipment = false;
+                    equipment.SetTargetSlotAsFree();
+                }
+                grid.SetPuzzle(puzzle, endX, endY);
+                selectedPiece.transform.position = new Vector3(endX * grid.cellSize, endY * grid.cellSize, zPosition);
+                SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzle); 
+            }
+        }
         //Lower layer
         isHolding = false;
         SetOrderInLayer(selectedPiece, 0);
