@@ -134,4 +134,13 @@ public class Puzzle : MonoBehaviour
 
         return false;
     }
+
+    public void Shrink()
+    {
+        transform.localScale = new Vector3(0.65f, 0.65f, 0.05f);
+    }
+    public void ExpandToDefaultSize()
+    {
+        transform.localScale = new Vector3(1f, 1f, 1f);
+    }
 }

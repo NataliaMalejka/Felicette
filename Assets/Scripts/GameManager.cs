@@ -116,4 +116,6 @@ public class GameManager : MonoBehaviour
             ActOnGameOver();
         }
     }
+
+    public UiLevelController GetUiControllerHandle() { return uiLevelController; }
 }
