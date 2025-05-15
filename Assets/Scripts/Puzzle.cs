@@ -6,9 +6,10 @@ enum Connection {EMPTY, HOLE, KNOB};
 public class Puzzle : MonoBehaviour
 {
     const int LEFT = 0;
-    const int RIGHT = 1;
-    const int UP = 2;
+    const int UP = 1;
+    const int RIGHT = 2;
     const int DOWN = 3;
+
 
     Connection[] connections;
 
@@ -51,7 +52,8 @@ public class Puzzle : MonoBehaviour
         //Run once to set the initial visibility of the puzzle
         OnPlayerMoved(player.transform.position);
 
-        connections = new Connection[] { left, right, up, down };
+        connections = new Connection[] { left, up, right, down };
+        FixConnectionsRotation();
     }
 
     private void OnPlayerMoved(Vector3 playerPosition)
@@ -133,6 +135,24 @@ public class Puzzle : MonoBehaviour
             return false;
 
         return false;
+    }
+
+    // Rotates the logical connections of a puzzle based on object's rotation along Z axis
+    void FixConnectionsRotation()
+    {
+        int rotation = Mathf.RoundToInt(transform.rotation.eulerAngles.z);
+        int amount = rotation / 90;
+        
+        Connection[] oldConnections = (Connection[])connections.Clone();
+        connections[0] = oldConnections[(0 + amount) % 4];
+        connections[1] = oldConnections[(1 + amount) % 4];
+        connections[2] = oldConnections[(2 + amount) % 4];
+        connections[3] = oldConnections[(3 + amount) % 4];
+
+        left = connections[LEFT];
+        right = connections[RIGHT];
+        up = connections[UP];
+        down = connections[DOWN];
     }
 
     public void Shrink()
