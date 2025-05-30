@@ -21,12 +21,15 @@ public class Perspective : Interactive
 
     private void OnWallAnimEnd()
     {
-        
+       // gridWall.SetActive(false);
+        //Instead of disabling and enabling -> turn off and on all colliders within grid and disable sprites ? 
+        player.GetComponent<Player>().TogglePlayerInput();
     }
 
     private void OnFloorAnimEnd()
     {
-
+        //gridFloor.SetActive(false);
+        player.GetComponent<Player>().TogglePlayerInput();
     }
 
     protected override void ActOnInteraction()
@@ -36,25 +39,19 @@ public class Perspective : Interactive
             SoundsManager.Instance.PlaySound(SoundsManager.Sounds.ChangePerspective);
             Debug.Log("Camera animation");
 
-            if(GameManager.Instance.isPerspectiveOnWall)
+            if (GameManager.Instance.isPerspectiveOnWall)
             {
                 GameManager.Instance.isPerspectiveOnWall = false;
                 player.GetComponent<Player>().TogglePlayerInput();
                 perspAnim.SetTrigger("ToFloor");
-                //On animation finish:
-                gridWall.SetActive(false);
-                gridFloor.SetActive(true);
-                player.GetComponent<Player>().TogglePlayerInput();
+                //gridFloor.SetActive(true);
             }
             else
             {
                 GameManager.Instance.isPerspectiveOnWall = true;
                 player.GetComponent<Player>().TogglePlayerInput();
                 perspAnim.SetTrigger("ToWall");
-                gridWall.SetActive(true);
-                // On animation finish:
-                gridFloor.SetActive(false);
-                player.GetComponent<Player>().TogglePlayerInput();
+                //gridWall.SetActive(true);
             }
         }
     }
