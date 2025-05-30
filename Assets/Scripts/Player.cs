@@ -32,6 +32,14 @@ public class Player : MonoBehaviour
         HandleInteractInput();
     }
 
+    public void TogglePlayerInput()
+    {
+        if (inputComponent != null)
+        {
+            inputComponent.enabled = !inputComponent.enabled;
+        }
+    }
+
     //Fires event 2 times, once when pressed and once when released
     void OnDrag(InputValue value)
     {

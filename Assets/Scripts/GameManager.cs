@@ -14,13 +14,15 @@ public class GameManager : MonoBehaviour
     private float time = 0f;
     [SerializeField] private UiLevelController uiLevelController;
     private GameState gameState = GameState.Start;
-        public GameState State
+    public GameState State
     {
         get
         {
             return gameState;
         }
     }
+
+    public bool isPerspectiveOnWall = true;
 
     public UnityEvent OnGameStarted;
     public UnityEvent OnGameWon;
@@ -52,6 +54,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         gameState = GameState.GameActive;
+        isPerspectiveOnWall = true;
         time = 0f;
     }
 

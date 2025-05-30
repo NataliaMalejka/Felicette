@@ -11,6 +11,7 @@ public class SoundsManager : MonoBehaviour
     [SerializeField] AudioClip PutPuzzleFail;
     [SerializeField] AudioClip Error;
     [SerializeField] AudioClip Finish;
+    [SerializeField] AudioClip ChangePerspective;
     // TO DO Other sounds can be added here like
     // walking, entry to level, transition to different view, interaction, etc.
     [SerializeField] AudioClip BackgroundMusic_A;
@@ -38,7 +39,8 @@ public class SoundsManager : MonoBehaviour
         TakePuzzleFail,
         PutPuzzleFail,
         Error,
-        Finish
+        Finish,
+        ChangePerspective
     }
 
     public enum BackgroundMusic
@@ -124,6 +126,9 @@ public class SoundsManager : MonoBehaviour
                 break;
             case Sounds.Finish:
                 audioSource.PlayOneShot(Finish);
+                break;
+            case Sounds.ChangePerspective:
+                audioSource.PlayOneShot(ChangePerspective);
                 break;
             default:
                 break;
