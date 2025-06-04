@@ -3,13 +3,6 @@ public class Door : Interactive //Teleport?
 {
     [SerializeField] private GameObject connectedDoor;
 
-    private GameObject player;
-
-    private void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
-
     protected override void ActOnInteraction()
     {
         if(playerCollision)

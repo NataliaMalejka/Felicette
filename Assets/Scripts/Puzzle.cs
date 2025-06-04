@@ -33,9 +33,7 @@ public class Puzzle : MonoBehaviour
 
     void Start()
     {
-        // TO DO - This code assumes that there is one GRID object in scene, worth remembering that, added log as reminder
-        Debug.LogWarning("Puzzle: Start() - Only one Grid object should be present in the scene."); 
-        grid = GameObject.FindWithTag("Grid").GetComponent<Grid>();
+        grid = GetComponentInParent<Grid>();
         player = GameObject.FindWithTag("Player");
         player.GetComponent<Player>().OnPlayerMoved.AddListener(OnPlayerMoved);
 
@@ -58,21 +56,22 @@ public class Puzzle : MonoBehaviour
 
     private void OnPlayerMoved(Vector3 playerPosition)
     {
-        if (GameManager.Instance.State != GameState.GameActive)
-            return;
+        //TO DO - Replace this with shader or something similar, then remove this method and members if possible
+            // if (GameManager.Instance.State != GameState.GameActive)
+            //     return;
 
-        bool isNearby = Mathf.Abs(playerPosition.y - transform.position.y) < 0.1f 
-                        && Mathf.Abs(playerPosition.x - transform.position.x) <= 1.0f;
-        if ((isNearby || alwaysVisible) && isPlaced)
-        {
-            foreach (GameObject child in children)
-                child.SetActive(true);
-        }
-        else
-        {
-            foreach (GameObject child in children)
-                child.SetActive(false);
-        }
+            // bool isNearby = Mathf.Abs(playerPosition.y - transform.position.y) < 0.1f 
+            //                 && Mathf.Abs(playerPosition.x - transform.position.x) <= 1.0f;
+            // if ((isNearby || alwaysVisible) && isPlaced)
+            // {
+            //     foreach (GameObject child in children)
+            //         child.SetActive(true);
+            // }
+            // else
+            // {
+            //     foreach (GameObject child in children)
+            //         child.SetActive(false);
+            // }
     }
 
     public bool FitsAt(int x, int y)
@@ -157,10 +156,12 @@ public class Puzzle : MonoBehaviour
 
     public void Shrink()
     {
-        transform.localScale = new Vector3(0.65f, 0.65f, 0.05f);
+        float newScale = transform.localScale.x * 0.5f;
+        transform.localScale = new Vector3(newScale, newScale, transform.localScale.z);
     }
     public void ExpandToDefaultSize()
     {
-        transform.localScale = new Vector3(1f, 1f, 1f);
+        float newScale = transform.localScale.x / 0.5f;
+        transform.localScale = new Vector3(newScale, newScale, transform.localScale.z);
     }
 }

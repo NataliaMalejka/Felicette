@@ -110,26 +110,33 @@ public class SoundsManager : MonoBehaviour
         switch (sounds)
         {
             case Sounds.OpenDoor:
+            if (OpenDoor != null)
                 audioSource.PlayOneShot(OpenDoor);
-                break;
-            case Sounds.TimerStop:
+            break;
+        case Sounds.TimerStop:
+            if (TimerStop != null)
                 audioSource.PlayOneShot(TimerStop);
-                break;
-            case Sounds.TakePuzzle:
+            break;
+        case Sounds.TakePuzzle:
+            if (TakePuzzle != null)
                 audioSource.PlayOneShot(TakePuzzle);
-                break;
-            case Sounds.PutPuzzle:
+            break;
+        case Sounds.PutPuzzle:
+            if (PutPuzzle != null)
                 audioSource.PlayOneShot(PutPuzzle);
-                break;
-            case Sounds.Error:
+            break;
+        case Sounds.Error:
+            if (Error != null)
                 audioSource.PlayOneShot(Error);
-                break;
-            case Sounds.Finish:
+            break;
+        case Sounds.Finish:
+            if (Finish != null)
                 audioSource.PlayOneShot(Finish);
-                break;
-            case Sounds.ChangePerspective:
+            break;
+        case Sounds.ChangePerspective:
+            if (ChangePerspective != null)
                 audioSource.PlayOneShot(ChangePerspective);
-                break;
+            break;
             default:
                 break;
         }

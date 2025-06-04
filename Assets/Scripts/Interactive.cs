@@ -3,11 +3,25 @@ using UnityEngine;
 public abstract class Interactive : MonoBehaviour
 {
     protected bool playerCollision = false;
+    protected Player player;
 
-    private void OnEnable()
+    private void Start()
     {
-        Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
         player.OnPlayerInteraction.AddListener(OnInteract);
+    }
+
+    void OnEnable() {
+        if (player == null)
+            return;
+        player.OnPlayerInteraction.RemoveListener(OnInteract);
+        player.OnPlayerInteraction.AddListener(OnInteract);
+    }
+
+    void OnDisable() {
+        if (player == null)
+            return;
+        player.OnPlayerInteraction.RemoveListener(OnInteract);
     }
 
     public void OnInteract()

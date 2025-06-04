@@ -39,7 +39,7 @@ public class Grid : MonoBehaviour
         // Get all the pieces and assign them to array
         // This will change!!
         Puzzle[] pieces = puzzleMap.GetComponentsInChildren<Puzzle>();
-        foreach(Puzzle piece in pieces)
+        foreach (Puzzle piece in pieces)
         {
             Vector2 pos = piece.transform.position;
             puzzles[(int)pos.x, (int)pos.y] = piece;
