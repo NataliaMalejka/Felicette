@@ -11,6 +11,7 @@ public class UiMobileControls : MonoBehaviour
         interactButton.OnButtonReleased.AddListener(onButtonInteract);
         // pauseButton.OnButtonPressed.AddListener(GameManager.Instance.PauseGame);
         player = GameObject.FindWithTag("Player");
+        player.GetComponent<Player>().OnInteractionPossibilityChanged.AddListener(interactButton.OnInteractionPossibilityChanged);
     }
 
     public void onButtonInteract()

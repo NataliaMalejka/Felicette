@@ -18,4 +18,16 @@ public class MobileButton : Button
         base.OnPointerUp(eventData);
         OnButtonReleased?.Invoke();
     }
+
+    public void OnInteractionPossibilityChanged(bool canInteract)
+    {
+        if (canInteract)
+        {
+            GetComponent<Image>().color = new Color(0.4f, 0.8f, 0.4f);
+        }
+        else
+        {
+            GetComponent<Image>().color = Color.white;
+        }
+    }
 }

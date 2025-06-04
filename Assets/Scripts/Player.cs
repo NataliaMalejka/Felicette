@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public UnityEvent OnPlayerInteraction;
     public UnityEvent<bool> OnPlayerDrag;
     public UnityEvent<Vector3> OnPlayerMoved;
+    public UnityEvent<bool> OnInteractionPossibilityChanged;
     private bool isDragging = false;
     private PlayerInput inputComponent;
     private BoxCollider boxCollider;
@@ -30,6 +31,11 @@ public class Player : MonoBehaviour
         if (!value.isPressed)
             return;
         HandleInteractInput();
+    }
+
+    public void SetInteractionPossibility(bool canInteract)
+    {
+        OnInteractionPossibilityChanged?.Invoke(canInteract);
     }
 
     //Fires event 2 times, once when pressed and once when released

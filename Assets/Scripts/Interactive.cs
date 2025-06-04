@@ -2,11 +2,20 @@ using UnityEngine;
 
 public abstract class Interactive : MonoBehaviour
 {
+    private Player player;
     protected bool playerCollision = false;
+
+    private void Start()
+    {
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        player.OnPlayerInteraction.AddListener(OnInteract);
+    }
 
     private void OnEnable()
     {
-        Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        if (player == null)
+            return;
+        player.OnPlayerInteraction.RemoveListener(OnInteract);
         player.OnPlayerInteraction.AddListener(OnInteract);
     }
 
@@ -25,6 +34,7 @@ public abstract class Interactive : MonoBehaviour
         if (other.gameObject.transform.CompareTag("Player"))
         {
             playerCollision = true;
+            player.SetInteractionPossibility(true);
             ActOnCollision();
         }
     }
@@ -34,6 +44,7 @@ public abstract class Interactive : MonoBehaviour
         if (other.gameObject.transform.CompareTag("Player"))
         {
             playerCollision = false;
+            player.SetInteractionPossibility(false);
         }
     }
 }
