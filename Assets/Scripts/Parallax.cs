@@ -3,30 +3,24 @@ using UnityEngine;
 public class Parallax : MonoBehaviour
 {
     private float length;
-    private float startPosition;
-    public GameObject cam;
-    public float parallaxEffect;
+    private Vector3 startPos;
+    public float scrollSpeed = 2f; 
+    public float parallaxEffect = 0.5f; 
 
     private void Start()
     {
-        startPosition = transform.position.x;
+        startPos = transform.position;
         length = GetComponent<SpriteRenderer>().bounds.size.x;
     }
 
-    private void Update()
+    void Update()
     {
-        float temp = (cam.transform.position.x * (1 - parallaxEffect));
-        float distanse = (cam.transform.position.x * parallaxEffect);
+        float movement = scrollSpeed * parallaxEffect * Time.deltaTime;
+        transform.position -= new Vector3(movement, 0f, 0f);
 
-        transform.position = new Vector3(startPosition + distanse, transform.position.y, transform.position.z);
-
-        if (temp > startPosition + length)
+        if (transform.position.x < startPos.x - length)
         {
-            startPosition += length * 2;
-        }
-        else if (temp < startPosition - length)
-        {
-            startPosition -= length * 2;
+            transform.position += new Vector3(length * 3f, 0f, 0f);
         }
     }
 }

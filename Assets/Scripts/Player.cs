@@ -104,11 +104,11 @@ public class Player : MonoBehaviour
         Vector2 moveInput = inputComponent.actions["Move"].ReadValue<Vector2>();
         if (moveInput == Vector2.zero)
         {
-            animator.SetBool("isRun", false);
+            animator.SetBool("IsRun", false);
             return;
         }
 
-        animator.SetBool("isRun", true);
+        animator.SetBool("IsRun", true);
 
         float timeVelocity = velocity * Time.deltaTime;
         oldPosition = transform.position;
@@ -129,7 +129,7 @@ public class Player : MonoBehaviour
             pieceColliders[0].transform.position.y != pieceColliders[1].transform.position.y))
         {
             transform.position = oldPosition;
-            animator.SetBool("isRun", false);
+            animator.SetBool("IsRun", false);
             return;
         }
 
