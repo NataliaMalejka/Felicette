@@ -1081,6 +1081,18 @@ PrefabInstance:
       propertyPath: perspAnim
       value: 
       objectReference: {fileID: 848683670}
+    - target: {fileID: 1939650661045521936, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -522446802, guid: e4c4b59fb8627ce47bf92bfb05116e32, type: 3}
+    - target: {fileID: 5435637154398432357, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435637154398432357, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.04
+      objectReference: {fileID: 0}
     - target: {fileID: 5435637154398432357, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.02
@@ -1137,7 +1149,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8805223621694489392, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5788012546188082066, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
@@ -1161,8 +1174,37 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6104302316951591300, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1349285728}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4823838240161897527, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1067938890}
   m_SourcePrefab: {fileID: 100100000, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
+--- !u!1 &1067938889 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4823838240161897527, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
+  m_PrefabInstance: {fileID: 1067938888}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1067938890
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067938889}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 7.37, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1073529730
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     private bool isDragging = false;
     private PlayerInput inputComponent;
     private BoxCollider boxCollider;
+    private Animator animator;
     private bool upDownMovementEnabled = false;
     private Vector3 oldPosition;
 
@@ -23,6 +24,7 @@ public class Player : MonoBehaviour
     {
         inputComponent = GetComponent<PlayerInput>();
         boxCollider = GetComponent<BoxCollider>();
+        animator = GetComponent<Animator>();
     }
 
     void OnInteract(InputValue value)
@@ -100,8 +102,13 @@ public class Player : MonoBehaviour
     private void MovePlayer()
     {
         Vector2 moveInput = inputComponent.actions["Move"].ReadValue<Vector2>();
-        if(moveInput == Vector2.zero)
+        if (moveInput == Vector2.zero)
+        {
+            animator.SetBool("isRun", false);
             return;
+        }
+
+        animator.SetBool("isRun", true);
 
         float timeVelocity = velocity * Time.deltaTime;
         oldPosition = transform.position;
@@ -122,6 +129,7 @@ public class Player : MonoBehaviour
             pieceColliders[0].transform.position.y != pieceColliders[1].transform.position.y))
         {
             transform.position = oldPosition;
+            animator.SetBool("isRun", false);
             return;
         }
 
