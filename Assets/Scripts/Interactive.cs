@@ -2,21 +2,26 @@ using UnityEngine;
 
 public abstract class Interactive : MonoBehaviour
 {
-    private Player player;
+    protected Player player;
     protected bool playerCollision = false;
-
+    
     private void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         player.OnPlayerInteraction.AddListener(OnInteract);
     }
 
-    private void OnEnable()
-    {
+    void OnEnable() {
         if (player == null)
             return;
         player.OnPlayerInteraction.RemoveListener(OnInteract);
         player.OnPlayerInteraction.AddListener(OnInteract);
+    }
+
+    void OnDisable() {
+        if (player == null)
+            return;
+        player.OnPlayerInteraction.RemoveListener(OnInteract);
     }
 
     public void OnInteract()

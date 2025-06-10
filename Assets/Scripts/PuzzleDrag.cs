@@ -25,17 +25,29 @@ public class PuzzleDrag : MonoBehaviour
 
     private void Start()
     {
-        Debug.LogWarning("PuzzleDrag: Start() - Only one Grid object should be present in the scene."); 
-        grid = GameObject.FindWithTag("Grid").GetComponent<Grid>();
+        grid = transform.root.GetComponentInChildren<Grid>();
         player = GameObject.FindWithTag("Player");
         equipment = GameManager.Instance.GetUiControllerHandle().GetEquipmentManager();
         player.GetComponent<Player>().OnPlayerDrag.AddListener(OnDrag);
+    }
+    
+    void OnEnable() {
+        if (player == null)
+            return;
+        player.GetComponent<Player>().OnPlayerDrag.RemoveListener(OnDrag);
+        player.GetComponent<Player>().OnPlayerDrag.AddListener(OnDrag);
+    }
+
+    void OnDisable() {
+        if (player == null)
+            return;
+        player.GetComponent<Player>().OnPlayerDrag.RemoveListener(OnDrag);
     }
 
     private void OnDrag(bool dragActive)
     {
         isDragging = dragActive;
-        if(isDragging)
+        if (isDragging)
         {
             AttemptToPickUpPiece();
         }
@@ -137,7 +149,7 @@ public class PuzzleDrag : MonoBehaviour
         {
             selectedPiece.transform.position = equipment.SetTargetSlotAsOccupied(startPosition);
             puzzle.Shrink();
-            SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzle); 
+            SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzle);
         }
         else
         {

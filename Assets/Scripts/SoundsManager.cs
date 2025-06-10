@@ -11,6 +11,7 @@ public class SoundsManager : MonoBehaviour
     [SerializeField] AudioClip PutPuzzleFail;
     [SerializeField] AudioClip Error;
     [SerializeField] AudioClip Finish;
+    [SerializeField] AudioClip ChangePerspective;
     // TO DO Other sounds can be added here like
     // walking, entry to level, transition to different view, interaction, etc.
     [SerializeField] AudioClip BackgroundMusic_A;
@@ -38,7 +39,8 @@ public class SoundsManager : MonoBehaviour
         TakePuzzleFail,
         PutPuzzleFail,
         Error,
-        Finish
+        Finish,
+        ChangePerspective
     }
 
     public enum BackgroundMusic
@@ -108,23 +110,33 @@ public class SoundsManager : MonoBehaviour
         switch (sounds)
         {
             case Sounds.OpenDoor:
+            if (OpenDoor != null)
                 audioSource.PlayOneShot(OpenDoor);
-                break;
-            case Sounds.TimerStop:
+            break;
+        case Sounds.TimerStop:
+            if (TimerStop != null)
                 audioSource.PlayOneShot(TimerStop);
-                break;
-            case Sounds.TakePuzzle:
+            break;
+        case Sounds.TakePuzzle:
+            if (TakePuzzle != null)
                 audioSource.PlayOneShot(TakePuzzle);
-                break;
-            case Sounds.PutPuzzle:
+            break;
+        case Sounds.PutPuzzle:
+            if (PutPuzzle != null)
                 audioSource.PlayOneShot(PutPuzzle);
-                break;
-            case Sounds.Error:
+            break;
+        case Sounds.Error:
+            if (Error != null)
                 audioSource.PlayOneShot(Error);
-                break;
-            case Sounds.Finish:
+            break;
+        case Sounds.Finish:
+            if (Finish != null)
                 audioSource.PlayOneShot(Finish);
-                break;
+            break;
+        case Sounds.ChangePerspective:
+            if (ChangePerspective != null)
+                audioSource.PlayOneShot(ChangePerspective);
+            break;
             default:
                 break;
         }

@@ -38,6 +38,14 @@ public class Player : MonoBehaviour
         OnInteractionPossibilityChanged?.Invoke(canInteract);
     }
 
+    public void TogglePlayerInput()
+    {
+        if (inputComponent != null)
+        {
+            inputComponent.enabled = !inputComponent.enabled;
+        }
+    }
+
     //Fires event 2 times, once when pressed and once when released
     void OnDrag(InputValue value)
     {
@@ -56,7 +64,7 @@ public class Player : MonoBehaviour
 
     private void HandleInteractInput()
     {
-        if (GameManager.Instance.State != GameState.GameActive)
+        if (GameManager.Instance.State != GameState.GameActive || isDragging)
             return;
         OnPlayerInteraction?.Invoke();
     }
@@ -114,12 +122,12 @@ public class Player : MonoBehaviour
             return;
         }
         // Check bounds and corner cutting
-        if(!IsPlayerFullyInsideAnyCell(pieceColliders) ||
+        if (!IsPlayerFullyInsideAnyCell(pieceColliders) ||
             (pieceColliders.Count == 2 &&
             pieceColliders[0].transform.position.x != pieceColliders[1].transform.position.x &&
             pieceColliders[0].transform.position.y != pieceColliders[1].transform.position.y))
         {
-            transform.position = oldPosition; 
+            transform.position = oldPosition;
             return;
         }
 
