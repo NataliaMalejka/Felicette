@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.3
+  parallaxEffect: 0.07
 --- !u!1 &435701399811609844
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.2
+  parallaxEffect: 0.05
 --- !u!1 &940970870437817439
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,7 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 1
+  parallaxEffect: 0.08
 --- !u!1 &1385986009950756612
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,7 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 1
+  parallaxEffect: 0.08
 --- !u!1 &1595940783043401726
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,7 +509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 1.1
+  parallaxEffect: 0.08
 --- !u!1 &1647005454133894797
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,7 +645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.7
+  parallaxEffect: 0.08
 --- !u!1 &1827179000475264614
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,7 +781,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.1
+  parallaxEffect: 0.07
 --- !u!1 &1923120583828489165
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,7 +883,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.7
+  parallaxEffect: 0.08
 --- !u!1 &1975206834034708065
 GameObject:
   m_ObjectHideFlags: 0
@@ -985,7 +985,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.8
+  parallaxEffect: 0.08
 --- !u!1 &2058439959208084821
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,7 +1087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 1
+  parallaxEffect: 0.08
 --- !u!1 &2061029305633588295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,7 +1189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.8
+  parallaxEffect: 0.08
 --- !u!1 &2257971940019822832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1291,7 +1291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.9
+  parallaxEffect: 0.07
 --- !u!1 &2355314311163868435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1393,7 +1393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.4
+  parallaxEffect: 0.05
 --- !u!1 &2599120587730941729
 GameObject:
   m_ObjectHideFlags: 0
@@ -1495,7 +1495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.9
+  parallaxEffect: 0.07
 --- !u!1 &2724598120850858628
 GameObject:
   m_ObjectHideFlags: 0
@@ -1597,7 +1597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.3
+  parallaxEffect: 0.07
 --- !u!1 &2753465875651533024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1699,7 +1699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.4
+  parallaxEffect: 0.05
 --- !u!1 &3089398726231025813
 GameObject:
   m_ObjectHideFlags: 0
@@ -1801,7 +1801,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0
+  parallaxEffect: 0.07
 --- !u!1 &3403687392891516310
 GameObject:
   m_ObjectHideFlags: 0
@@ -1971,7 +1971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 1.1
+  parallaxEffect: 0.08
 --- !u!1 &3657434210125986379
 GameObject:
   m_ObjectHideFlags: 0
@@ -2073,7 +2073,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.5
+  parallaxEffect: 0.08
 --- !u!1 &3875121443045106213
 GameObject:
   m_ObjectHideFlags: 0
@@ -2243,7 +2243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.2
+  parallaxEffect: 0.05
 --- !u!1 &4484558191057053349
 GameObject:
   m_ObjectHideFlags: 0
@@ -2345,7 +2345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.9
+  parallaxEffect: 0.07
 --- !u!1 &4501361136363471449
 GameObject:
   m_ObjectHideFlags: 0
@@ -2447,7 +2447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0
+  parallaxEffect: 0.07
 --- !u!1 &4805524772198969279
 GameObject:
   m_ObjectHideFlags: 0
@@ -2617,7 +2617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.3
+  parallaxEffect: 0.07
 --- !u!1 &5342284007385921514
 GameObject:
   m_ObjectHideFlags: 0
@@ -2719,7 +2719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.8
+  parallaxEffect: 0.08
 --- !u!1 &5478961318978863305
 GameObject:
   m_ObjectHideFlags: 0
@@ -2821,7 +2821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.1
+  parallaxEffect: 0.07
 --- !u!1 &5488785190411411736
 GameObject:
   m_ObjectHideFlags: 0
@@ -2923,7 +2923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.1
+  parallaxEffect: 0.07
 --- !u!1 &5736288256908907249
 GameObject:
   m_ObjectHideFlags: 0
@@ -3025,7 +3025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.2
+  parallaxEffect: 0.05
 --- !u!1 &5795044839675932786
 GameObject:
   m_ObjectHideFlags: 0
@@ -3161,7 +3161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.6
+  parallaxEffect: 0.05
 --- !u!1 &6073195694318990075
 GameObject:
   m_ObjectHideFlags: 0
@@ -3340,7 +3340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.4
+  parallaxEffect: 0.05
 --- !u!1 &6996828680044362389
 GameObject:
   m_ObjectHideFlags: 0
@@ -3442,7 +3442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.7
+  parallaxEffect: 0.08
 --- !u!1 &7198517428701659290
 GameObject:
   m_ObjectHideFlags: 0
@@ -3544,7 +3544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.6
+  parallaxEffect: 0.05
 --- !u!1 &7469642465395984530
 GameObject:
   m_ObjectHideFlags: 0
@@ -3646,7 +3646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.5
+  parallaxEffect: 0.08
 --- !u!1 &7668315935256093833
 GameObject:
   m_ObjectHideFlags: 0
@@ -3782,7 +3782,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.5
+  parallaxEffect: 0.08
 --- !u!1 &8395076475201629200
 GameObject:
   m_ObjectHideFlags: 0
@@ -3884,7 +3884,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0.6
+  parallaxEffect: 0.05
 --- !u!1 &8685522856749496036
 GameObject:
   m_ObjectHideFlags: 0
@@ -3986,7 +3986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 1.1
+  parallaxEffect: 0.08
 --- !u!1 &8808614421546098615
 GameObject:
   m_ObjectHideFlags: 0
@@ -4088,7 +4088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: 2
-  parallaxEffect: 0
+  parallaxEffect: 0.07
 --- !u!1 &9163172451658631753
 GameObject:
   m_ObjectHideFlags: 0
