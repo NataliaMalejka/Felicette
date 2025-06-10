@@ -93,6 +93,7 @@ public class PuzzleDrag : MonoBehaviour
             // Check if the piece is in equipment and not in the grid
             if (equipment.CheckIfPointHoversOverSlot(selectedPiece.transform.position, checkForEmpty: false))
             {
+                //Puzzle pick up from equipment
                 isInEquipment = true;
                 puzzle = selectedPiece.GetComponent<Puzzle>();
                 puzzle.isPlaced = false;
@@ -100,6 +101,7 @@ public class PuzzleDrag : MonoBehaviour
             }
             else
             {
+                //Puzzle pick up from grid
                 isInEquipment = false;
                 //Grid Position
                 startX = Mathf.RoundToInt(startPosition.x / grid.cellSize);
@@ -108,6 +110,7 @@ public class PuzzleDrag : MonoBehaviour
                 //Get the puzzle and remove it from the grid for now
                 puzzle = grid.GetPuzzleFromGrid(startX, startY);
                 grid.SetPuzzle(null, startX, startY);
+                puzzle.ActOnPuzzlePicked();
                 puzzle.isPlaced = false;
             }
 
@@ -128,7 +131,7 @@ public class PuzzleDrag : MonoBehaviour
                 SoundsManager.Instance.PlaySound(SoundsManager.Sounds.TakePuzzleFail);
                 selectedPiece.transform.position = startPosition;
                 puzzle.isPlaced = true;
-                if(!isInEquipment)
+                if (!isInEquipment)
                     grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startX, startY);
                 selectedPiece = null;
             }
@@ -137,7 +140,7 @@ public class PuzzleDrag : MonoBehaviour
 
     private void AttemptToPutPiece()
     {
-        if (selectedPiece == null )
+        if (selectedPiece == null)
         {
             return;
         }
@@ -145,7 +148,7 @@ public class PuzzleDrag : MonoBehaviour
         endPosition = selectedPiece.transform.position;
 
         //CHECK UI FIRST
-        if(equipment.CheckIfPointHoversOverSlot(selectedPiece.transform.position, checkForEmpty: true, previousTargetSlot: isInEquipment))
+        if (equipment.CheckIfPointHoversOverSlot(selectedPiece.transform.position, checkForEmpty: true, previousTargetSlot: isInEquipment))
         {
             selectedPiece.transform.position = equipment.SetTargetSlotAsOccupied(startPosition);
             puzzle.Shrink();
@@ -164,8 +167,8 @@ public class PuzzleDrag : MonoBehaviour
                 || endY < 0 || endY >= grid.GridSizeY)
             {
                 selectedPiece.transform.position = startPosition;
-                if(isInEquipment)
-                    puzzle.Shrink();            
+                if (isInEquipment)
+                    puzzle.Shrink();
                 else
                     grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startX, startY);
                 SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzleFail);
@@ -173,14 +176,14 @@ public class PuzzleDrag : MonoBehaviour
             //Success
             else
             {
-                if(isInEquipment)
+                if (isInEquipment)
                 {
                     isInEquipment = false;
                     equipment.SetTargetSlotAsFree();
                 }
                 grid.SetPuzzle(puzzle, endX, endY);
                 selectedPiece.transform.position = new Vector3(endX * grid.cellSize, endY * grid.cellSize, zPosition);
-                SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzle); 
+                SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzle);
             }
         }
         //Lower layer
@@ -190,6 +193,7 @@ public class PuzzleDrag : MonoBehaviour
         puzzle.isPlaced = true;
         selectedPiece = null;
         pieceImage = null;    
+        puzzle.ActOnPuzzlePlaced();
     }
 
     private void HandlePieceDragging()

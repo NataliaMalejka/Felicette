@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.VFX;
 
 enum Connection {EMPTY, HOLE, KNOB};
 
@@ -17,6 +18,7 @@ public class Puzzle : MonoBehaviour
     [SerializeField] private Connection right;
     [SerializeField] private Connection up;
     [SerializeField] private Connection down;
+    [SerializeField] private VisualEffect visualEffectFog;
 
     [SerializeField] public bool portable;
     [SerializeField] private bool alwaysVisible;
@@ -49,6 +51,7 @@ public class Puzzle : MonoBehaviour
 
         //Run once to set the initial visibility of the puzzle
         OnPlayerMoved(player.transform.position);
+        visualEffectFog.SetVector3("PlayerPosition", player.transform.position);
 
         connections = new Connection[] { left, up, right, down };
         FixConnectionsRotation();
@@ -56,29 +59,26 @@ public class Puzzle : MonoBehaviour
 
     private void OnPlayerMoved(Vector3 playerPosition)
     {
-        //TO DO - Replace this with shader or something similar, then remove this method and members if possible
-            // if (GameManager.Instance.State != GameState.GameActive)
-            //     return;
+        visualEffectFog.SetVector3("PlayerPosition", playerPosition);
+    }
 
-            // bool isNearby = Mathf.Abs(playerPosition.y - transform.position.y) < 0.1f 
-            //                 && Mathf.Abs(playerPosition.x - transform.position.x) <= 1.0f;
-            // if ((isNearby || alwaysVisible) && isPlaced)
-            // {
-            //     foreach (GameObject child in children)
-            //         child.SetActive(true);
-            // }
-            // else
-            // {
-            //     foreach (GameObject child in children)
-            //         child.SetActive(false);
-            // }
+    public void ActOnPuzzlePlaced()
+    {
+        if (visualEffectFog != null)
+            visualEffectFog.gameObject.SetActive(true);
+    }
+
+    public void ActOnPuzzlePicked()
+    {
+        if (visualEffectFog != null)
+            visualEffectFog.gameObject.SetActive(false);
     }
 
     public bool FitsAt(int x, int y)
     {
         Puzzle neighbor;
         //left
-        if(x >= 1)
+        if (x >= 1)
         {
             neighbor = grid.GetPuzzleFromGrid(x - 1, y);
             if (neighbor != null)
