@@ -16,8 +16,8 @@ public class PuzzleDrag : MonoBehaviour
     private Grid grid;
     private GameObject player;
 
-    private int startX;
-    private int startY;
+    private int startHorizontal;
+    private int startVertical;
 
     private bool isDragging = false;
     private bool isHolding = false;
@@ -102,12 +102,16 @@ public class PuzzleDrag : MonoBehaviour
             {
                 isInEquipment = false;
                 //Grid Position
-                startX = Mathf.RoundToInt(startPosition.x / grid.cellSize);
-                startY = Mathf.RoundToInt(startPosition.y / grid.cellSize);
+                //startHorizontal = Mathf.RoundToInt(startPosition.x / grid.cellSize);
+                //startVertical = Mathf.RoundToInt(startPosition.y / grid.cellSize);
+
+                Vector2Int pos = grid.WorldToGridCoords(startPosition);
+                startHorizontal = pos.x;
+                startVertical = pos.y;
 
                 //Get the puzzle and remove it from the grid for now
-                puzzle = grid.GetPuzzleFromGrid(startX, startY);
-                grid.SetPuzzle(null, startX, startY);
+                puzzle = grid.GetPuzzleFromGrid(startHorizontal, startVertical );
+                grid.SetPuzzle(null, startHorizontal, startVertical);
                 puzzle.isPlaced = false;
             }
 
@@ -129,7 +133,7 @@ public class PuzzleDrag : MonoBehaviour
                 selectedPiece.transform.position = startPosition;
                 puzzle.isPlaced = true;
                 if(!isInEquipment)
-                    grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startX, startY);
+                    grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startHorizontal, startVertical);
                 selectedPiece = null;
             }
         }   
@@ -154,20 +158,24 @@ public class PuzzleDrag : MonoBehaviour
         else
         {
             //Grid Position
-            int endX = Mathf.RoundToInt(endPosition.x / grid.cellSize);
-            int endY = Mathf.RoundToInt(endPosition.y / grid.cellSize);
+            //int endX = Mathf.RoundToInt(endPosition.x / grid.cellSize);
+            //int endY = Mathf.RoundToInt(endPosition.y / grid.cellSize);
+
+            Vector2Int endPos = grid.WorldToGridCoords(endPosition);
+            int endHorizontal = endPos.x;
+            int endVertical = endPos.y;
 
             //Check if already occupied, Check if the puzzle doesn't fit, Check if out of bounds
-            if (grid.GetPuzzleFromGrid(endX, endY) != null
-                || !selectedPiece.GetComponent<Puzzle>().FitsAt(endX, endY)
-                || endX < 0 || endX >= grid.GridSizeX
-                || endY < 0 || endY >= grid.GridSizeY)
+            if (grid.GetPuzzleFromGrid(endHorizontal, endVertical) != null
+                || !selectedPiece.GetComponent<Puzzle>().FitsAt(endHorizontal, endVertical)
+                || endHorizontal < 0 || endHorizontal >= grid.GridSizeHorizontal
+                || endVertical < 0 || endVertical >= grid.GridSizeVertical)
             {
                 selectedPiece.transform.position = startPosition;
                 if(isInEquipment)
                     puzzle.Shrink();            
                 else
-                    grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startX, startY);
+                    grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startHorizontal, startVertical);
                 SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzleFail);
             }
             //Success
@@ -178,8 +186,9 @@ public class PuzzleDrag : MonoBehaviour
                     isInEquipment = false;
                     equipment.SetTargetSlotAsFree();
                 }
-                grid.SetPuzzle(puzzle, endX, endY);
-                selectedPiece.transform.position = new Vector3(endX * grid.cellSize, endY * grid.cellSize, zPosition);
+                grid.SetPuzzle(puzzle, endHorizontal, endVertical);
+                //selectedPiece.transform.position = new Vector3(endHorizontal * grid.cellSize, endVertical * grid.cellSize, zPosition);
+                selectedPiece.transform.position = grid.GridToWorldCoords(endHorizontal, endVertical, selectedPiece.transform.position.y);
                 SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzle); 
             }
         }
