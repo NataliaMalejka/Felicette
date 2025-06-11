@@ -194,4 +194,17 @@ public class Puzzle : MonoBehaviour
         float newScale = transform.localScale.x / 0.5f;
         transform.localScale = new Vector3(newScale, newScale, transform.localScale.z);
     }
+
+    public void ChangeShaderColor(bool isPlacable)
+    {
+        //can be optimized
+        if (isPlacable)
+        {
+            pickUpMaterial.SetColor("_glow_color", new Color(0.015f, 0.604f, 0.195f, 1f));
+        }
+        else
+        {
+            pickUpMaterial.SetColor("_glow_color", new Color(0.745f, 0.0078f, 0f, 1f));
+        }
+    }
 }
