@@ -8,6 +8,11 @@ public class Door : Interactive //Teleport?
         if(playerCollision)
         {
             SoundsManager.Instance.PlaySound(SoundsManager.Sounds.OpenDoor);
+            if (connectedDoor == null)
+            {
+                Debug.LogWarning("Connected door is not set for " + gameObject.name);
+                return;
+            }
             player.transform.position = connectedDoor.transform.position;
         }
     }

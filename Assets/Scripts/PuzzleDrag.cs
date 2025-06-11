@@ -24,6 +24,7 @@ public class PuzzleDrag : MonoBehaviour
     private bool isDragging = false;
     private bool isHolding = false;
     private bool isInEquipment = false;
+    private static readonly int defaultLayerMask = 1 << 0;
 
     private void Start()
     {
@@ -86,7 +87,7 @@ public class PuzzleDrag : MonoBehaviour
         RaycastHit hit;
 
         //Collision Check
-        if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("Piece"))
+        if (Physics.Raycast(ray, out hit, 100, defaultLayerMask) && hit.collider.CompareTag("Piece"))
         {
             selectedPiece = hit.collider.gameObject;
             offset = selectedPiece.transform.position - hit.point;

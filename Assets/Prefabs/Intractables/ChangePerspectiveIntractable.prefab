@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6978265831125523450}
   - component: {fileID: 9064255729057461176}
   - component: {fileID: 8147668410153175141}
-  m_Layer: 0
-  m_Name: ChangePerspectiv
+  m_Layer: 6
+  m_Name: ChangePerspectiveIntractable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 6952026715714024576}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -53,8 +53,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.7070527, y: 3.5155115, z: 0.8769903}
-  m_Center: {x: -0.0795069, y: 1.021355, z: -0.061504856}
+  m_Size: {x: 1, y: 1, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &9064255729057461176
 Rigidbody:
   m_ObjectHideFlags: 0
