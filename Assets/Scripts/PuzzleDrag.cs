@@ -117,8 +117,9 @@ public class PuzzleDrag : MonoBehaviour
                 puzzle.isPlaced = false;
             }
 
-            if ((puzzle.portable && (int)player.transform.position.x != (int)puzzle.transform.position.x)
-                || (puzzle.portable && (int)player.transform.position.y != (int)puzzle.transform.position.y))
+            Collider playerCollider = player.GetComponent<Collider>();
+            Collider puzzleCollider = selectedPiece.GetComponent<Collider>();
+            if (puzzle.portable && !playerCollider.bounds.Intersects(puzzleCollider.bounds))
             {
                 isHolding = true;
                 SoundsManager.Instance.PlaySound(SoundsManager.Sounds.TakePuzzle);
@@ -133,6 +134,7 @@ public class PuzzleDrag : MonoBehaviour
             else
             {
                 SoundsManager.Instance.PlaySound(SoundsManager.Sounds.TakePuzzleFail);
+                puzzle.ActOnPuzzleFailedDrag();
                 selectedPiece.transform.position = startPosition;
                 puzzle.isPlaced = true;
                 if (!isInEquipment)
@@ -172,6 +174,7 @@ public class PuzzleDrag : MonoBehaviour
                 else
                     grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startX, startY);
                 SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzleFail);
+                puzzle.ActOnPuzzleFailedDrag();
             }
             //Success
             else

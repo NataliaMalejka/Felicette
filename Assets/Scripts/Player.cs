@@ -83,6 +83,11 @@ public class Player : MonoBehaviour
         {
             if (hit.gameObject != gameObject && hit.CompareTag("Piece"))
             {
+                if (hit.gameObject.GetComponent<Puzzle>() != null &&
+                    !hit.gameObject.GetComponent<Puzzle>().isPlaced)
+                {
+                    continue; // Skip pieces that are currently being dragged
+                }
                 pieces.Add(hit);
             }
         }

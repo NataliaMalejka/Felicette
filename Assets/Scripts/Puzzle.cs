@@ -20,6 +20,8 @@ public class Puzzle : MonoBehaviour
     [SerializeField] private Connection down;
     [SerializeField] private VisualEffect visualEffectFog;
     [SerializeField] private Material pickUpMaterial;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Animator animator;
     private Material defaultMaterial;
 
     [SerializeField] public bool portable;
@@ -40,7 +42,7 @@ public class Puzzle : MonoBehaviour
         grid = GetComponentInParent<Grid>();
         player = GameObject.FindWithTag("Player");
         player.GetComponent<Player>().OnPlayerMoved.AddListener(OnPlayerMoved);
-        defaultMaterial = GetComponent<Renderer>().material;
+        defaultMaterial = spriteRenderer.material;
 
         gridSizeX = grid.GetGridSizeX();
         gridSizeY = grid.GetGridSizeY();
@@ -69,7 +71,7 @@ public class Puzzle : MonoBehaviour
     {
         if (visualEffectFog != null)
             visualEffectFog.gameObject.SetActive(true);
-        GetComponent<Renderer>().material = defaultMaterial;
+        spriteRenderer.material = defaultMaterial;
         SetOrderingLayer("Default");
     }
 
@@ -80,10 +82,16 @@ public class Puzzle : MonoBehaviour
         if (pickUpMaterial != null)
         {
             pickUpMaterial.SetColor("_glow_color", new Color(0.745f, 0.0078f, 0f, 1f));
-            GetComponent<Renderer>().material = pickUpMaterial;
+            spriteRenderer.material = pickUpMaterial;
 
             SetOrderingLayer("Top");
         }
+    }
+
+    public void ActOnPuzzleFailedDrag()
+    {
+        if (animator != null)
+            animator.SetTrigger("Shake");
     }
 
     private void SetOrderingLayer(string layer, GameObject obj = null)
@@ -97,7 +105,6 @@ public class Puzzle : MonoBehaviour
             return;
         }
 
-        var spriteRenderer = obj.GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
         {
             spriteRenderer.sortingLayerName = layer;
