@@ -118,7 +118,7 @@ VFXRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1573497151
-  m_SortingLayer: -1
+  m_SortingLayer: 1
   m_SortingOrder: 0
 --- !u!1 &7104602542444930631
 GameObject:
@@ -305,6 +305,7 @@ MonoBehaviour:
   up: 0
   down: 0
   visualEffectFog: {fileID: 1509255333779290766}
+  pickUpMaterial: {fileID: 2100000, guid: ece2b6713c2871143a569151e6ea8635, type: 2}
   portable: 1
   alwaysVisible: 0
   isPlaced: 0

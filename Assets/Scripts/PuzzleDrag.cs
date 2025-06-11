@@ -26,6 +26,7 @@ public class PuzzleDrag : MonoBehaviour
     private void Start()
     {
         grid = transform.root.GetComponentInChildren<Grid>();
+        // zPosition = grid.GetDefaultZPosition();
         player = GameObject.FindWithTag("Player");
         equipment = GameManager.Instance.GetUiControllerHandle().GetEquipmentManager();
         player.GetComponent<Player>().OnPlayerDrag.AddListener(OnDrag);
@@ -110,7 +111,6 @@ public class PuzzleDrag : MonoBehaviour
                 //Get the puzzle and remove it from the grid for now
                 puzzle = grid.GetPuzzleFromGrid(startX, startY);
                 grid.SetPuzzle(null, startX, startY);
-                puzzle.ActOnPuzzlePicked();
                 puzzle.isPlaced = false;
             }
 
@@ -119,12 +119,13 @@ public class PuzzleDrag : MonoBehaviour
             {
                 isHolding = true;
                 SoundsManager.Instance.PlaySound(SoundsManager.Sounds.TakePuzzle);
-                //Select Piece Image
-                pieceImage = selectedPiece.transform.GetChild(0).gameObject;
+                puzzle.ActOnPuzzlePicked();
 
-                //Higher layer
-                SetOrderInLayer(selectedPiece, 1);
-                SetOrderInLayer(pieceImage, 1);
+                // //Select Piece Image
+                // pieceImage = selectedPiece.transform.GetChild(0).gameObject;
+                // //Higher layer
+                // SetOrderInLayer(selectedPiece, 1);
+                // SetOrderInLayer(pieceImage, 1);
             }
             else
             {
@@ -188,8 +189,8 @@ public class PuzzleDrag : MonoBehaviour
         }
         //Lower layer
         isHolding = false;
-        SetOrderInLayer(selectedPiece, 0);
-        SetOrderInLayer(pieceImage, 0);
+        // SetOrderInLayer(selectedPiece, 0);
+        // SetOrderInLayer(pieceImage, 0);
         puzzle.isPlaced = true;
         selectedPiece = null;
         pieceImage = null;    
@@ -214,7 +215,13 @@ public class PuzzleDrag : MonoBehaviour
             if (plane.Raycast(ray, out distance))
             {
                 Vector3 mousePosition = ray.GetPoint(distance);
-                selectedPiece.transform.position = mousePosition + offset;
+                float zOffset = Camera.main.transform.position.z > 0 ? 0.5f : -0.5f;
+                if (!GameManager.Instance.isPerspectiveOnWall)
+                {
+                    Debug.LogWarning("[!] PuzzleDrag: Camera perspective is on floor, CHECK CUSTOM zOffset.");
+                    zOffset = offset.z;
+                }
+                selectedPiece.transform.position = new Vector3(mousePosition.x + offset.x, mousePosition.y + offset.y, mousePosition.z + zOffset);
             }
         }
     }
@@ -232,6 +239,7 @@ public class PuzzleDrag : MonoBehaviour
         return Vector2.zero;
     }
 
+    //Obsolete method, kept for reference
     private void SetOrderInLayer(GameObject piece, int order)
     {
         var spriteRenderer = piece.GetComponent<SpriteRenderer>();

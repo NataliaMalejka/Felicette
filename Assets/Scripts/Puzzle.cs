@@ -19,6 +19,8 @@ public class Puzzle : MonoBehaviour
     [SerializeField] private Connection up;
     [SerializeField] private Connection down;
     [SerializeField] private VisualEffect visualEffectFog;
+    [SerializeField] private Material pickUpMaterial;
+    private Material defaultMaterial;
 
     [SerializeField] public bool portable;
     [SerializeField] private bool alwaysVisible;
@@ -38,6 +40,7 @@ public class Puzzle : MonoBehaviour
         grid = GetComponentInParent<Grid>();
         player = GameObject.FindWithTag("Player");
         player.GetComponent<Player>().OnPlayerMoved.AddListener(OnPlayerMoved);
+        defaultMaterial = GetComponent<Renderer>().material;
 
         gridSizeX = grid.GetGridSizeX();
         gridSizeY = grid.GetGridSizeY();
@@ -66,12 +69,39 @@ public class Puzzle : MonoBehaviour
     {
         if (visualEffectFog != null)
             visualEffectFog.gameObject.SetActive(true);
+        GetComponent<Renderer>().material = defaultMaterial;
+        SetOrderingLayer("Default");
     }
 
     public void ActOnPuzzlePicked()
     {
         if (visualEffectFog != null)
             visualEffectFog.gameObject.SetActive(false);
+        if (pickUpMaterial != null)
+        {
+            pickUpMaterial.SetColor("_glow_color", new Color(0.745f, 0.0078f, 0f, 1f));
+            GetComponent<Renderer>().material = pickUpMaterial;
+
+            SetOrderingLayer("Top");
+        }
+    }
+
+    private void SetOrderingLayer(string layer, GameObject obj = null)
+    {
+        if (obj == null)
+            obj = gameObject;
+
+        if (layer != "Top" && layer != "Default")
+        {
+            Debug.LogError("Puzzle.SetOrderingLayer: Invalid layer name. Use 'Top' or 'Default'");
+            return;
+        }
+
+        var spriteRenderer = obj.GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sortingLayerName = layer;
+        }
     }
 
     public bool FitsAt(int x, int y)
@@ -141,7 +171,7 @@ public class Puzzle : MonoBehaviour
     {
         int rotation = Mathf.RoundToInt(transform.rotation.eulerAngles.z);
         int amount = rotation / 90;
-        
+
         Connection[] oldConnections = (Connection[])connections.Clone();
         connections[0] = oldConnections[(0 + amount) % 4];
         connections[1] = oldConnections[(1 + amount) % 4];

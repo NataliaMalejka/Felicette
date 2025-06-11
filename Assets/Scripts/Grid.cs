@@ -28,9 +28,9 @@ public class Grid : MonoBehaviour
     {
         // Create array and set all values to null
         puzzles = new Puzzle[gridSizeX, gridSizeY];
-        for(int i=0; i<gridSizeX; i++)
+        for (int i = 0; i < gridSizeX; i++)
         {
-            for(int j=0; j<gridSizeY; j++)
+            for (int j = 0; j < gridSizeY; j++)
             {
                 puzzles[i, j] = null;
             }
@@ -86,4 +86,9 @@ public class Grid : MonoBehaviour
     {
         return gridSizeY;
     }
+    
+    // public float GetDefaultZPosition()
+    // {
+    //     return ;
+    // }
 }
