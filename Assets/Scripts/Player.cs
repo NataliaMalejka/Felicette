@@ -151,6 +151,14 @@ public class Player : MonoBehaviour
         OnPlayerMoved?.Invoke(transform.position);
     }
 
+    public void HideSprite()
+    {
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.enabled = false;
+        }
+    }
+
     void FixedUpdate()
     {
         if (GameManager.Instance.State == GameState.GameActive)

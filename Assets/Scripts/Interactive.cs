@@ -4,8 +4,8 @@ public abstract class Interactive : MonoBehaviour
 {
     protected Player player;
     protected bool playerCollision = false;
-    
-    private void Start()
+
+    protected virtual void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         player.OnPlayerInteraction.AddListener(OnInteract);
