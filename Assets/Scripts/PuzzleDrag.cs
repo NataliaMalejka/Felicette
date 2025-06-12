@@ -7,19 +7,22 @@ public class PuzzleDrag : MonoBehaviour
     // private GameObject pieceImage;
     private EquipmentManager equipment;
 
-    private Vector3 offset;
+    // private Vector3 offset;
     private static float zPosition = 0f;
 
     private Vector3 startPosition;
     private Vector3 endPosition;
     private Puzzle puzzle;
     private Grid grid;
+    [SerializeField] private GridOrientation gridOrientation;
     private GameObject player;
 
-    private int startX;
-    private int startY;
-    private static readonly Plane followPlane = new Plane(Vector3.forward, new Vector3(0f, 0f, zPosition));
+    private static readonly Plane followPlaneA = new Plane(Vector3.forward, new Vector3(0f, 0f, zPosition));
+    private Plane followPlaneB;
+
     private Vector2 lastPointerPos = Vector2.zero;
+    private int startHorizontal;
+    private int startVertical;
 
     private bool isDragging = false;
     private bool isHolding = false;
@@ -33,6 +36,7 @@ public class PuzzleDrag : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         equipment = GameManager.Instance.GetUiControllerHandle().GetEquipmentManager();
         player.GetComponent<Player>().OnPlayerDrag.AddListener(OnDrag);
+        followPlaneB = new Plane(Vector3.up, new Vector3(0f, this.gameObject.transform.position.y, 0f));
     }
     
     void OnEnable() {
@@ -90,7 +94,7 @@ public class PuzzleDrag : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 100, defaultLayerMask) && hit.collider.CompareTag("Piece"))
         {
             selectedPiece = hit.collider.gameObject;
-            offset = selectedPiece.transform.position - hit.point;
+            // offset = selectedPiece.transform.position - hit.point;
 
             startPosition = selectedPiece.transform.position;
 
@@ -108,18 +112,28 @@ public class PuzzleDrag : MonoBehaviour
                 //Puzzle pick up from grid
                 isInEquipment = false;
                 //Grid Position
-                startX = Mathf.RoundToInt(startPosition.x / grid.cellSize);
-                startY = Mathf.RoundToInt(startPosition.y / grid.cellSize);
+                //startHorizontal = Mathf.RoundToInt(startPosition.x / grid.cellSize);
+                //startVertical = Mathf.RoundToInt(startPosition.y / grid.cellSize);
+
+                Vector2Int pos = grid.WorldToGridCoords(startPosition, gridOrientation);
+                startHorizontal = pos.x;
+                startVertical = pos.y;
 
                 //Get the puzzle and remove it from the grid for now
-                puzzle = grid.GetPuzzleFromGrid(startX, startY);
-                grid.SetPuzzle(null, startX, startY);
+                puzzle = grid.GetPuzzleFromGrid(startHorizontal, startVertical );
+
+                grid.SetPuzzle(null, startHorizontal, startVertical);
+
                 puzzle.isPlaced = false;
             }
 
             Collider playerCollider = player.GetComponent<Collider>();
             Collider puzzleCollider = selectedPiece.GetComponent<Collider>();
             if (puzzle.portable && !playerCollider.bounds.Intersects(puzzleCollider.bounds))
+            // //zmienic na y/z
+            // if ((puzzle.portable && (int)player.transform.position.x != (int)puzzle.transform.position.x)
+            //     || (puzzle.portable && gridOrientation == GridOrientation.Wall && (int)player.transform.position.y != (int)puzzle.transform.position.y)
+            //     || (puzzle.portable && gridOrientation == GridOrientation.Floor && (int)player.transform.position.z != (int)puzzle.transform.position.z))
             {
                 isHolding = true;
                 SoundsManager.Instance.PlaySound(SoundsManager.Sounds.TakePuzzle);
@@ -137,8 +151,8 @@ public class PuzzleDrag : MonoBehaviour
                 puzzle.ActOnPuzzleFailedDrag();
                 selectedPiece.transform.position = startPosition;
                 puzzle.isPlaced = true;
-                if (!isInEquipment)
-                    grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startX, startY);
+                if(!isInEquipment)
+                    grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startHorizontal, startVertical);
                 selectedPiece = null;
             }
         }   
@@ -163,16 +177,20 @@ public class PuzzleDrag : MonoBehaviour
         else
         {
             //Grid Position
-            int endX = Mathf.RoundToInt(endPosition.x / grid.cellSize);
-            int endY = Mathf.RoundToInt(endPosition.y / grid.cellSize);
+            //int endX = Mathf.RoundToInt(endPosition.x / grid.cellSize);
+            //int endY = Mathf.RoundToInt(endPosition.y / grid.cellSize);
 
-            if (!CanBePlaced(endX, endY))
+            Vector2Int endPos = grid.WorldToGridCoords(endPosition, gridOrientation);
+            int endHorizontal = endPos.x;
+            int endVertical = endPos.y;
+
+            if (!CanBePlaced(endHorizontal, endVertical))
             {
                 selectedPiece.transform.position = startPosition;
                 if (isInEquipment)
                     puzzle.Shrink();
                 else
-                    grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startX, startY);
+                    grid.SetPuzzle(selectedPiece.GetComponent<Puzzle>(), startHorizontal, startVertical);
                 SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzleFail);
                 puzzle.ActOnPuzzleFailedDrag();
             }
@@ -184,9 +202,9 @@ public class PuzzleDrag : MonoBehaviour
                     isInEquipment = false;
                     equipment.SetTargetSlotAsFree();
                 }
-                grid.SetPuzzle(puzzle, endX, endY);
-                selectedPiece.transform.position = new Vector3(endX * grid.cellSize, endY * grid.cellSize, zPosition);
-                SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzle);
+                grid.SetPuzzle(puzzle, endHorizontal, endVertical);
+                selectedPiece.transform.position = grid.GridToWorldCoords(endHorizontal, endVertical, gridOrientation);
+                SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzle); 
             }
         }
         //Lower layer
@@ -199,13 +217,13 @@ public class PuzzleDrag : MonoBehaviour
         puzzle.ActOnPuzzlePlaced();
     }
 
-    private bool CanBePlaced(int intX, int intY)
-    {
-        //Check if already occupied, Check if the puzzle doesn't fit, Check if out of bounds
-        return grid.GetPuzzleFromGrid(intX, intY) == null
-            && selectedPiece.GetComponent<Puzzle>().FitsAt(intX, intY)
-            && intX >= 0 && intX < grid.GridSizeX
-            && intY >= 0 && intY < grid.GridSizeY;
+    private bool CanBePlaced(int endHorizontal, int endVertical)
+    {           
+            //Check if already occupied, Check if the puzzle doesn't fit, Check if out of bounds
+            return grid.GetPuzzleFromGrid(endHorizontal, endVertical) == null
+                && selectedPiece.GetComponent<Puzzle>().FitsAt(endHorizontal, endVertical)
+                && endHorizontal >= 0 && endHorizontal < grid.GridSizeHorizontal
+                && endVertical >= 0 && endVertical < grid.GridSizeVertical;
     }
 
     private void HandlePieceDragging()
@@ -222,17 +240,29 @@ public class PuzzleDrag : MonoBehaviour
         }
         lastPointerPos = pointerPos;
 
-        Ray ray = Camera.main.ScreenPointToRay(pointerPos);
+        Plane followPlane = gridOrientation == GridOrientation.Wall ? followPlaneA : followPlaneB;
+        Ray ray = Camera.main.ScreenPointToRay(gridOrientation == GridOrientation.Wall ? new Vector3(pointerPos.x, pointerPos.y, zPosition) : pointerPos);
+
         if (followPlane.Raycast(ray, out float distance))
         {
-            Vector3 targetPos = ray.GetPoint(distance);
-            float zOffset = Camera.main.transform.position.z > 0 ? 0.5f : -0.5f;
-            if (!GameManager.Instance.isPerspectiveOnWall)
+            Vector3 mousePosition = ray.GetPoint(distance);
+            Vector3 pos = mousePosition;
+
+            if (gridOrientation == GridOrientation.Floor)
             {
-                Debug.LogWarning("[!] PuzzleDrag: Camera perspective is on floor, CHECK CUSTOM zOffset.");
-                zOffset = offset.z;
+                pos.y = 1.5f;
             }
-            selectedPiece.transform.position = new Vector3(targetPos.x + offset.x, targetPos.y + offset.y, targetPos.z + zOffset);
+
+            // Z offset added so that the piece appears above the floor or wall, other pieces and visual effects
+            // Z offset has to move piece closer to the camera
+            float zOffset = Camera.main.transform.position.z > 0 ? 0.5f : -0.5f;
+            // if (!GameManager.Instance.isPerspectiveOnWall)
+            // {
+            //     Debug.LogWarning("[!] PuzzleDrag: Camera perspective is on floor, CHECK CUSTOM zOffset.");
+            //     zOffset = offset.z;
+            // }
+            selectedPiece.transform.position = new Vector3(pos.x, pos.y, pos.z + zOffset);
+            // selectedPiece.transform.position = new Vector3(mousePosition.x + offset.x, mousePosition.y + offset.y, mousePosition.z + zOffset);
             int intX = Mathf.RoundToInt(selectedPiece.transform.position.x / grid.cellSize);
             int intY = Mathf.RoundToInt(selectedPiece.transform.position.y / grid.cellSize);
             puzzle.ChangeShaderColor(CanBePlaced(intX, intY));

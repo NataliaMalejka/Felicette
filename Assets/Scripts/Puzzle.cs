@@ -28,8 +28,8 @@ public class Puzzle : MonoBehaviour
     [SerializeField] private bool alwaysVisible;
 
     private Grid grid;
-    private int gridSizeX;
-    private int gridSizeY;
+    private int gridSizeHorizontal;
+    private int gridSizeVertical;
     private GameObject player;
     private Vector3 playerPosition;
     private Vector3 puzzlePosition;
@@ -44,8 +44,8 @@ public class Puzzle : MonoBehaviour
         player.GetComponent<Player>().OnPlayerMoved.AddListener(OnPlayerMoved);
         defaultMaterial = spriteRenderer.material;
 
-        gridSizeX = grid.GetGridSizeX();
-        gridSizeY = grid.GetGridSizeY();
+        gridSizeHorizontal = grid.GetGridSizeHorizontal();
+        gridSizeVertical = grid.GetGridSizeVertical();
 
         // TO DO - Is it quicker to create and use an array instead of accessing transform.childCount and GetChild() directly every time?
         children = new GameObject[this.transform.childCount];
@@ -81,8 +81,8 @@ public class Puzzle : MonoBehaviour
             visualEffectFog.gameObject.SetActive(false);
         if (pickUpMaterial != null)
         {
-            pickUpMaterial.SetColor("_glow_color", new Color(0.745f, 0.0078f, 0f, 1f));
-            spriteRenderer.material = pickUpMaterial;
+            // pickUpMaterial.SetColor("_glow_color", new Color(0.745f, 0.0078f, 0f, 1f));
+            // spriteRenderer.material = pickUpMaterial;
 
             SetOrderingLayer("Top");
         }
@@ -111,13 +111,13 @@ public class Puzzle : MonoBehaviour
         }
     }
 
-    public bool FitsAt(int x, int y)
+    public bool FitsAt(int horizontal, int vertical)
     {
         Puzzle neighbor;
         //left
-        if (x >= 1)
+        if (horizontal >= 1)
         {
-            neighbor = grid.GetPuzzleFromGrid(x - 1, y);
+            neighbor = grid.GetPuzzleFromGrid(horizontal - 1, vertical);
             if (neighbor != null)
             {
                 if (!CanConnect(connections[LEFT], neighbor.connections[RIGHT]))
@@ -126,9 +126,9 @@ public class Puzzle : MonoBehaviour
         }
 
         //right
-        if (x <= gridSizeX - 2)
+        if (horizontal <= gridSizeHorizontal - 2)
         {
-            neighbor = grid.GetPuzzleFromGrid(x + 1, y);
+            neighbor = grid.GetPuzzleFromGrid(horizontal + 1, vertical);
             if (neighbor != null)
             {
                 if (!CanConnect(connections[RIGHT], neighbor.connections[LEFT]))
@@ -137,9 +137,9 @@ public class Puzzle : MonoBehaviour
         }
 
         //up
-        if (y <= gridSizeX - 2)
+        if (vertical <= gridSizeVertical - 2)
         {
-            neighbor = grid.GetPuzzleFromGrid(x, y + 1);
+            neighbor = grid.GetPuzzleFromGrid(horizontal, vertical + 1);
             if (neighbor != null)
             {
                 if (!CanConnect(connections[UP], neighbor.connections[DOWN]))
@@ -148,9 +148,9 @@ public class Puzzle : MonoBehaviour
         }
 
         //down
-        if (y >= 1)
+        if (vertical >= 1)
         {
-            neighbor = grid.GetPuzzleFromGrid(x, y - 1);
+            neighbor = grid.GetPuzzleFromGrid(horizontal, vertical - 1);
             if (neighbor != null)
             {
                 if (!CanConnect(connections[DOWN], neighbor.connections[UP]))

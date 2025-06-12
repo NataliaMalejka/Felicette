@@ -44,7 +44,7 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _edge_threshold: -0.2
+    - _edge_threshold: -0.15
     m_Colors:
     - _base_color: {r: 0, g: 0.7433963, b: 0.11952641, a: 0}
     - _glow_color: {r: 0.015, g: 0.604, b: 0.195, a: 1}
