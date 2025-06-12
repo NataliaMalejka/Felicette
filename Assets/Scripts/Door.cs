@@ -9,7 +9,7 @@ public class Door : Interactive //Teleport?
     {
         if (playerCollision)
         {
-            SoundsManager.Instance.PlaySound(SoundsManager.Sounds.OpenDoor);
+            SoundsManager.Instance.PlaySound(SoundsManager.Sounds.Teleportation);
             teleportEffect?.Play();
             if (connectedDoor == null)
             {

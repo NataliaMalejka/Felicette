@@ -46,17 +46,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2752a182e43a614cabae56bd05fdc64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OpenDoor: {fileID: 8300000, guid: a8a6231d45f7a4a44bd731605dc94c7b, type: 3}
-  TimerStop: {fileID: 8300000, guid: a8a6231d45f7a4a44bd731605dc94c7b, type: 3}
-  TakePuzzle: {fileID: 8300000, guid: a8a6231d45f7a4a44bd731605dc94c7b, type: 3}
-  PutPuzzle: {fileID: 8300000, guid: a8a6231d45f7a4a44bd731605dc94c7b, type: 3}
-  TakePuzzleFail: {fileID: 8300000, guid: a8a6231d45f7a4a44bd731605dc94c7b, type: 3}
-  PutPuzzleFail: {fileID: 8300000, guid: a8a6231d45f7a4a44bd731605dc94c7b, type: 3}
+  OpenDoor: {fileID: 0}
+  TimerStop: {fileID: 0}
+  TakePuzzle: {fileID: 8300000, guid: 6b775f58027a9c24cb4e4e15168d66ec, type: 3}
+  PutPuzzle: {fileID: 8300000, guid: 30392091e81857946a7e440658687972, type: 3}
+  TakePuzzleFail: {fileID: 0}
+  PutPuzzleFail: {fileID: 0}
   Error: {fileID: 8300000, guid: a8a6231d45f7a4a44bd731605dc94c7b, type: 3}
-  Finish: {fileID: 8300000, guid: a8a6231d45f7a4a44bd731605dc94c7b, type: 3}
+  Finish: {fileID: 0}
   TimesUp: {fileID: 8300000, guid: a8a6231d45f7a4a44bd731605dc94c7b, type: 3}
   ChangePerspective: {fileID: 8300000, guid: f7b98a9cca0da9a438669f01fbbb4ec2, type: 3}
-  Teleportation: {fileID: 8300000, guid: a8a6231d45f7a4a44bd731605dc94c7b, type: 3}
+  Teleportation: {fileID: 0}
   BackgroundMusic_A: {fileID: 8300000, guid: 41880332f805a5d439138fe8c4770eae, type: 3}
   BackgroundMusic_B: {fileID: 0}
   musicAudioSource: {fileID: 9113598039497729546}

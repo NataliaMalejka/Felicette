@@ -18,6 +18,7 @@ public class SoundsManager : MonoBehaviour
     // walking, entry to level, transition to different view, interaction, etc.
     [SerializeField] AudioClip BackgroundMusic_A;
     [SerializeField] AudioClip BackgroundMusic_B;
+    [SerializeField] AudioClip RocketLaunch;
 
     private static SoundsManager instance;
     public static SoundsManager Instance
@@ -68,7 +69,8 @@ public class SoundsManager : MonoBehaviour
         Finish,
         TimesUp,
         ChangePerspective,
-        Teleportation
+        Teleportation,
+        RocketLaunch
     }
 
     public enum BackgroundMusic
@@ -184,6 +186,10 @@ public class SoundsManager : MonoBehaviour
         case Sounds.Teleportation:
             if (Teleportation != null)
                 sfxAudioSource.PlayOneShot(Teleportation);
+            break;
+        case Sounds.RocketLaunch:
+            if (RocketLaunch != null)
+                sfxAudioSource.PlayOneShot(RocketLaunch);
             break;
 
         default:

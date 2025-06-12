@@ -19,8 +19,8 @@ public class Rocket : Interactive
             trailEffect?.Play();
             player.HideSprite();
             flyAnimator?.SetTrigger("Fly");
+            SoundsManager.Instance.PlaySound(SoundsManager.Sounds.RocketLaunch);
             GameManager.Instance.ActOnGameWon();
-            SoundsManager.Instance.PlaySound(SoundsManager.Sounds.Finish);
         }
     }
 
