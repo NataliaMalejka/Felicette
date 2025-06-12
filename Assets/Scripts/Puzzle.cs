@@ -81,8 +81,8 @@ public class Puzzle : MonoBehaviour
             visualEffectFog.gameObject.SetActive(false);
         if (pickUpMaterial != null)
         {
-            // pickUpMaterial.SetColor("_glow_color", new Color(0.745f, 0.0078f, 0f, 1f));
-            // spriteRenderer.material = pickUpMaterial;
+            pickUpMaterial.SetColor("_SolidOutline", new Color(0.745f, 0.0078f, 0f, 1f));
+            spriteRenderer.material = pickUpMaterial;
 
             SetOrderingLayer("Top");
         }
@@ -94,11 +94,8 @@ public class Puzzle : MonoBehaviour
             animator.SetTrigger("Shake");
     }
 
-    private void SetOrderingLayer(string layer, GameObject obj = null)
+    private void SetOrderingLayer(string layer)
     {
-        if (obj == null)
-            obj = gameObject;
-
         if (layer != "Top" && layer != "Default")
         {
             Debug.LogError("Puzzle.SetOrderingLayer: Invalid layer name. Use 'Top' or 'Default'");
@@ -207,11 +204,11 @@ public class Puzzle : MonoBehaviour
         //can be optimized
         if (isPlacable)
         {
-            pickUpMaterial.SetColor("_glow_color", new Color(0.015f, 0.604f, 0.195f, 1f));
+            pickUpMaterial.SetColor("_SolidOutline", new Color(0.015f, 0.604f, 0.195f, 1f));
         }
         else
         {
-            pickUpMaterial.SetColor("_glow_color", new Color(0.745f, 0.0078f, 0f, 1f));
+            pickUpMaterial.SetColor("_SolidOutline", new Color(0.745f, 0.0078f, 0f, 1f));
         }
     }
 }

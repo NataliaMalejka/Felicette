@@ -48,6 +48,9 @@ TagManager:
   - name: Fog
     uniqueID: 2721470145
     locked: 0
+  - name: Top
+    uniqueID: 2584821863
+    locked: 0
   m_RenderingLayers:
   - Default
   - Light Layer 1
