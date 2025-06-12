@@ -64,8 +64,9 @@ public class GameManager : MonoBehaviour
         {
             gameState = GameState.Pause;
             SoundsManager.Instance.PlaySound(SoundsManager.Sounds.TimerStop);
-            uiLevelController.ShowGameOverPanel();
+            uiLevelController.ShowGameFinishedPanel(false);
             OnGamePaused?.Invoke();
+            Debug.LogWarning("Not implemented yet: PauseGame() in GameManager");
         }
     }
 
@@ -75,7 +76,8 @@ public class GameManager : MonoBehaviour
         {
             gameState = GameState.GameActive;
             OnGameResumed?.Invoke();
-            uiLevelController.ShowGameOverPanel(false);
+            uiLevelController.ShowGameFinishedPanel(false);
+            Debug.LogWarning("Not implemented yet: ResumeGame() in GameManager");
         }
     }
 
@@ -86,7 +88,7 @@ public class GameManager : MonoBehaviour
             gameState = GameState.GameLost;
             OnGameLost?.Invoke();
             SoundsManager.Instance.PlaySound(SoundsManager.Sounds.TimerStop);
-            uiLevelController.ShowGameOverPanel();
+            uiLevelController.ShowGameFinishedPanel(false, maxTime <= time);
         }
     }
 
@@ -97,7 +99,7 @@ public class GameManager : MonoBehaviour
             gameState = GameState.GameWon;
             OnGameWon?.Invoke();
             LevelManager.Instance.BeginLoadingScene(LevelManager.Instance.GetNextLevelId());
-            uiLevelController.ShowWinPanel(time);
+            uiLevelController.ShowGameFinishedPanel(true);
         }
     }
 

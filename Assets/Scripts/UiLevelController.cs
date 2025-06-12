@@ -5,8 +5,7 @@ using UnityEngine.UI;
 public class UiLevelController : MonoBehaviour
 {
     [SerializeField] private GameObject generalUi;
-    [SerializeField] private GameObject gameOverPanel; //TO DO - Or pause panel?
-    [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject gameFinishedPanel;
     [SerializeField] private GameObject androidUi;
     [SerializeField] private TextMeshProUGUI timeText;
 
@@ -18,22 +17,18 @@ public class UiLevelController : MonoBehaviour
     
     private void Start()
     {
-        if (gameOverPanel != null)
+        if (gameFinishedPanel != null)
         {
-            gameOverPanel.SetActive(false);
-        }
-        if (winPanel != null)
-        {
-            winPanel.SetActive(false);
+            gameFinishedPanel.SetActive(false);
         }
         if (generalUi != null)
-        {
-            generalUi.SetActive(true);
-        }
+            {
+                generalUi.SetActive(true);
+            }
         if (equipmentPanel != null)
         {
-            equipmentPanel.SetActive(true);
             equipmentPanel.GetComponent<EquipmentManager>().SetGraphicRaycaster(graphicRaycaster);
+            equipmentPanel.SetActive(false); //TO DO - Decide what to do with Equipment System
         }
         if (Application.platform == RuntimePlatform.Android && androidUi != null)
         {
@@ -41,23 +36,19 @@ public class UiLevelController : MonoBehaviour
         }
     }
 
-    public void ShowGameOverPanel(bool hide = false)
+    public void ShowGameFinishedPanel(bool won, bool timeRanOut = false)
     {
         timeText.text = "";
-        gameOverPanel.SetActive(!hide);
+        gameFinishedPanel.SetActive(true);
+        gameFinishedPanel.GetComponent<UiGamefFinishedController>().SetGameFinished(won, timeRanOut);
     }
 
     public void UpdateTime(float time, float maxTime)
     {
-        timeText.text = string.Format("Time: {0} / {1}",
-            Mathf.Clamp(Mathf.CeilToInt(time), 0, int.MaxValue).ToString(),
+        timeText.text = string.Format("{0} / {1}",
+            Mathf.Clamp(Mathf.CeilToInt(maxTime-time), 0, int.MaxValue).ToString(),
             Mathf.Clamp(Mathf.CeilToInt(maxTime), 0, int.MaxValue).ToString());
         UpdateTankSlider(time, maxTime);
-    }
-
-    public void ShowWinPanel(float timeLeft)
-    {
-        winPanel.SetActive(true);
     }
 
     public void UpdateTankSlider(float value, float maxValue)

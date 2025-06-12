@@ -7,7 +7,6 @@ public class Rocket : Interactive
     {
         if (playerCollision)
         {
-            Debug.Log(playerCollision);
             GameManager.Instance.ActOnGameWon();
             SoundsManager.Instance.PlaySound(SoundsManager.Sounds.Finish);
         }
