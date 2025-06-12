@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.PlayerSettings;
+using UnityEngine.UIElements;
 
 public class PuzzleDrag : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class PuzzleDrag : MonoBehaviour
     private Vector3 endPosition;
     private Puzzle puzzle;
     private Grid grid;
+    [SerializeField] private GridOrientation gridOrientation;
     private GameObject player;
 
     private int startHorizontal;
@@ -105,18 +108,23 @@ public class PuzzleDrag : MonoBehaviour
                 //startHorizontal = Mathf.RoundToInt(startPosition.x / grid.cellSize);
                 //startVertical = Mathf.RoundToInt(startPosition.y / grid.cellSize);
 
-                Vector2Int pos = grid.WorldToGridCoords(startPosition);
+                Vector2Int pos = grid.WorldToGridCoords(startPosition, gridOrientation);
                 startHorizontal = pos.x;
                 startVertical = pos.y;
 
+                Debug.Log(startHorizontal + ", " + startVertical);
+
                 //Get the puzzle and remove it from the grid for now
                 puzzle = grid.GetPuzzleFromGrid(startHorizontal, startVertical );
+
                 grid.SetPuzzle(null, startHorizontal, startVertical);
+
                 puzzle.isPlaced = false;
             }
-
+            //zmienic na y/z
             if ((puzzle.portable && (int)player.transform.position.x != (int)puzzle.transform.position.x)
-                || (puzzle.portable && (int)player.transform.position.y != (int)puzzle.transform.position.y))
+                || (puzzle.portable && gridOrientation == GridOrientation.Wall && (int)player.transform.position.y != (int)puzzle.transform.position.y)
+                || (puzzle.portable && gridOrientation == GridOrientation.Floor && (int)player.transform.position.z != (int)puzzle.transform.position.z))
             {
                 isHolding = true;
                 SoundsManager.Instance.PlaySound(SoundsManager.Sounds.TakePuzzle);
@@ -146,7 +154,11 @@ public class PuzzleDrag : MonoBehaviour
             return;
         }
 
+        Debug.Log("AttemptToPutPiece");
+
         endPosition = selectedPiece.transform.position;
+        Debug.Log(endPosition + " endPosition");
+
 
         //CHECK UI FIRST
         if(equipment.CheckIfPointHoversOverSlot(selectedPiece.transform.position, checkForEmpty: true, previousTargetSlot: isInEquipment))
@@ -161,9 +173,11 @@ public class PuzzleDrag : MonoBehaviour
             //int endX = Mathf.RoundToInt(endPosition.x / grid.cellSize);
             //int endY = Mathf.RoundToInt(endPosition.y / grid.cellSize);
 
-            Vector2Int endPos = grid.WorldToGridCoords(endPosition);
+            Vector2Int endPos = grid.WorldToGridCoords(endPosition, gridOrientation);
             int endHorizontal = endPos.x;
             int endVertical = endPos.y;
+
+            Debug.Log(endHorizontal + " " + endVertical);
 
             //Check if already occupied, Check if the puzzle doesn't fit, Check if out of bounds
             if (grid.GetPuzzleFromGrid(endHorizontal, endVertical) != null
@@ -187,8 +201,12 @@ public class PuzzleDrag : MonoBehaviour
                     equipment.SetTargetSlotAsFree();
                 }
                 grid.SetPuzzle(puzzle, endHorizontal, endVertical);
+                Debug.Log(endHorizontal + ", " + endVertical);
                 //selectedPiece.transform.position = new Vector3(endHorizontal * grid.cellSize, endVertical * grid.cellSize, zPosition);
-                selectedPiece.transform.position = grid.GridToWorldCoords(endHorizontal, endVertical, selectedPiece.transform.position.y);
+                selectedPiece.transform.position = grid.GridToWorldCoords(endHorizontal, endVertical, gridOrientation);
+
+                Debug.Log(selectedPiece.transform.position);
+
                 SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzle); 
             }
         }
@@ -212,14 +230,38 @@ public class PuzzleDrag : MonoBehaviour
                 return;
             }
             // TO DO (?) - 2D -> //Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-            Ray ray = Camera.main.ScreenPointToRay(new Vector3(pointerPos.x, pointerPos.y, zPosition));
-            Plane plane = new Plane(Vector3.forward, new Vector3(0, 0, zPosition)); 
+            Ray ray;
+            Plane plane;
+            if (gridOrientation == GridOrientation.Wall)
+            {
+                ray = Camera.main.ScreenPointToRay(new Vector3(pointerPos.x, pointerPos.y, zPosition));
+                plane = new Plane(Vector3.forward, new Vector3(0, 0, zPosition));
+            }
+            else
+            {
+                ray = Camera.main.ScreenPointToRay(pointerPos);
+                plane = new Plane(Vector3.up, new Vector3(0, this.gameObject.transform.position.y, 0));
+            }
             float distance;
 
             if (plane.Raycast(ray, out distance))
             {
                 Vector3 mousePosition = ray.GetPoint(distance);
-                selectedPiece.transform.position = mousePosition + offset;
+
+                Vector3 pos = mousePosition /*+ offset*/;
+
+                //if (gridOrientation == GridOrientation.Floor)
+                //    pos.y = this.gameObject.transform.position.y;
+
+                if (gridOrientation == GridOrientation.Floor)
+                {
+                    pos.y = 1.5f;
+                }
+
+                selectedPiece.transform.position = pos;
+
+                Debug.Log(pos);
+
             }
         }
     }

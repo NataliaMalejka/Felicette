@@ -1,4 +1,6 @@
 using UnityEngine;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
+using static UnityEngine.UI.Image;
 
 public enum GridOrientation
 {
@@ -62,7 +64,7 @@ public class Grid : MonoBehaviour
         Puzzle[] pieces = puzzleMap.GetComponentsInChildren<Puzzle>();
         foreach (Puzzle piece in pieces)
         {
-            Vector2Int pos = WorldToGridCoords(piece.transform.position);
+            Vector2Int pos = WorldToGridCoords(piece.transform.position, gridOrientation);
             if (IsValidGridPosition(pos.x, pos.y))
             {
                 puzzles[pos.x, pos.y] = piece;
@@ -71,13 +73,29 @@ public class Grid : MonoBehaviour
 
     }
 
-    public Vector2Int WorldToGridCoords(Vector3 worldPosition)
+    public Vector2Int WorldToGridCoords(Vector3 worldPosition, GridOrientation grid)
     {
-        int vertical = gridOrientation == GridOrientation.Wall
-            ? Mathf.RoundToInt(worldPosition.y / cellSize)
-            : Mathf.RoundToInt(worldPosition.z / cellSize);
+        //int vertical = gridOrientation == GridOrientation.Wall
+        //    ? Mathf.RoundToInt(worldPosition.y / cellSize)
+        //    : Mathf.RoundToInt(worldPosition.z / cellSize);
 
-        int horizontal = Mathf.RoundToInt(worldPosition.x / cellSize);
+        //int horizontal = Mathf.RoundToInt(worldPosition.x / cellSize);
+        //return new Vector2Int(horizontal, vertical);
+
+        int horizontal, vertical;
+
+        if (grid == GridOrientation.Wall)
+        {
+            horizontal = Mathf.RoundToInt(worldPosition.x  / cellSize);
+            vertical = Mathf.RoundToInt(worldPosition.y  / cellSize);
+        }
+        else 
+        {
+            horizontal = Mathf.RoundToInt(worldPosition.x  / cellSize);
+            vertical = Mathf.RoundToInt(worldPosition.z / cellSize); 
+
+        }
+
         return new Vector2Int(horizontal, vertical);
     }
 
@@ -110,21 +128,31 @@ public class Grid : MonoBehaviour
 
         int j = (int)(vertical / cellSize);
         if (j < 0 || j >= gridSizeHorizontal) return null;
-
         return puzzles[i, j];
     }
 
-    public Vector3 GridToWorldCoords(int x, int vertical, float originalY = 0f)
+    public Vector3 GridToWorldCoords(float horizontal, float vertical, GridOrientation grid)
     {
-        return gridOrientation == GridOrientation.Wall
-            ? new Vector3(x * cellSize, vertical * cellSize, 0f)
-            : new Vector3(x * cellSize, originalY, vertical * cellSize);
+        //return gridOrientation == GridOrientation.Wall
+        //    ? new Vector3(x * cellSize, vertical * cellSize, 0f)
+        //    : new Vector3(x * cellSize, originalY, vertical * cellSize);
+
+        if (grid == GridOrientation.Wall)
+        {
+            float x =  horizontal * cellSize;
+            float y =  vertical * cellSize;
+            return new Vector3(x, y, 0f);
+        }
+        else 
+        {
+            float x =  horizontal * cellSize;
+            float z =  vertical * cellSize + 0.5f; 
+            return new Vector3(x, 1.5f, z);
+        }
     }
 
     public void SetPuzzle(Puzzle puzzle, int horizontal, int vertical)
     {
-        Debug.Log(gridSizeHorizontal);
-        Debug.Log(gridSizeVertical);
 
         if (IsValidGridPosition(horizontal, vertical))
         {

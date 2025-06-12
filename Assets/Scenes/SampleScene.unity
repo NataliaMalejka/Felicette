@@ -326,6 +326,10 @@ PrefabInstance:
       propertyPath: gridSizeHorizontal
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5529027535076627916, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
+      propertyPath: gridOrientation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5782905039794634917, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
       propertyPath: m_Name
       value: Map
@@ -376,6 +380,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8067827903748893943, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8760397426835204993, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8760397426835204993, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
