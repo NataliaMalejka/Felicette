@@ -4,12 +4,12 @@ using UnityEngine;
 public class UiMobileControls : MonoBehaviour
 {
     [SerializeField] MobileButton interactButton;
-    [SerializeField] MobileButton pauseButton;
+    [SerializeField] MobileButton restartButton;
     private GameObject player;
     void Start()
     {
         interactButton.OnButtonReleased.AddListener(onButtonInteract);
-        // pauseButton.OnButtonPressed.AddListener(GameManager.Instance.PauseGame);
+        restartButton.OnButtonReleased.AddListener(onButtonRestart);
         player = GameObject.FindWithTag("Player");
         player.GetComponent<Player>().OnInteractionPossibilityChanged.AddListener(interactButton.OnInteractionPossibilityChanged);
     }
@@ -17,5 +17,10 @@ public class UiMobileControls : MonoBehaviour
     public void onButtonInteract()
     {
         player.GetComponent<Player>().OnInteractFromUI();
+    }
+
+    public void onButtonRestart()
+    {
+        player.GetComponent<Player>().OnRestartFromUI();
     }
 }

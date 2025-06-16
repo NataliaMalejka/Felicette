@@ -35,6 +35,13 @@ public class Player : MonoBehaviour
         HandleInteractInput();
     }
 
+    void OnRestart(InputValue value)
+    {
+        if (!value.isPressed)
+            return;
+        HandleRestartInput();
+    }
+
     public void SetInteractionPossibility(bool canInteract)
     {
         OnInteractionPossibilityChanged?.Invoke(canInteract);
@@ -62,6 +69,19 @@ public class Player : MonoBehaviour
     public void OnInteractFromUI()
     {
         HandleInteractInput();
+    }
+
+    public void OnRestartFromUI()
+    {
+        HandleRestartInput();
+    }
+
+    private void HandleRestartInput()
+    {
+        if (GameManager.Instance.State == GameState.GameActive)
+        {
+            GameManager.Instance.RestartLevel();
+        }
     }
 
     private void HandleInteractInput()

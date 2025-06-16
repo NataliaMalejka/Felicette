@@ -53,9 +53,15 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        gameState = GameState.GameActive;
+        gameState = GameState.Start;
         isPerspectiveOnWall = true;
         time = 0f;
+
+        if (LevelManager.Instance == null)
+        {
+            Debug.LogError("LevelManager instance is not set. Please ensure LevelManager is initialized. Start from Menu Level");
+            return;
+        }
     }
 
     public void PauseGame()
@@ -78,6 +84,15 @@ public class GameManager : MonoBehaviour
             OnGameResumed?.Invoke();
             uiLevelController.ShowGameFinishedPanel(false);
             Debug.LogWarning("Not implemented yet: ResumeGame() in GameManager");
+        }
+    }
+
+    public void RestartLevel()
+    {
+        if (gameState == GameState.GameActive && gameState != GameState.GameLost && gameState != GameState.GameWon)
+        {
+            gameState = GameState.Pause;
+            LevelManager.Instance.LoadCurrentLevel(true);
         }
     }
 
