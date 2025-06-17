@@ -14,6 +14,10 @@ public class Player : MonoBehaviour
     public UnityEvent<bool> OnPlayerDrag;
     public UnityEvent<Vector3> OnPlayerMoved;
     public UnityEvent<bool> OnInteractionPossibilityChanged;
+
+    public UnityEvent<Sprite, Sprite, float> OnPuzzlePickedUp;
+    public UnityEvent OnPuzzlePutDown;
+
     private bool isDragging = false;
     private PlayerInput inputComponent;
     private BoxCollider boxCollider;
@@ -45,6 +49,16 @@ public class Player : MonoBehaviour
     public void SetInteractionPossibility(bool canInteract)
     {
         OnInteractionPossibilityChanged?.Invoke(canInteract);
+    }
+
+    public void TriggerOnPuzzlePickedUp(Sprite previewSprite, Sprite previewChildSprite = null, float rotation = 0f)
+    {
+        OnPuzzlePickedUp?.Invoke(previewSprite, previewChildSprite, rotation);
+    }
+
+    public void TriggerOnPuzzlePutDown()
+    {
+        OnPuzzlePutDown?.Invoke();
     }
 
     public void TogglePlayerInput()

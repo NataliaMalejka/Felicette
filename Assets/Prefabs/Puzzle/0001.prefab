@@ -430,6 +430,8 @@ MonoBehaviour:
   pickUpMaterial: {fileID: 2100000, guid: aa7583a274de73446aee3acf5f5f4f0f, type: 2}
   spriteRenderer: {fileID: 8548699233991542503}
   animator: {fileID: 628604161767339571}
+  shapeImage: {fileID: 8548699233991542503}
+  objectImage: {fileID: 0}
   portable: 1
   alwaysVisible: 0
   isPlaced: 0

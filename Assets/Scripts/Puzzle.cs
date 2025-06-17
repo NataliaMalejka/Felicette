@@ -22,6 +22,10 @@ public class Puzzle : MonoBehaviour
     [SerializeField] private Material pickUpMaterial;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer shapeImage = null;
+    [SerializeField] private Sprite objectImage = null;
+    public Sprite ShapeImage => shapeImage.sprite;
+    public Sprite ObjectImage => objectImage;
     private Material defaultMaterial;
 
     [SerializeField] public bool portable;
@@ -36,6 +40,9 @@ public class Puzzle : MonoBehaviour
     private GameObject[] children;
 
     public bool isPlaced = true;
+
+    private Color redOutlineColor = new Color(0.745f, 0.0078f, 0f, 0.8f);
+    private Color greenOutlineColor = new Color(0.015f, 0.604f, 0.195f, 0.8f);
 
     void Start()
     {
@@ -81,7 +88,7 @@ public class Puzzle : MonoBehaviour
             visualEffectFog.gameObject.SetActive(false);
         if (pickUpMaterial != null)
         {
-            pickUpMaterial.SetColor("_SolidOutline", new Color(0.745f, 0.0078f, 0f, 1f));
+            pickUpMaterial.SetColor("_SolidOutline", redOutlineColor);
             spriteRenderer.material = pickUpMaterial;
 
             SetOrderingLayer("Top");
@@ -204,11 +211,11 @@ public class Puzzle : MonoBehaviour
         //can be optimized
         if (isPlacable)
         {
-            pickUpMaterial.SetColor("_SolidOutline", new Color(0.015f, 0.604f, 0.195f, 1f));
+            pickUpMaterial.SetColor("_SolidOutline", greenOutlineColor);
         }
         else
         {
-            pickUpMaterial.SetColor("_SolidOutline", new Color(0.745f, 0.0078f, 0f, 1f));
+            pickUpMaterial.SetColor("_SolidOutline", redOutlineColor);
         }
     }
 }

@@ -138,7 +138,10 @@ public class PuzzleDrag : MonoBehaviour
                 isHolding = true;
                 SoundsManager.Instance.PlaySound(SoundsManager.Sounds.TakePuzzle);
                 puzzle.ActOnPuzzlePicked();
-
+                player.GetComponent<Player>().TriggerOnPuzzlePickedUp(
+                    selectedPiece.GetComponent<Puzzle>().ShapeImage,
+                    selectedPiece.GetComponent<Puzzle>().ObjectImage,
+                    selectedPiece.transform.rotation.eulerAngles.z);
                 // //Select Piece Image
                 // pieceImage = selectedPiece.transform.GetChild(0).gameObject;
                 // //Higher layer
@@ -204,7 +207,7 @@ public class PuzzleDrag : MonoBehaviour
                 }
                 grid.SetPuzzle(puzzle, endHorizontal, endVertical);
                 selectedPiece.transform.position = grid.GridToWorldCoords(endHorizontal, endVertical, gridOrientation);
-                SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzle); 
+                SoundsManager.Instance.PlaySound(SoundsManager.Sounds.PutPuzzle);
             }
         }
         //Lower layer
@@ -215,6 +218,7 @@ public class PuzzleDrag : MonoBehaviour
         selectedPiece = null;
         // pieceImage = null;    
         puzzle.ActOnPuzzlePlaced();
+        player.GetComponent<Player>().TriggerOnPuzzlePutDown();
     }
 
     private bool CanBePlaced(int endHorizontal, int endVertical)
