@@ -7,6 +7,8 @@ public class LevelSelector : MonoBehaviour
     [SerializeField] private List<GameObject> panels = new List<GameObject>();
     [SerializeField] private GameObject menuPanel;
     [SerializeField] private GameObject levelSelectionPanel;
+    [SerializeField] private GameObject logoText;
+    [SerializeField] private GameObject levelSelectionText;
 
     private int currentPanelIdx = 0;
 
@@ -34,6 +36,8 @@ public class LevelSelector : MonoBehaviour
         if (panels.Count > 0)
         {
             menuPanel.SetActive(false);
+            logoText.SetActive(false);
+            levelSelectionText.SetActive(true);
             levelSelectionPanel.SetActive(true);
             foreach (GameObject panel in panels)
             {
@@ -51,6 +55,8 @@ public class LevelSelector : MonoBehaviour
             panel.SetActive(false);
         }
         menuPanel.SetActive(true);
+        logoText.SetActive(true);
+        levelSelectionText.SetActive(false);
         levelSelectionPanel.SetActive(false);
         currentPanelIdx = 0;
     }

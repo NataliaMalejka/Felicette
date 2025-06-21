@@ -398,13 +398,13 @@ TextureImporter:
       name: button_pushed
       rect:
         serializedVersion: 2
-        x: 1035
-        y: 2590
-        width: 934
-        height: 450
+        x: 1052
+        y: 2622
+        width: 877
+        height: 395
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 169, y: 161, z: 195, w: 158}
+      border: {x: 147, y: 151, z: 161, w: 154}
       customData: 
       outline: []
       physicsShape: []
@@ -486,10 +486,10 @@ TextureImporter:
       name: button_active
       rect:
         serializedVersion: 2
-        x: 31
-        y: 2201
-        width: 884
-        height: 402
+        x: 30
+        y: 2206
+        width: 877
+        height: 395
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 151, y: 149, z: 157, w: 151}
@@ -926,7 +926,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: da8a2e774af2d32409abf2155576c4a4
     internalID: 0
     vertices: []
     indices: 
