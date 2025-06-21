@@ -1,17 +1,33 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelSelector : MonoBehaviour
 {
     [SerializeField] private List<GameObject> panels = new List<GameObject>();
     [SerializeField] private GameObject menuPanel;
     [SerializeField] private GameObject levelSelectionPanel;
+
     private int currentPanelIdx = 0;
 
     public void LoadLevel(int level)
     {
-        LevelManager.Instance.LoadLevel(level, true);
+        LevelManager.Instance.LoadLevel(LevelManager.Instance.FirstLevelSceneIndex + level, true);
     }
+
+    public void LoadTutorial()
+    {
+        LevelManager.Instance.LoadTutorial(true);
+    }
+    public void LoadMenu()
+    {
+        LevelManager.Instance.LoadMenu(true);
+    }
+    public void GameQuit()
+    {
+        LevelManager.Instance.ExitGame();
+    }
+
 
     public void GoFromMenuToLevelSelection()
     {

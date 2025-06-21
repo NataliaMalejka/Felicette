@@ -4,6 +4,19 @@ using System.Collections;
 
 public class LevelManager : MonoBehaviour
 {
+    [Tooltip("The index of the main menu scene in the build settings.")]
+    [SerializeField]
+    private int mainMenuSceneIndex = 0;
+
+    [Tooltip("The index of the tutorial level scene in the build settings.")]
+    [SerializeField]
+    private int tutorialLevelSceneIndex = 1;
+
+    [Tooltip("The index of the first level scene in the build settings. Next indexes must be used for subsequent levels.")]
+    [SerializeField]
+    private int firstLevelSceneIndex = 2;
+    public int FirstLevelSceneIndex => firstLevelSceneIndex;
+
     private AsyncOperation asyncLoad;
     private Coroutine loadSceneCoroutine = null;
     private static LevelManager instance;
@@ -30,17 +43,27 @@ public class LevelManager : MonoBehaviour
 
     public void LoadFirstLevel()
     {
-        LoadLevel(1, true);
+        LoadLevel(firstLevelSceneIndex, true);
+    }
+
+    public void LoadCurrentLevel(bool forceReload = false)
+    {
+        LoadLevel(SceneManager.GetActiveScene().buildIndex, forceReload);
+    }
+
+    public void LoadMenu(bool forceReload = false)
+    {
+        LoadLevel(mainMenuSceneIndex, forceReload);
+    }
+
+    public void LoadTutorial(bool forceReload = false)
+    {
+        LoadLevel(tutorialLevelSceneIndex, forceReload);
     }
 
     public void LoadLevel(int level, bool forceReload = false)
     {
-        if (loadSceneCoroutine != null && !forceReload)
-        {
-            return;
-        }
-        loadSceneCoroutine = null;
-        asyncLoad = null;
+        EnsureForcedLoad(forceReload);
         if (level < 0 || level >= SceneManager.sceneCountInBuildSettings)
         {
             Debug.LogWarning($"Scene with index {level} does not exist. There is {SceneManager.sceneCountInBuildSettings} scenes total");
@@ -49,38 +72,15 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(level, LoadSceneMode.Single);
     }
 
-    public void LoadCurrentLevel(bool forceReload = false)
-    {
-        if (loadSceneCoroutine != null && !forceReload)
-        {
-            return;
-        }
-        loadSceneCoroutine = null;
-        asyncLoad = null;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void LoadMenu(bool forceReload = false)
-    {
-        if (loadSceneCoroutine != null && !forceReload)
-        {
-            return;
-        }
-        loadSceneCoroutine = null;
-        asyncLoad = null;
-        SceneManager.LoadScene(0);
-    }
-
     public int GetNextLevelId()
     {
         int nextLevel = SceneManager.GetActiveScene().buildIndex + 1;
         if (nextLevel >= SceneManager.sceneCountInBuildSettings)
         {
-            return 0; // No more levels available, return to menu
+            return mainMenuSceneIndex; // No more levels available, return to menu
         }
         return nextLevel;
     }
-    
 
     public void BeginLoadingScene(int level)
     {
@@ -108,6 +108,16 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Scene loaded and ready to activate.");
     }
 
+    private void EnsureForcedLoad(bool forceReload)
+    {
+        if (loadSceneCoroutine != null && !forceReload)
+        {
+            return;
+        }
+        loadSceneCoroutine = null;
+        asyncLoad = null;
+    }
+
     public void ActivateScene()
     {
         if (asyncLoad != null)
@@ -130,5 +140,8 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Log("Quitting game");
         Application.Quit();
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #endif
     }
 }
