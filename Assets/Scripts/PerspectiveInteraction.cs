@@ -1,4 +1,5 @@
 using UnityEngine.Events;
+using UnityEngine;
 public class PerspectiveInteraction : Interactive
 {
     public UnityEvent OnPerspectiveInteraction;
@@ -28,6 +29,7 @@ public class PerspectiveInteraction : Interactive
     {
         if (playerCollision)
         {
+            Debug.Log("Perspective interaction triggered, component: " + gameObject.name);
             OnPerspectiveInteraction?.Invoke();
         }
     }
