@@ -1,9 +1,16 @@
 using UnityEngine;
 
+public enum InteractiveType
+{
+    Gravity,
+    Other
+}
+
 public abstract class Interactive : MonoBehaviour
 {
     protected Player player;
     protected bool playerCollision = false;
+    protected InteractiveType interactiveType = InteractiveType.Other;
 
     protected virtual void Start()
     {
@@ -11,14 +18,16 @@ public abstract class Interactive : MonoBehaviour
         player.OnPlayerInteraction.AddListener(OnInteract);
     }
 
-    void OnEnable() {
+    protected virtual void OnEnable()
+    {
         if (player == null)
             return;
         player.OnPlayerInteraction.RemoveListener(OnInteract);
         player.OnPlayerInteraction.AddListener(OnInteract);
     }
 
-    void OnDisable() {
+    protected virtual void OnDisable()
+    {
         if (player == null)
             return;
         player.OnPlayerInteraction.RemoveListener(OnInteract);
@@ -34,22 +43,22 @@ public abstract class Interactive : MonoBehaviour
     protected abstract void ActOnInteraction();
     protected abstract void ActOnCollision();
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.transform.CompareTag("Player"))
         {
             playerCollision = true;
-            player.SetInteractionPossibility(true);
+            player.SetInteractionPossibility(true, interactiveType);
             ActOnCollision();
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if (other.gameObject.transform.CompareTag("Player"))
         {
             playerCollision = false;
-            player.SetInteractionPossibility(false);
+            player.SetInteractionPossibility(false, interactiveType);
         }
     }
 }

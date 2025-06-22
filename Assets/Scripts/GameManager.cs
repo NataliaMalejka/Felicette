@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
 
         if (LevelManager.Instance == null)
         {
-            Debug.LogError("LevelManager instance is not set. Please ensure LevelManager is initialized. Start from Menu Level");
+            Debug.LogWarning("LevelManager instance is not set. Please ensure LevelManager is initialized. Start from Menu Level");
             return;
         }
     }

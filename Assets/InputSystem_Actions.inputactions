@@ -51,10 +51,19 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Gravity",
+                    "type": "Button",
+                    "id": "a9a715a4-1fd9-4cf0-9441-9801759a12f0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Crouch",
                     "type": "Button",
                     "id": "27c5f898-bc57-4ee1-8800-db469aca5fe3",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -460,17 +469,6 @@
                 },
                 {
                     "name": "",
-                    "id": "9f1b76c7-481b-430d-bc0a-5aa813bc0205",
-                    "path": "<Touchscreen>/Press",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Touch",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "cf871dd4-c16e-40de-9a9a-273a0d1117e6",
                     "path": "<Keyboard>/r",
                     "interactions": "",
@@ -482,12 +480,12 @@
                 },
                 {
                     "name": "",
-                    "id": "f28ebbfe-6082-46bd-919e-b3c6d2972ccc",
-                    "path": "<Touchscreen>/Press",
+                    "id": "54a72367-5738-4ff6-9b20-fe7ed32df6b9",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Touch",
-                    "action": "Restart",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Gravity",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -201,7 +201,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.8
+      m_SerializableObject: 0.4
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -2212,7 +2212,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.OrientedBox, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"center":{"x":0.0,"y":0.0,"z":-0.10000000149011612},"angles":{"x":0.0,"y":0.0,"z":0.0},"size":{"x":0.4000000059604645,"y":0.4000000059604645,"z":0.10000000149011612}}'
+      m_SerializableObject: '{"center":{"x":0.0,"y":0.0,"z":-0.10000000149011612},"angles":{"x":0.0,"y":0.0,"z":0.0},"size":{"x":0.30000001192092898,"y":0.30000001192092898,"z":0.10000000149011612}}'
     m_Space: 0
   m_Property:
     name: Box
@@ -4526,7 +4526,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.8
+      m_SerializableObject: 0.4
     m_Space: -1
   m_Property:
     name: o

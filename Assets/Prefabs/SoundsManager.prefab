@@ -56,9 +56,10 @@ MonoBehaviour:
   Finish: {fileID: 0}
   TimesUp: {fileID: 8300000, guid: a8a6231d45f7a4a44bd731605dc94c7b, type: 3}
   ChangePerspective: {fileID: 8300000, guid: f7b98a9cca0da9a438669f01fbbb4ec2, type: 3}
-  Teleportation: {fileID: 0}
+  Teleportation: {fileID: 8300000, guid: d2245e69764b9f741a8b5593e3b869a8, type: 3}
   BackgroundMusic_A: {fileID: 8300000, guid: 41880332f805a5d439138fe8c4770eae, type: 3}
   BackgroundMusic_B: {fileID: 0}
+  RocketLaunch: {fileID: 8300000, guid: f08da9c2a4a15a144bff864140c1dda8, type: 3}
   musicAudioSource: {fileID: 9113598039497729546}
   sfxAudioSource: {fileID: 7722465463492087183}
 --- !u!1 &4809900080453079869

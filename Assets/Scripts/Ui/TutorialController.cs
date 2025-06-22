@@ -32,7 +32,7 @@ public class TutorialController : MonoBehaviour
                 ui_UniversalPanel.SetActive(false);
                 foreach(RectTransform child in ui_AndroidPanel.GetComponentInChildren<RectTransform>())
                 {
-                        child.gameObject.SetActive(false);
+                    child.gameObject.SetActive(false);
                 }
                 holoPanel.SetActive(true);
                 // ui_AndroidPanel.SetActive(false);

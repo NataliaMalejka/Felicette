@@ -13,7 +13,8 @@ public class Player : MonoBehaviour
     public UnityEvent OnPlayerInteraction;
     public UnityEvent<bool> OnPlayerDrag;
     public UnityEvent<Vector3> OnPlayerMoved;
-    public UnityEvent<bool> OnInteractionPossibilityChanged;
+    public UnityEvent<bool, InteractiveType> OnInteractionPossibilityChanged;
+    public UnityEvent OnGravityInteraction;
 
     public UnityEvent<Sprite, Sprite, float> OnPuzzlePickedUp;
     public UnityEvent OnPuzzlePutDown;
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
     private Animator animator;
     private bool upDownMovementEnabled = false;
     private Vector3 oldPosition;
+    private Vector2 moveInput;
 
     private void Start()
     {
@@ -46,9 +48,16 @@ public class Player : MonoBehaviour
         HandleRestartInput();
     }
 
-    public void SetInteractionPossibility(bool canInteract)
+    void OnGravity(InputValue value)
     {
-        OnInteractionPossibilityChanged?.Invoke(canInteract);
+        if (!value.isPressed)
+            return;
+        HandleGravityInput();
+    }
+
+    public void SetInteractionPossibility(bool canInteract, InteractiveType interactiveType)
+    {
+        OnInteractionPossibilityChanged?.Invoke(canInteract, interactiveType);
     }
 
     public void TriggerOnPuzzlePickedUp(Sprite previewSprite, Sprite previewChildSprite = null, float rotation = 0f)
@@ -90,6 +99,11 @@ public class Player : MonoBehaviour
         HandleRestartInput();
     }
 
+    public void OnGravityFromUI()
+    {
+       HandleGravityInput();
+    }
+
     private void HandleRestartInput()
     {
         if (GameManager.Instance.State == GameState.GameActive)
@@ -103,6 +117,13 @@ public class Player : MonoBehaviour
         if (GameManager.Instance.State != GameState.GameActive || isDragging)
             return;
         OnPlayerInteraction?.Invoke();
+    }
+
+    private void HandleGravityInput()
+    {
+        if (GameManager.Instance.State != GameState.GameActive || isDragging)
+            return;
+        OnGravityInteraction?.Invoke();
     }
 
     public void ToggleUpDownMovement()
@@ -144,13 +165,34 @@ public class Player : MonoBehaviour
         return false;
     }
 
+    void OnMove(InputValue value)
+    {
+        moveInput = value.Get<Vector2>();
+    }
+
+    public void OnMoveFromUI(bool isPressed, bool isLeft)
+    {
+        if (!isPressed)
+        {
+            moveInput = Vector2.zero;
+            return;
+        }
+        if (isLeft)
+            moveInput = new Vector2(-1, 0);
+        else
+            moveInput = new Vector2(1, 0);
+    }
+
     private void MovePlayer()
     {
-        Vector2 moveInput = inputComponent.actions["Move"].ReadValue<Vector2>();
         if (moveInput == Vector2.zero)
         {
-            animator.SetBool("IsRun", false);
-            return;
+            moveInput = inputComponent.actions["Move"].ReadValue<Vector2>();
+            if (moveInput == Vector2.zero)
+            {
+                animator.SetBool("IsRun", false);
+                return;
+            }
         }
 
         animator.SetBool("IsRun", true);
@@ -161,10 +203,10 @@ public class Player : MonoBehaviour
                             upDownMovementEnabled && moveInput.y != 0 ? moveInput.y * timeVelocity : 0,
                             0);
         List<Collider> pieceColliders = CheckCollidingTiles();
-        if(pieceColliders.Count == 0)
+        if (pieceColliders.Count == 0)
         {
             Debug.LogWarning("Player out of bounds.");
-            transform.position = oldPosition; 
+            transform.position = oldPosition;
             return;
         }
         // Check bounds and corner cutting
