@@ -37,6 +37,7 @@ public class PuzzleDrag : MonoBehaviour
         equipment = GameManager.Instance.GetUiControllerHandle().GetEquipmentManager();
         player.GetComponent<Player>().OnPlayerDrag.AddListener(OnDrag);
         followPlaneB = new Plane(Vector3.up, new Vector3(0f, this.gameObject.transform.position.y, 0f));
+        GameManager.Instance.OnGameLost.AddListener(AttemptToPutPiece);
     }
     
     void OnEnable() {

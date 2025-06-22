@@ -32,6 +32,9 @@ public class Player : MonoBehaviour
         inputComponent = GetComponent<PlayerInput>();
         boxCollider = GetComponent<BoxCollider>();
         animator = GetComponent<Animator>();
+        GameManager.Instance.OnGameLost.AddListener(() => {
+            animator.SetBool("IsRun", false);
+        });
     }
 
     void OnInteract(InputValue value)
