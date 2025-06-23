@@ -186,17 +186,9 @@ public class Player : MonoBehaviour
         moveInput = value.Get<Vector2>();
     }
 
-    public void OnMoveFromUI(bool isPressed, bool isLeft)
+    public void OnMoveFromUI(Vector2 dir)
     {
-        if (!isPressed)
-        {
-            moveInput = Vector2.zero;
-            return;
-        }
-        if (isLeft)
-            moveInput = new Vector2(-1, 0);
-        else
-            moveInput = new Vector2(1, 0);
+        moveInput = dir;
     }
 
     public void CheckIfNothingToStandOn()
@@ -230,6 +222,10 @@ public class Player : MonoBehaviour
                 return;
             }
         }
+        if (moveInput.x == 0 && !upDownMovementEnabled)
+        {
+            return;
+        }
 
         animator.SetBool("IsRun", true);
 
@@ -241,9 +237,8 @@ public class Player : MonoBehaviour
         List<Collider> pieceColliders = CheckCollidingTiles();
         if (pieceColliders.Count == 0)
         {
-            Debug.LogWarning("Player out of bounds. GameOver, Intended behavior");
-            // transform.position = oldPosition;
-            GameManager.Instance.ActOnGameOver();
+            Debug.LogWarning("Player out of bounds.");
+            transform.position = oldPosition;
             return;
         }
         // Check bounds and corner cutting
