@@ -13,7 +13,7 @@ public class PuzzleDrag : MonoBehaviour
     private Vector3 startPosition;
     private Vector3 endPosition;
     private Puzzle puzzle;
-    private Grid grid;
+    [SerializeField] private Grid grid;
     [SerializeField] private GridOrientation gridOrientation;
     private GameObject player;
 
@@ -31,8 +31,13 @@ public class PuzzleDrag : MonoBehaviour
 
     private void Start()
     {
-        grid = transform.root.GetComponentInChildren<Grid>();
-        // zPosition = grid.GetDefaultZPosition();
+        // grid = transform.root.GetComponentInChildren<Grid>();
+        if (grid == null)
+        {
+            Debug.LogError($"Grid component not attached to {gridOrientation}");
+            return;
+        }
+
         player = GameObject.FindWithTag("Player");
         equipment = GameManager.Instance.GetUiControllerHandle().GetEquipmentManager();
         player.GetComponent<Player>().OnPlayerDrag.AddListener(OnDrag);
@@ -55,6 +60,11 @@ public class PuzzleDrag : MonoBehaviour
 
     private void OnDrag(bool dragActive)
     {
+        if (GameManager.Instance.isPerspectiveOnWall && gridOrientation == GridOrientation.Floor
+        || !GameManager.Instance.isPerspectiveOnWall && gridOrientation == GridOrientation.Wall)
+        {
+            return;
+        }
         isDragging = dragActive;
         if (isDragging)
         {
@@ -121,7 +131,7 @@ public class PuzzleDrag : MonoBehaviour
                 startVertical = pos.y;
 
                 //Get the puzzle and remove it from the grid for now
-                puzzle = grid.GetPuzzleFromGrid(startHorizontal, startVertical );
+                puzzle = grid.GetPuzzleFromGrid(startHorizontal, startVertical);
 
                 grid.SetPuzzle(null, startHorizontal, startVertical);
 
@@ -245,18 +255,18 @@ public class PuzzleDrag : MonoBehaviour
         }
         lastPointerPos = pointerPos;
 
-        Plane followPlane = gridOrientation == GridOrientation.Wall ? followPlaneA : followPlaneB;
+        // Plane followPlane = gridOrientation == GridOrientation.Wall ? followPlaneA : followPlaneB;
         Ray ray = Camera.main.ScreenPointToRay(gridOrientation == GridOrientation.Wall ? new Vector3(pointerPos.x, pointerPos.y, zPosition) : pointerPos);
 
-        if (followPlane.Raycast(ray, out float distance))
+        if (followPlaneA.Raycast(ray, out float distance))
         {
             Vector3 mousePosition = ray.GetPoint(distance);
             Vector3 pos = mousePosition;
 
-            if (gridOrientation == GridOrientation.Floor)
-            {
-                pos.y = 1.5f;
-            }
+            // if (gridOrientation == GridOrientation.Floor)
+            // {
+            //     pos.y = 1.5f;
+            // }
 
             // Z offset added so that the piece appears above the floor or wall, other pieces and visual effects
             // Z offset has to move piece closer to the camera
@@ -268,7 +278,7 @@ public class PuzzleDrag : MonoBehaviour
             // }
             selectedPiece.transform.position = new Vector3(pos.x, pos.y, pos.z + zOffset);
             // selectedPiece.transform.position = new Vector3(mousePosition.x + offset.x, mousePosition.y + offset.y, mousePosition.z + zOffset);
-            int intX = Mathf.RoundToInt(selectedPiece.transform.position.x / grid.cellSize);
+            int intX = Mathf.RoundToInt((selectedPiece.transform.position.x - grid.bottomLeftCornerPosition.x )/ grid.cellSize);
             int intY = Mathf.RoundToInt(selectedPiece.transform.position.y / grid.cellSize);
             puzzle.ChangeShaderColor(CanBePlaced(intX, intY));
         }

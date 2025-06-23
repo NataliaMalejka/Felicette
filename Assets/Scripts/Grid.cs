@@ -9,6 +9,8 @@ public enum GridOrientation
 public class Grid : MonoBehaviour
 {
     public Puzzle[,] puzzles;
+    public Vector3 bottomLeftCornerPosition;
+    [SerializeField] public float startingYPosition = 0.0f;
 
     [SerializeField, Tooltip("Size of the puzzle grid.")]
     private int gridSizeHorizontal;
@@ -44,20 +46,7 @@ public class Grid : MonoBehaviour
                 puzzles[i, j] = null;
             }
         }
-
-        // Get all the pieces and assign them to array
-        // This will change!!
-        //Puzzle[] pieces = puzzleMap.GetComponentsInChildren<Puzzle>();
-        //foreach (Puzzle piece in pieces)
-        //{
-        //    Vector2 pos = piece.transform.position;
-        //    puzzles[(int)pos.x, (int)pos.y] = piece;
-
-        //    int x = Mathf.RoundToInt(pos.x / cellSize);
-        //    int y = Mathf.RoundToInt(pos.y / cellSize);
-
-        //    puzzles[x, y] = piece;
-        //}
+        bottomLeftCornerPosition = transform.position;
 
         Puzzle[] pieces = puzzleMap.GetComponentsInChildren<Puzzle>();
         foreach (Puzzle piece in pieces)
@@ -82,17 +71,21 @@ public class Grid : MonoBehaviour
 
         int horizontal, vertical;
 
-        if (grid == GridOrientation.Wall)
-        {
-            horizontal = Mathf.RoundToInt(worldPosition.x  / cellSize);
-            vertical = Mathf.RoundToInt(worldPosition.y  / cellSize);
-        }
-        else 
-        {
-            horizontal = Mathf.RoundToInt(worldPosition.x  / cellSize);
-            vertical = Mathf.RoundToInt(worldPosition.z / cellSize); 
-
-        }
+        horizontal = Mathf.RoundToInt((worldPosition.x - bottomLeftCornerPosition.x) / cellSize);
+        vertical = Mathf.RoundToInt(worldPosition.y / cellSize);
+        // if (grid == GridOrientation.Wall)
+        // {
+        //     horizontal = Mathf.RoundToInt(worldPosition.x / cellSize);
+        //     vertical = Mathf.RoundToInt(worldPosition.y / cellSize);
+        //     Debug.Log("Grid orientation is Wall, horizontal: " + horizontal + ", vertical: " + vertical);
+        // }
+        // else
+        // {
+        //     Debug.Log("Grid orientation is Floor, worldPosition: " + worldPosition + ", bottomLeftCornerPosition: " + bottomLeftCornerPosition + ", cellSize: " + cellSize);
+        //     horizontal = Mathf.RoundToInt((worldPosition.x - bottomLeftCornerPosition.x) / cellSize);
+        //     vertical = Mathf.RoundToInt(worldPosition.z / cellSize);
+        //     Debug.Log("Grid orientation is Floor, horizontal: " + horizontal + ", vertical: " + vertical);
+        // }
 
         return new Vector2Int(horizontal, vertical);
     }
@@ -135,18 +128,18 @@ public class Grid : MonoBehaviour
         //    ? new Vector3(x * cellSize, vertical * cellSize, 0f)
         //    : new Vector3(x * cellSize, originalY, vertical * cellSize);
 
-        if (grid == GridOrientation.Wall)
-        {
-            float x =  horizontal * cellSize;
+        // if (grid == GridOrientation.Wall)
+        // {
+            float x =  (horizontal + bottomLeftCornerPosition.x) * cellSize;
             float y =  vertical * cellSize;
             return new Vector3(x, y, 0f);
-        }
-        else 
-        {
-            float x =  horizontal * cellSize;
-            float z =  vertical * cellSize + 0.5f; 
-            return new Vector3(x, 1.5f, z);
-        }
+        // }
+        // else 
+        // {
+        //     float x =  horizontal * cellSize;
+        //     float z =  vertical * cellSize + 0.5f; 
+        //     return new Vector3(x, 1.5f, z);
+        // }
     }
 
     public void SetPuzzle(Puzzle puzzle, int horizontal, int vertical)

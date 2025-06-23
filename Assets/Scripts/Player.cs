@@ -26,15 +26,27 @@ public class Player : MonoBehaviour
     private bool upDownMovementEnabled = false;
     private Vector3 oldPosition;
     private Vector2 moveInput;
+    public float WallYPosition = 0;
+    private Vector3 realBoxColliderSize
+    {
+        get
+        {
+            return new Vector3(boxCollider.size.x * transform.localScale.x,
+                               boxCollider.size.y * transform.localScale.y,
+                               boxCollider.size.z * transform.localScale.z);
+        }
+    }
 
     private void Start()
     {
         inputComponent = GetComponent<PlayerInput>();
         boxCollider = GetComponent<BoxCollider>();
         animator = GetComponent<Animator>();
-        GameManager.Instance.OnGameLost.AddListener(() => {
+        GameManager.Instance.OnGameLost.AddListener(() =>
+        {
             animator.SetBool("IsRun", false);
         });
+        WallYPosition = transform.position.y;
     }
 
     void OnInteract(InputValue value)
@@ -127,6 +139,7 @@ public class Player : MonoBehaviour
         if (GameManager.Instance.State != GameState.GameActive || isDragging)
             return;
         OnGravityInteraction?.Invoke();
+        ToggleUpDownMovement();
     }
 
     public void ToggleUpDownMovement()
@@ -136,8 +149,8 @@ public class Player : MonoBehaviour
 
     private List<Collider> CheckCollidingTiles()
     {
-        List<Collider> hits = Physics.OverlapBox(transform.position, boxCollider.size, transform.rotation).ToList();
-        //To do - Handle corner cases (GET ITT??) (lock movement while dragging??)
+        List<Collider> hits = Physics.OverlapBox(transform.position, realBoxColliderSize, transform.rotation).ToList();
+
         List<Collider> pieces = new List<Collider>();
         foreach (Collider hit in hits)
         {
@@ -186,6 +199,26 @@ public class Player : MonoBehaviour
             moveInput = new Vector2(1, 0);
     }
 
+    public void CheckIfNothingToStandOn()
+    {
+        List<Collider> pieceColliders = CheckCollidingTiles();
+        if (pieceColliders.Count == 0)
+        {
+            animator.SetBool("IsRun", false);
+            GameManager.Instance.ActOnGameOver();
+            return;
+        }
+        if (!IsPlayerFullyInsideAnyCell(pieceColliders) ||
+            (pieceColliders.Count == 2 &&
+            pieceColliders[0].transform.position.x != pieceColliders[1].transform.position.x &&
+            pieceColliders[0].transform.position.y != pieceColliders[1].transform.position.y))
+        {
+            animator.SetBool("IsRun", false);
+            GameManager.Instance.ActOnGameOver();
+            return;
+        }
+    }
+
     private void MovePlayer()
     {
         if (moveInput == Vector2.zero)
@@ -208,8 +241,9 @@ public class Player : MonoBehaviour
         List<Collider> pieceColliders = CheckCollidingTiles();
         if (pieceColliders.Count == 0)
         {
-            Debug.LogWarning("Player out of bounds.");
-            transform.position = oldPosition;
+            Debug.LogWarning("Player out of bounds. GameOver, Intended behavior");
+            // transform.position = oldPosition;
+            GameManager.Instance.ActOnGameOver();
             return;
         }
         // Check bounds and corner cutting
@@ -226,6 +260,10 @@ public class Player : MonoBehaviour
         if (moveInput.x != 0)
         {
             spriteRenderer.flipX = moveInput.x < 0;
+        }
+        if (GameManager.Instance.isPerspectiveOnWall)
+        {
+            WallYPosition = transform.position.y;
         }
         OnPlayerMoved?.Invoke(transform.position);
     }
