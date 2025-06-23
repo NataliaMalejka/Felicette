@@ -12,18 +12,18 @@ public class PerspectiveInteraction : Interactive
         interactiveType = InteractiveType.Gravity;
     }
 
-    protected override void OnEnable() {
-        if (player == null)
-            return;
-        player.OnGravityInteraction.RemoveListener(OnInteract);
-        player.OnGravityInteraction.AddListener(OnInteract);
-    }
+    // protected override void OnEnable() {
+    //     if (player == null)
+    //         return;
+    //     player.OnGravityInteraction.RemoveListener(OnInteract);
+    //     player.OnGravityInteraction.AddListener(OnInteract);
+    // }
 
-    protected override void OnDisable() {
-        if (player == null)
-            return;
-        player.OnGravityInteraction.RemoveListener(OnInteract);
-    }
+    // protected override void OnDisable() {
+    //     if (player == null)
+    //         return;
+    //     player.OnGravityInteraction.RemoveListener(OnInteract);
+    // }
 
     protected override void ActOnInteraction()
     {

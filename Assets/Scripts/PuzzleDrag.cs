@@ -45,12 +45,12 @@ public class PuzzleDrag : MonoBehaviour
         GameManager.Instance.OnGameLost.AddListener(AttemptToPutPiece);
     }
     
-    void OnEnable() {
-        if (player == null)
-            return;
-        player.GetComponent<Player>().OnPlayerDrag.RemoveListener(OnDrag);
-        player.GetComponent<Player>().OnPlayerDrag.AddListener(OnDrag);
-    }
+    // void OnEnable() {
+    //     if (player == null)
+    //         return;
+    //     player.GetComponent<Player>().OnPlayerDrag.RemoveListener(OnDrag);
+    //     player.GetComponent<Player>().OnPlayerDrag.AddListener(OnDrag);
+    // }
 
     void OnDisable() {
         if (player == null)

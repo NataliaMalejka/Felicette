@@ -18,20 +18,20 @@ public abstract class Interactive : MonoBehaviour
         player.OnPlayerInteraction.AddListener(OnInteract);
     }
 
-    protected virtual void OnEnable()
-    {
-        if (player == null)
-            return;
-        player.OnPlayerInteraction.RemoveListener(OnInteract);
-        player.OnPlayerInteraction.AddListener(OnInteract);
-    }
+    // protected virtual void OnEnable()
+    // {
+    //     if (player == null)
+    //         return;
+    //     player.OnPlayerInteraction.RemoveListener(OnInteract);
+    //     player.OnPlayerInteraction.AddListener(OnInteract);
+    // }
 
-    protected virtual void OnDisable()
-    {
-        if (player == null)
-            return;
-        player.OnPlayerInteraction.RemoveListener(OnInteract);
-    }
+    // protected virtual void OnDisable()
+    // {
+    //     if (player == null)
+    //         return;
+    //     player.OnPlayerInteraction.RemoveListener(OnInteract);
+    // }
 
     public void OnInteract()
     {
