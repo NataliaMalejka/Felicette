@@ -11,11 +11,17 @@ public abstract class Interactive : MonoBehaviour
     protected Player player;
     protected bool playerCollision = false;
     protected InteractiveType interactiveType = InteractiveType.Other;
+    [SerializeField] protected SpriteRenderer spriteRenderer; 
+    [SerializeField] private Sprite wallSprite;
+    [SerializeField] private Sprite topSprite;
+    [SerializeField] protected GridOrientation interactiveLocation = GridOrientation.Wall;
 
     protected virtual void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
         player.OnPlayerInteraction.AddListener(OnInteract);
+        if (spriteRenderer != null)
+            spriteRenderer.sprite = interactiveLocation == GridOrientation.Wall ? wallSprite : topSprite;
     }
 
     // protected virtual void OnEnable()

@@ -5,6 +5,18 @@ public class Door : Interactive //Teleport?
     [SerializeField] private GameObject connectedDoor;
     [SerializeField] private VisualEffect teleportEffect;
 
+    protected override void Start()
+    {
+        base.Start();
+        transform.rotation = Quaternion.identity;
+        if (spriteRenderer != null)
+            spriteRenderer.gameObject.transform.localPosition = interactiveLocation == GridOrientation.Wall ?
+                new Vector3(spriteRenderer.gameObject.transform.localPosition.x,
+                            spriteRenderer.gameObject.transform.localPosition.y - 0.75f,
+                            spriteRenderer.gameObject.transform.localPosition.z)
+                : spriteRenderer.gameObject.transform.localPosition;
+    }
+
     protected override void ActOnInteraction()
     {
         if (playerCollision)

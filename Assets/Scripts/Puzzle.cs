@@ -26,7 +26,7 @@ public class Puzzle : MonoBehaviour
     [SerializeField] private Sprite objectImage = null;
     public Sprite ShapeImage => shapeImage.sprite;
     public Sprite ObjectImage => objectImage;
-    private Material defaultMaterial;
+    // private Material defaultMaterial;
 
     [SerializeField] public bool portable;
     [SerializeField] private bool alwaysVisible;
@@ -49,7 +49,9 @@ public class Puzzle : MonoBehaviour
         grid = GetComponentInParent<Grid>();
         player = GameObject.FindWithTag("Player");
         player.GetComponent<Player>().OnPlayerMoved.AddListener(OnPlayerMoved);
-        defaultMaterial = spriteRenderer.material;
+        // defaultMaterial = spriteRenderer.material;
+        spriteRenderer.material = pickUpMaterial;
+        spriteRenderer.enabled = false;
 
         gridSizeHorizontal = grid.GetGridSizeHorizontal();
         gridSizeVertical = grid.GetGridSizeVertical();
@@ -78,8 +80,9 @@ public class Puzzle : MonoBehaviour
     {
         if (visualEffectFog != null)
             visualEffectFog.gameObject.SetActive(true);
-        spriteRenderer.material = defaultMaterial;
-        SetOrderingLayer("Default");
+        // spriteRenderer.material = defaultMaterial;
+        spriteRenderer.enabled = false;
+        // SetOrderingLayer("Default");
     }
 
     public void ActOnPuzzlePicked()
@@ -88,10 +91,11 @@ public class Puzzle : MonoBehaviour
             visualEffectFog.gameObject.SetActive(false);
         if (pickUpMaterial != null)
         {
+            spriteRenderer.enabled = true;
             pickUpMaterial.SetColor("_SolidOutline", redOutlineColor);
-            spriteRenderer.material = pickUpMaterial;
+            // spriteRenderer.material = pickUpMaterial;
 
-            SetOrderingLayer("Top");
+            // SetOrderingLayer("Top");
         }
     }
 
