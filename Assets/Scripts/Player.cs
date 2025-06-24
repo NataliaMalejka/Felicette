@@ -144,6 +144,10 @@ public class Player : MonoBehaviour
         if (GameManager.Instance.State != GameState.GameActive || isDragging)
             return;
         OnGravityInteraction?.Invoke();
+    }
+
+    public void LogicToGravityChange()
+    {
         ToggleUpDownMovement();
         animator.SetBool("IsRun", false);
         animator.SetTrigger("Presp");

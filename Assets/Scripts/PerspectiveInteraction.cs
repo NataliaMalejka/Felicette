@@ -29,7 +29,7 @@ public class PerspectiveInteraction : Interactive
     {
         if (playerCollision)
         {
-            Debug.Log("Perspective interaction triggered, component: " + gameObject.name);
+            player.LogicToGravityChange();
             OnPerspectiveInteraction?.Invoke();
         }
     }
