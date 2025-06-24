@@ -54,15 +54,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6750728218642480949, guid: b1757ad7e6b36134ca5e255d09488ab6, type: 3}
       propertyPath: up
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6750728218642480949, guid: b1757ad7e6b36134ca5e255d09488ab6, type: 3}
-      propertyPath: down
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6750728218642480949, guid: b1757ad7e6b36134ca5e255d09488ab6, type: 3}
-      propertyPath: right
+      propertyPath: down
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6750728218642480949, guid: b1757ad7e6b36134ca5e255d09488ab6, type: 3}
+      propertyPath: right
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
