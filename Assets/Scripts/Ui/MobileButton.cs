@@ -24,10 +24,12 @@ public class MobileButton : Button
         if (canInteract)
         {
             GetComponent<Image>().color = new Color(0.4f, 0.8f, 0.4f);
+            enabled = true;
         }
         else
         {
             GetComponent<Image>().color = Color.white;
+            enabled = false;
         }
     }
 }

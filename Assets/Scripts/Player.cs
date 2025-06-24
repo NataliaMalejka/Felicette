@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector3 direction;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
+    [SerializeField] private PlayerAnimatorEvent playerAnimatorEvent;
 
     public UnityEvent OnPlayerInteraction;
     public UnityEvent<bool> OnPlayerDrag;
@@ -19,6 +20,8 @@ public class Player : MonoBehaviour
 
     public UnityEvent<Sprite, Sprite, float> OnPuzzlePickedUp;
     public UnityEvent OnPuzzlePutDown;
+    public UnityEvent OnTp_1AnimEnd;
+
 
     private bool isDragging = false;
     private PlayerInput inputComponent;
@@ -48,6 +51,7 @@ public class Player : MonoBehaviour
             animator.SetBool("IsRun", false);
         });
         WallYPosition = transform.position.y;
+        playerAnimatorEvent.OnTpAnim.AddListener(TriggerOnTpAnim);
     }
 
     void OnInteract(InputValue value)
@@ -100,7 +104,7 @@ public class Player : MonoBehaviour
         if (GameManager.Instance.State != GameState.GameActive)
             return;
         isDragging = false;
-        if(value.isPressed)
+        if (value.isPressed)
             isDragging = true;
         OnPlayerDrag?.Invoke(isDragging);
     }
@@ -117,7 +121,7 @@ public class Player : MonoBehaviour
 
     public void OnGravityFromUI()
     {
-       HandleGravityInput();
+        HandleGravityInput();
     }
 
     private void HandleRestartInput()
@@ -289,5 +293,15 @@ public class Player : MonoBehaviour
         {
             MovePlayer();
         }
+    }
+
+    public void PlayTpAnimation()
+    {
+        animator.SetTrigger("TpAnim");
+    }
+
+    public void TriggerOnTpAnim()
+    {
+        OnTp_1AnimEnd?.Invoke();
     }
 }
