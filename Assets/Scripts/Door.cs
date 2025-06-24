@@ -21,15 +21,24 @@ public class Door : Interactive //Teleport?
     {
         if (playerCollision)
         {
-            SoundsManager.Instance.PlaySound(SoundsManager.Sounds.Teleportation);
-            teleportEffect?.Play();
             if (connectedDoor == null)
             {
                 Debug.LogWarning("Connected door is not set for " + gameObject.name);
                 return;
             }
-            player.transform.position = connectedDoor.transform.position;
+            SoundsManager.Instance.PlaySound(SoundsManager.Sounds.Teleportation);
+            teleportEffect?.Play();
+            player.PlayTpAnimation();
+            player.TogglePlayerInput();
+            player.OnTp_1AnimEnd.AddListener(OnTp_1AnimEnd);
         }
+    }
+
+    private void OnTp_1AnimEnd()
+    {
+        player.transform.position = connectedDoor.transform.position;
+        player.TogglePlayerInput();
+        player.OnTp_1AnimEnd.RemoveListener(OnTp_1AnimEnd);
     }
 
     protected override void ActOnCollision()

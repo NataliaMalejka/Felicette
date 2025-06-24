@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1654139349631047857}
   - component: {fileID: 4517009503649411264}
   - component: {fileID: 5101299964423635819}
+  - component: {fileID: 4393813754507674990}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -110,6 +111,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4393813754507674990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216658726972392995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2357e8e6df554ee4c905baf5185f096f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnTpAnim:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4771771875171508700
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,6 +206,8 @@ MonoBehaviour:
   velocity: 2
   direction: {x: 0.5, y: 0.5, z: 5}
   spriteRenderer: {fileID: 4517009503649411264}
+  animator: {fileID: 5101299964423635819}
+  playerAnimatorEvent: {fileID: 4393813754507674990}
   OnPlayerInteraction:
     m_PersistentCalls:
       m_Calls: []
@@ -211,7 +229,9 @@ MonoBehaviour:
   OnPuzzlePutDown:
     m_PersistentCalls:
       m_Calls: []
-  animator: {fileID: 5101299964423635819}
+  OnTp_1AnimEnd:
+    m_PersistentCalls:
+      m_Calls: []
   WallYPosition: 0
 --- !u!65 &8861811193463783131
 BoxCollider:

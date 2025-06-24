@@ -48,8 +48,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   perspAnim: {fileID: 0}
+  mainCamera: {fileID: 0}
   gridWall: {fileID: 6597867411783622947}
   gridFloor: {fileID: 6878585799529988917}
+  perspectiveInteractionWall: {fileID: 0}
+  perspectiveInteractionFloor: {fileID: 0}
 --- !u!1 &6005642504384909507
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,6 +174,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f41456e07fcb64c9dadc70f40755a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 0}
+  wallSprite: {fileID: 0}
+  topSprite: {fileID: 0}
+  interactiveLocation: 0
+  trailEffect: {fileID: 0}
+  flyAnimator: {fileID: 0}
 --- !u!65 &8671752334949810164
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -445,9 +454,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4771771875171508700, guid: 4f47448acec5a924a9fed9a82b75cbd0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6190263355943478628}
-    - targetCorrespondingSourceObject: {fileID: 4771771875171508700, guid: 4f47448acec5a924a9fed9a82b75cbd0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 754488337627716268}
   m_SourcePrefab: {fileID: 100100000, guid: 4f47448acec5a924a9fed9a82b75cbd0, type: 3}
 --- !u!1 &4823838240161897527 stripped
 GameObject:
@@ -475,28 +481,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 7.37, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!95 &754488337627716268
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4823838240161897527}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 255a894ecb85cc84a941640ff0af35cc, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &5435637154398432357 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5451125067420455310, guid: 4f47448acec5a924a9fed9a82b75cbd0, type: 3}
