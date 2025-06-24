@@ -1036,6 +1036,10 @@ PrefabInstance:
       propertyPath: gridSizeHorizontal
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4496472976963767595, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 477969846, guid: 19cb93253d3df7f46b267a6b774abae9, type: 3}
     - target: {fileID: 5529027535076627916, guid: a1c2c17b5481903409f6153bfe231248, type: 3}
       propertyPath: gridOrientation
       value: 1
