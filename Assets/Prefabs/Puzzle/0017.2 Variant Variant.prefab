@@ -13,8 +13,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2881910947068206787, guid: c41e3674b867b90489b29961c1a6f99f, type: 3}
-      propertyPath: right
+      propertyPath: left
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881910947068206787, guid: c41e3674b867b90489b29961c1a6f99f, type: 3}
+      propertyPath: right
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5093607859912690859, guid: c41e3674b867b90489b29961c1a6f99f, type: 3}
       propertyPath: m_Name

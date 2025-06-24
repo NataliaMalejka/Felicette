@@ -16,6 +16,14 @@ PrefabInstance:
       propertyPath: down
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3602785872535801111, guid: b90437f42ea8f2c488a404149a96b29e, type: 3}
+      propertyPath: left
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3602785872535801111, guid: b90437f42ea8f2c488a404149a96b29e, type: 3}
+      propertyPath: right
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5814447603156148095, guid: b90437f42ea8f2c488a404149a96b29e, type: 3}
       propertyPath: m_Name
       value: 0008.3 Variant Variant
