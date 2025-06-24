@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float velocity;
     [SerializeField] private Vector3 direction;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Animator animator;
 
     public UnityEvent OnPlayerInteraction;
     public UnityEvent<bool> OnPlayerDrag;
@@ -22,7 +23,6 @@ public class Player : MonoBehaviour
     private bool isDragging = false;
     private PlayerInput inputComponent;
     private BoxCollider boxCollider;
-    private Animator animator;
     private bool upDownMovementEnabled = false;
     private Vector3 oldPosition;
     private Vector2 moveInput;
@@ -41,7 +41,8 @@ public class Player : MonoBehaviour
     {
         inputComponent = GetComponent<PlayerInput>();
         boxCollider = GetComponent<BoxCollider>();
-        animator = GetComponent<Animator>();
+        if (animator == null || spriteRenderer == null)
+            Debug.LogError("Missing SerializeField components in Player");
         GameManager.Instance.OnGameLost.AddListener(() =>
         {
             animator.SetBool("IsRun", false);
@@ -140,6 +141,10 @@ public class Player : MonoBehaviour
             return;
         OnGravityInteraction?.Invoke();
         ToggleUpDownMovement();
+        animator.SetBool("IsRun", false);
+        animator.SetTrigger("Presp");
+        if (!upDownMovementEnabled)
+            spriteRenderer.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     public void ToggleUpDownMovement()
@@ -255,6 +260,13 @@ public class Player : MonoBehaviour
         if (moveInput.x != 0)
         {
             spriteRenderer.flipX = moveInput.x < 0;
+            if (upDownMovementEnabled)
+                spriteRenderer.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        if (moveInput.y != 0)
+        {
+            spriteRenderer.gameObject.transform.rotation = Quaternion.Euler(0, 0, 90 * (moveInput.y > 0 ? 1 : -1));
+            spriteRenderer.flipX = false;
         }
         if (GameManager.Instance.isPerspectiveOnWall)
         {
