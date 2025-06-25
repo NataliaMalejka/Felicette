@@ -50,7 +50,7 @@ public class UiMobileControls : MonoBehaviour
 
         player.OnPuzzlePickedUp.AddListener(ShowHoloPreview);
         player.OnPuzzlePutDown.AddListener(HideHoloPreview);
-        player.OnGravityInteraction.AddListener(ToggleArrows);
+        player.OnGravityInteractionConfirmed.AddListener(ToggleArrows);
         holoPreview.SetActive(false);
         foreach (GameObject obj in arrowsToggleObjects)
         {

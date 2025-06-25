@@ -393,6 +393,10 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 2574518430042945462, guid: d8998c84592c6b645b5c5e688109211f, type: 3}
+      propertyPath: maxTime
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2574518430042945462, guid: d8998c84592c6b645b5c5e688109211f, type: 3}
       propertyPath: uiLevelController
       value: 
       objectReference: {fileID: 1736129612}

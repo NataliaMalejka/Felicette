@@ -531,6 +531,10 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 2574518430042945462, guid: d8998c84592c6b645b5c5e688109211f, type: 3}
+      propertyPath: maxTime
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2574518430042945462, guid: d8998c84592c6b645b5c5e688109211f, type: 3}
       propertyPath: uiLevelController
       value: 
       objectReference: {fileID: 1792557054}
@@ -1506,7 +1510,7 @@ Transform:
   m_GameObject: {fileID: 1683472538}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -4.1790123, y: -11.067904, z: 0}
+  m_LocalPosition: {x: -4.29, y: -11.067904, z: 0}
   m_LocalScale: {x: 1.8796911, y: 1.8796911, z: 0.30451}
   m_ConstrainProportionsScale: 0
   m_Children: []

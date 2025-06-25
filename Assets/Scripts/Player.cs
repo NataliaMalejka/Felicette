@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public UnityEvent<Vector3> OnPlayerMoved;
     public UnityEvent<bool, InteractiveType> OnInteractionPossibilityChanged;
     public UnityEvent OnGravityInteraction;
+    public UnityEvent OnGravityInteractionConfirmed;
 
     public UnityEvent<Sprite, Sprite, float> OnPuzzlePickedUp;
     public UnityEvent OnPuzzlePutDown;
@@ -151,6 +152,7 @@ public class Player : MonoBehaviour
         ToggleUpDownMovement();
         animator.SetBool("IsRun", false);
         animator.SetTrigger("Presp");
+        OnGravityInteractionConfirmed?.Invoke();
         if (!upDownMovementEnabled)
             spriteRenderer.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
@@ -299,9 +301,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void PlayTpAnimation()
+    public void PlayTpAnimation(bool disintegrate)
     {
-        animator.SetTrigger("TpAnim");
+        animator.SetTrigger(disintegrate ? "TpAnim" : "TpInterAnim");
     }
 
     public void TriggerOnTpAnim()

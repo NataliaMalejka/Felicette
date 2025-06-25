@@ -889,7 +889,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7475549164956764590, guid: 6e5ec1ab9832cdb498f382e0c81fe6c7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 458407243}
-    - targetCorrespondingSourceObject: {fileID: 3656036344472469156, guid: 6e5ec1ab9832cdb498f382e0c81fe6c7, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 3825578667698304608, guid: 6e5ec1ab9832cdb498f382e0c81fe6c7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 461370915}
     - targetCorrespondingSourceObject: {fileID: 6094880271629636054, guid: 6e5ec1ab9832cdb498f382e0c81fe6c7, type: 3}
@@ -933,6 +933,11 @@ RectTransform:
 --- !u!224 &16168004 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6769124152094343961, guid: 6e5ec1ab9832cdb498f382e0c81fe6c7, type: 3}
+  m_PrefabInstance: {fileID: 16167997}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &75558304 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3825578667698304608, guid: 6e5ec1ab9832cdb498f382e0c81fe6c7, type: 3}
   m_PrefabInstance: {fileID: 16167997}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &107474734
@@ -2319,11 +2324,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1531584180}
+  m_Father: {fileID: 75558304}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 198.51, y: 0}
+  m_AnchoredPosition: {x: 47.4, y: 122.4}
   m_SizeDelta: {x: 311.9, y: 120}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &461370916
@@ -4956,11 +4961,6 @@ SpriteRenderer:
 --- !u!4 &1531584179 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3005757445267010438, guid: 6e5ec1ab9832cdb498f382e0c81fe6c7, type: 3}
-  m_PrefabInstance: {fileID: 16167997}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &1531584180 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3656036344472469156, guid: 6e5ec1ab9832cdb498f382e0c81fe6c7, type: 3}
   m_PrefabInstance: {fileID: 16167997}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1532533454

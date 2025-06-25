@@ -65,7 +65,7 @@ public class Puzzle : MonoBehaviour
 
         //Run once to set the initial visibility of the puzzle
         OnPlayerMoved(player.transform.position);
-        visualEffectFog.SetVector3("PlayerPosition", player.transform.position);
+        // visualEffectFog.SetVector3("PlayerPosition", player.transform.position);
 
         connections = new Connection[] { left, up, right, down };
         FixConnectionsRotation();
@@ -73,13 +73,13 @@ public class Puzzle : MonoBehaviour
 
     private void OnPlayerMoved(Vector3 playerPosition)
     {
-        visualEffectFog.SetVector3("PlayerPosition", playerPosition);
+        // visualEffectFog.SetVector3("PlayerPosition", playerPosition);
     }
 
     public void ActOnPuzzlePlaced()
     {
-        if (visualEffectFog != null)
-            visualEffectFog.gameObject.SetActive(true);
+        // if (visualEffectFog != null)
+        //     visualEffectFog.gameObject.SetActive(true);
         // spriteRenderer.material = defaultMaterial;
         spriteRenderer.enabled = false;
         // SetOrderingLayer("Default");
@@ -87,8 +87,8 @@ public class Puzzle : MonoBehaviour
 
     public void ActOnPuzzlePicked()
     {
-        if (visualEffectFog != null)
-            visualEffectFog.gameObject.SetActive(false);
+        // if (visualEffectFog != null)
+        //     visualEffectFog.gameObject.SetActive(false);
         if (pickUpMaterial != null)
         {
             spriteRenderer.enabled = true;

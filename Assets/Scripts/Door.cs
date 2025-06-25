@@ -28,7 +28,7 @@ public class Door : Interactive //Teleport?
             }
             SoundsManager.Instance.PlaySound(SoundsManager.Sounds.Teleportation);
             teleportEffect?.Play();
-            player.PlayTpAnimation();
+            player.PlayTpAnimation(true);
             player.TogglePlayerInput();
             player.OnTp_1AnimEnd.AddListener(OnTp_1AnimEnd);
         }
@@ -38,6 +38,7 @@ public class Door : Interactive //Teleport?
     {
         player.transform.position = connectedDoor.transform.position;
         player.TogglePlayerInput();
+        player.PlayTpAnimation(false);
         player.OnTp_1AnimEnd.RemoveListener(OnTp_1AnimEnd);
     }
 

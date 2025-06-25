@@ -1471,6 +1471,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2574518430042945462, guid: d8998c84592c6b645b5c5e688109211f, type: 3}
+      propertyPath: maxTime
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2574518430042945462, guid: d8998c84592c6b645b5c5e688109211f, type: 3}
       propertyPath: uiLevelController
       value: 
       objectReference: {fileID: 1871295873}
@@ -1896,7 +1900,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4550871706131150322, guid: be65769ae7f9b55479cf5e3016c8e166, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4658960208937008923, guid: be65769ae7f9b55479cf5e3016c8e166, type: 3}
       propertyPath: m_Enabled
@@ -1956,7 +1960,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8667968364979679576, guid: be65769ae7f9b55479cf5e3016c8e166, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
