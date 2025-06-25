@@ -8,6 +8,7 @@ public class PerspectiveManager : MonoBehaviour
     [SerializeField] GameObject gridFloor;
     [SerializeField] PerspectiveInteraction perspectiveInteractionWall;
     [SerializeField] PerspectiveInteraction perspectiveInteractionFloor;
+    [SerializeField] bool playPerspectiveAnimations = true;
 
     private GameObject player;
 
@@ -16,8 +17,11 @@ public class PerspectiveManager : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        perspAnim.GetComponent<AnimatorEvent>().OnWallAnimEnd.AddListener(OnWallAnimEnd);
-        perspAnim.GetComponent<AnimatorEvent>().OnFloorAnimEnd.AddListener(OnFloorAnimEnd);
+        if (playPerspectiveAnimations)
+        {
+            perspAnim.GetComponent<AnimatorEvent>().OnWallAnimEnd.AddListener(OnWallAnimEnd);
+            perspAnim.GetComponent<AnimatorEvent>().OnFloorAnimEnd.AddListener(OnFloorAnimEnd);
+        }
 
         //Listen to every perspective interaction event from PerspectiveInteraction objects
         // foreach (PerspectiveInteraction perspectiveInteraction in FindObjectsByType<PerspectiveInteraction>(FindObjectsSortMode.None))
@@ -73,7 +77,8 @@ public class PerspectiveManager : MonoBehaviour
         if (GameManager.Instance.isPerspectiveOnWall)
         {
             GameManager.Instance.isPerspectiveOnWall = false;
-            perspAnim.SetTrigger("ToFloor");
+            if (playPerspectiveAnimations)
+                perspAnim.SetTrigger("ToFloor");
             // gridWall.SetActive(false);
             // gridFloor.SetActive(true);
             // player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y - 0.5f, player.transform.position.z);
@@ -86,11 +91,16 @@ public class PerspectiveManager : MonoBehaviour
             //     mainCamera.transform.position.y,
             //     mainCamera.transform.position.z);
             player.GetComponent<Player>().CheckIfNothingToStandOn();
+            if (!playPerspectiveAnimations)
+            {
+                OnWallAnimEnd();
+            }
         }
         else
         {
             GameManager.Instance.isPerspectiveOnWall = true;
-            perspAnim.SetTrigger("ToWall");
+            if (playPerspectiveAnimations)
+                perspAnim.SetTrigger("ToWall");
             // gridWall.SetActive(true);
             // gridFloor.SetActive(false);
             // player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y - 0.5f, player.transform.position.z);
@@ -103,6 +113,10 @@ public class PerspectiveManager : MonoBehaviour
             //     mainCamera.transform.position.y,
             //     mainCamera.transform.position.z);
             player.GetComponent<Player>().CheckIfNothingToStandOn();
+            if (!playPerspectiveAnimations)
+            {
+                OnFloorAnimEnd();
+            }
         }
 
         SoundsManager.Instance.PlaySound(SoundsManager.Sounds.ChangePerspective);
