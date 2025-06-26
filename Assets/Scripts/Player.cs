@@ -99,8 +99,15 @@ public class Player : MonoBehaviour
         }
     }
 
-    //Fires event 2 times, once when pressed and once when released
-    void OnDrag(InputValue value)
+    public void ForceEnebleInput()
+    {
+        if (inputComponent != null)
+        {
+            inputComponent.enabled = true;
+        }
+    }
+//Fires event 2 times, once when pressed and once when released
+void OnDrag(InputValue value)
     {
         if (GameManager.Instance.State != GameState.GameActive)
             return;

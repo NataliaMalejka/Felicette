@@ -121,4 +121,28 @@ public class PerspectiveManager : MonoBehaviour
 
         SoundsManager.Instance.PlaySound(SoundsManager.Sounds.ChangePerspective);
     }
+
+    public void SwitchPerspective() //It will only switch perspective and player inputs - it will not change player's position!!!!!
+    {
+        player.GetComponent<Player>().TogglePlayerInput();
+        if (GameManager.Instance.isPerspectiveOnWall)
+        {
+            GameManager.Instance.isPerspectiveOnWall = false;
+
+            FindAnyObjectByType<Camera>().transform.position = new Vector3(
+                FindAnyObjectByType<Camera>().transform.position.x + gridFloor.GetComponent<Grid>().bottomLeftCornerPosition.x,
+                FindAnyObjectByType<Camera>().transform.position.y,
+                FindAnyObjectByType<Camera>().transform.position.z);
+
+        }
+        else
+        {
+            GameManager.Instance.isPerspectiveOnWall = true;
+
+            FindAnyObjectByType<Camera>().transform.position = new Vector3(
+                FindAnyObjectByType<Camera>().transform.position.x - gridFloor.GetComponent<Grid>().bottomLeftCornerPosition.x,
+                FindAnyObjectByType<Camera>().transform.position.y,
+                FindAnyObjectByType<Camera>().transform.position.z);
+        }
+    }
 }

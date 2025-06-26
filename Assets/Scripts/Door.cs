@@ -4,6 +4,8 @@ public class Door : Interactive //Teleport?
 {
     [SerializeField] private GameObject connectedDoor;
     [SerializeField] private VisualEffect teleportEffect;
+    [SerializeField] public bool isOnWall = true;
+    private PerspectiveManager perspectiveManager;
 
     protected override void Start()
     {
@@ -15,6 +17,7 @@ public class Door : Interactive //Teleport?
                             spriteRenderer.gameObject.transform.localPosition.y - 0.75f,
                             spriteRenderer.gameObject.transform.localPosition.z)
                 : spriteRenderer.gameObject.transform.localPosition;
+        perspectiveManager = FindObjectOfType<PerspectiveManager>();
     }
 
     protected override void ActOnInteraction()
@@ -26,11 +29,17 @@ public class Door : Interactive //Teleport?
                 Debug.LogWarning("Connected door is not set for " + gameObject.name);
                 return;
             }
+
             SoundsManager.Instance.PlaySound(SoundsManager.Sounds.Teleportation);
             teleportEffect?.Play();
             player.PlayTpAnimation(true);
             player.TogglePlayerInput();
             player.OnTp_1AnimEnd.AddListener(OnTp_1AnimEnd);
+
+            if (connectedDoor.GetComponent<Door>().isOnWall != isOnWall)
+            {
+                perspectiveManager.SwitchPerspective();
+            }
         }
     }
 
@@ -38,8 +47,11 @@ public class Door : Interactive //Teleport?
     {
         player.transform.position = connectedDoor.transform.position;
         player.TogglePlayerInput();
+        player.ForceEnebleInput();
         player.PlayTpAnimation(false);
         player.OnTp_1AnimEnd.RemoveListener(OnTp_1AnimEnd);
+        if (connectedDoor.GetComponent<Door>().isOnWall != isOnWall)
+            player.LogicToGravityChange();
     }
 
     protected override void ActOnCollision()
