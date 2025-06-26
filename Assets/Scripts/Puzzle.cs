@@ -20,6 +20,7 @@ public class Puzzle : MonoBehaviour
     [SerializeField] private Connection down;
     [SerializeField] private VisualEffect visualEffectFog;
     [SerializeField] private Material pickUpMaterial;
+    [SerializeField] private Material hintMaterial;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer shapeImage = null;
@@ -44,6 +45,8 @@ public class Puzzle : MonoBehaviour
     private Color redOutlineColor = new Color(0.745f, 0.0078f, 0f, 0.8f);
     private Color greenOutlineColor = new Color(0.015f, 0.604f, 0.195f, 0.8f);
 
+    private Transform parent = null;
+
     void Start()
     {
         grid = GetComponentInParent<Grid>();
@@ -55,6 +58,10 @@ public class Puzzle : MonoBehaviour
 
         gridSizeHorizontal = grid.GetGridSizeHorizontal();
         gridSizeVertical = grid.GetGridSizeVertical();
+
+        parent = gameObject.transform.parent;
+
+        GameManager.Instance.OnPuzzleHint.AddListener(OutlineOnHint);
 
         // TO DO - Is it quicker to create and use an array instead of accessing transform.childCount and GetChild() directly every time?
         children = new GameObject[this.transform.childCount];
@@ -69,6 +76,16 @@ public class Puzzle : MonoBehaviour
 
         connections = new Connection[] { left, up, right, down };
         FixConnectionsRotation();
+    }
+
+    private void OutlineOnHint(bool turnOn)
+    {
+        if (portable && hintMaterial != null)
+        {
+            transform.parent = turnOn ? null : parent;
+            spriteRenderer.enabled = turnOn;
+            spriteRenderer.material = turnOn ? hintMaterial : pickUpMaterial;
+        }
     }
 
     private void OnPlayerMoved(Vector3 playerPosition)
@@ -91,10 +108,9 @@ public class Puzzle : MonoBehaviour
         //     visualEffectFog.gameObject.SetActive(false);
         if (pickUpMaterial != null)
         {
+            spriteRenderer.material = pickUpMaterial;
             spriteRenderer.enabled = true;
             pickUpMaterial.SetColor("_SolidOutline", redOutlineColor);
-            // spriteRenderer.material = pickUpMaterial;
-
             // SetOrderingLayer("Top");
         }
     }

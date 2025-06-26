@@ -29,6 +29,12 @@ public class GameManager : MonoBehaviour
     public UnityEvent OnGameLost;
     public UnityEvent OnGamePaused;
     public UnityEvent OnGameResumed;
+    public UnityEvent<bool> OnPuzzleHint;
+
+    bool initialHintShown = false;
+    bool secondHintShown = false;
+    float halfMaxTime = 0f;
+    float percent2MaxTime = 0f;
 
     private static GameManager instance;
     public static GameManager Instance
@@ -56,6 +62,8 @@ public class GameManager : MonoBehaviour
         gameState = GameState.Start;
         isPerspectiveOnWall = true;
         time = 0f;
+        halfMaxTime = maxTime/2f;
+        percent2MaxTime = maxTime*0.01f;
 
         if (LevelManager.Instance == null)
         {
@@ -128,6 +136,30 @@ public class GameManager : MonoBehaviour
 
         if (gameState == GameState.GameActive && maxTime > time)
         {
+            if(!initialHintShown)
+            {
+                if(time == 0f)
+                {
+                    OnPuzzleHint?.Invoke(true);
+                }
+                else if(time > 1.5f)
+                {
+                    OnPuzzleHint?.Invoke(false);
+                    initialHintShown = true;
+                }
+            }
+            else if(!secondHintShown)
+            {
+                if(time > halfMaxTime && time < halfMaxTime+percent2MaxTime)
+                {
+                    OnPuzzleHint?.Invoke(true);
+                }
+                else if(time > (halfMaxTime+1.5f))
+                {
+                    OnPuzzleHint?.Invoke(false);
+                    secondHintShown = true;
+                }
+            }
             time += Time.deltaTime;
             uiLevelController.UpdateTime(time, maxTime);
         }
