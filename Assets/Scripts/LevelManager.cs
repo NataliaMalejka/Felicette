@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour
             return instance;
         }
     }
-    
+
     private void Awake()
     {
         if (instance == null)
