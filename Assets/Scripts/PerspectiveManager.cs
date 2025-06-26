@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PerspectiveManager : MonoBehaviour
 {
@@ -17,11 +18,11 @@ public class PerspectiveManager : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        if (playPerspectiveAnimations)
-        {
-            perspAnim.GetComponent<AnimatorEvent>().OnWallAnimEnd.AddListener(OnWallAnimEnd);
-            perspAnim.GetComponent<AnimatorEvent>().OnFloorAnimEnd.AddListener(OnFloorAnimEnd);
-        }
+        // if (playPerspectiveAnimations)
+        // {
+        //     perspAnim.GetComponent<AnimatorEvent>().OnWallAnimEnd.AddListener(OnWallAnimEnd);
+        //     perspAnim.GetComponent<AnimatorEvent>().OnFloorAnimEnd.AddListener(OnFloorAnimEnd);
+        // }
 
         //Listen to every perspective interaction event from PerspectiveInteraction objects
         // foreach (PerspectiveInteraction perspectiveInteraction in FindObjectsByType<PerspectiveInteraction>(FindObjectsSortMode.None))
@@ -74,6 +75,7 @@ public class PerspectiveManager : MonoBehaviour
         // gridFloor.SetActive(true);
         // player.GetComponent<Player>().TogglePlayerInput();
         player.GetComponent<Player>().TogglePlayerInput();
+        Debug.Log("ActPerspective");
         if (GameManager.Instance.isPerspectiveOnWall)
         {
             GameManager.Instance.isPerspectiveOnWall = false;
@@ -91,6 +93,7 @@ public class PerspectiveManager : MonoBehaviour
             //     mainCamera.transform.position.y,
             //     mainCamera.transform.position.z);
             player.GetComponent<Player>().CheckIfNothingToStandOn();
+            StartCoroutine(ExecuteAfterDelayW());
             if (!playPerspectiveAnimations)
             {
                 OnWallAnimEnd();
@@ -113,6 +116,7 @@ public class PerspectiveManager : MonoBehaviour
             //     mainCamera.transform.position.y,
             //     mainCamera.transform.position.z);
             player.GetComponent<Player>().CheckIfNothingToStandOn();
+            StartCoroutine(ExecuteAfterDelayF());
             if (!playPerspectiveAnimations)
             {
                 OnFloorAnimEnd();
@@ -144,5 +148,17 @@ public class PerspectiveManager : MonoBehaviour
                 FindAnyObjectByType<Camera>().transform.position.y,
                 FindAnyObjectByType<Camera>().transform.position.z);
         }
+    }
+
+    IEnumerator ExecuteAfterDelayW()
+    {
+        yield return new WaitForSeconds(0.2f);
+        OnWallAnimEnd();
+    }
+
+    IEnumerator ExecuteAfterDelayF()
+    {
+        yield return new WaitForSeconds(0.2f);
+        OnFloorAnimEnd();
     }
 }
