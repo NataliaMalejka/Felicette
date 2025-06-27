@@ -46,6 +46,8 @@ public class Door : Interactive //Teleport?
     private void OnTp_1AnimEnd()
     {
         player.transform.position = connectedDoor.transform.position;
+        if(connectedDoor.GetComponent<Door>().isOnWall)
+            player.WallYPosition = player.transform.position.y;
         player.TogglePlayerInput();
         player.ForceEnebleInput();
         player.PlayTpAnimation(false);

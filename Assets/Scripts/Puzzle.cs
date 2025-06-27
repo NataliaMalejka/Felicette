@@ -98,7 +98,9 @@ public class Puzzle : MonoBehaviour
         // if (visualEffectFog != null)
         //     visualEffectFog.gameObject.SetActive(true);
         // spriteRenderer.material = defaultMaterial;
-        spriteRenderer.enabled = false;
+        // spriteRenderer.enabled = false;
+        spriteRenderer.material = hintMaterial;
+
         // SetOrderingLayer("Default");
     }
 

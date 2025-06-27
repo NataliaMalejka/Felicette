@@ -141,25 +141,26 @@ public class GameManager : MonoBehaviour
                 if(time == 0f)
                 {
                     OnPuzzleHint?.Invoke(true);
-                }
-                else if(time > 1.5f)
-                {
-                    OnPuzzleHint?.Invoke(false);
                     initialHintShown = true;
                 }
+                // else if(time > 1.5f)
+                // {
+                //     OnPuzzleHint?.Invoke(false);
+                //     initialHintShown = true;
+                // }
             }
-            else if(!secondHintShown)
-            {
-                if(time > halfMaxTime && time < halfMaxTime+percent2MaxTime)
-                {
-                    OnPuzzleHint?.Invoke(true);
-                }
-                else if(time > (halfMaxTime+1.5f))
-                {
-                    OnPuzzleHint?.Invoke(false);
-                    secondHintShown = true;
-                }
-            }
+            // else if(!secondHintShown)
+            // {
+            //     if(time > halfMaxTime && time < halfMaxTime+percent2MaxTime)
+            //     {
+            //         OnPuzzleHint?.Invoke(true);
+            //     }
+            //     else if(time > (halfMaxTime+1.5f))
+            //     {
+            //         OnPuzzleHint?.Invoke(false);
+            //         secondHintShown = true;
+            //     }
+            // }
             time += Time.deltaTime;
             uiLevelController.UpdateTime(time, maxTime);
         }
