@@ -54,11 +54,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6718506185472301275, guid: 7a24370a3df70a84f8aace7989469514, type: 3}
       propertyPath: up
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6718506185472301275, guid: 7a24370a3df70a84f8aace7989469514, type: 3}
       propertyPath: down
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6718506185472301275, guid: 7a24370a3df70a84f8aace7989469514, type: 3}
       propertyPath: left

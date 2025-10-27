@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.VFX;
 
 enum Connection {EMPTY, HOLE, KNOB};
 
@@ -17,13 +18,23 @@ public class Puzzle : MonoBehaviour
     [SerializeField] private Connection right;
     [SerializeField] private Connection up;
     [SerializeField] private Connection down;
+    [SerializeField] private VisualEffect visualEffectFog;
+    [SerializeField] private Material pickUpMaterial;
+    [SerializeField] private Material hintMaterial;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer shapeImage = null;
+    [SerializeField] private Sprite objectImage = null;
+    public Sprite ShapeImage => shapeImage.sprite;
+    public Sprite ObjectImage => objectImage;
+    // private Material defaultMaterial;
 
     [SerializeField] public bool portable;
     [SerializeField] private bool alwaysVisible;
 
     private Grid grid;
-    private int gridSizeX;
-    private int gridSizeY;
+    private int gridSizeHorizontal;
+    private int gridSizeVertical;
     private GameObject player;
     private Vector3 playerPosition;
     private Vector3 puzzlePosition;
@@ -31,16 +42,26 @@ public class Puzzle : MonoBehaviour
 
     public bool isPlaced = true;
 
+    private Color redOutlineColor = new Color(0.745f, 0.0078f, 0f, 0.8f);
+    private Color greenOutlineColor = new Color(0.015f, 0.604f, 0.195f, 0.8f);
+
+    private Transform parent = null;
+
     void Start()
     {
-        // TO DO - This code assumes that there is one GRID object in scene, worth remembering that, added log as reminder
-        Debug.LogWarning("Puzzle: Start() - Only one Grid object should be present in the scene."); 
-        grid = GameObject.FindWithTag("Grid").GetComponent<Grid>();
+        grid = GetComponentInParent<Grid>();
         player = GameObject.FindWithTag("Player");
         player.GetComponent<Player>().OnPlayerMoved.AddListener(OnPlayerMoved);
+        // defaultMaterial = spriteRenderer.material;
+        spriteRenderer.material = pickUpMaterial;
+        spriteRenderer.enabled = false;
 
-        gridSizeX = grid.GetGridSizeX();
-        gridSizeY = grid.GetGridSizeY();
+        gridSizeHorizontal = grid.GetGridSizeHorizontal();
+        gridSizeVertical = grid.GetGridSizeVertical();
+
+        parent = gameObject.transform.parent;
+
+        GameManager.Instance.OnPuzzleHint.AddListener(OutlineOnHint);
 
         // TO DO - Is it quicker to create and use an array instead of accessing transform.childCount and GetChild() directly every time?
         children = new GameObject[this.transform.childCount];
@@ -51,37 +72,78 @@ public class Puzzle : MonoBehaviour
 
         //Run once to set the initial visibility of the puzzle
         OnPlayerMoved(player.transform.position);
+        // visualEffectFog.SetVector3("PlayerPosition", player.transform.position);
 
         connections = new Connection[] { left, up, right, down };
         FixConnectionsRotation();
     }
 
-    private void OnPlayerMoved(Vector3 playerPosition)
+    private void OutlineOnHint(bool turnOn)
     {
-        if (GameManager.Instance.State != GameState.GameActive)
-            return;
-
-        bool isNearby = Mathf.Abs(playerPosition.y - transform.position.y) < 0.1f 
-                        && Mathf.Abs(playerPosition.x - transform.position.x) <= 1.0f;
-        if ((isNearby || alwaysVisible) && isPlaced)
+        if (portable && hintMaterial != null)
         {
-            foreach (GameObject child in children)
-                child.SetActive(true);
-        }
-        else
-        {
-            foreach (GameObject child in children)
-                child.SetActive(false);
+            transform.parent = turnOn ? null : parent;
+            spriteRenderer.enabled = turnOn;
+            spriteRenderer.material = turnOn ? hintMaterial : pickUpMaterial;
         }
     }
 
-    public bool FitsAt(int x, int y)
+    private void OnPlayerMoved(Vector3 playerPosition)
+    {
+        // visualEffectFog.SetVector3("PlayerPosition", playerPosition);
+    }
+
+    public void ActOnPuzzlePlaced()
+    {
+        // if (visualEffectFog != null)
+        //     visualEffectFog.gameObject.SetActive(true);
+        // spriteRenderer.material = defaultMaterial;
+        // spriteRenderer.enabled = false;
+        spriteRenderer.material = hintMaterial;
+
+        // SetOrderingLayer("Default");
+    }
+
+    public void ActOnPuzzlePicked()
+    {
+        // if (visualEffectFog != null)
+        //     visualEffectFog.gameObject.SetActive(false);
+        if (pickUpMaterial != null)
+        {
+            spriteRenderer.material = pickUpMaterial;
+            spriteRenderer.enabled = true;
+            pickUpMaterial.SetColor("_SolidOutline", redOutlineColor);
+            // SetOrderingLayer("Top");
+        }
+    }
+
+    public void ActOnPuzzleFailedDrag()
+    {
+        if (animator != null)
+            animator.SetTrigger("Shake");
+    }
+
+    private void SetOrderingLayer(string layer)
+    {
+        if (layer != "Top" && layer != "Default")
+        {
+            Debug.LogError("Puzzle.SetOrderingLayer: Invalid layer name. Use 'Top' or 'Default'");
+            return;
+        }
+
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sortingLayerName = layer;
+        }
+    }
+
+    public bool FitsAt(int horizontal, int vertical)
     {
         Puzzle neighbor;
         //left
-        if(x >= 1)
+        if (horizontal >= 1)
         {
-            neighbor = grid.GetPuzzleFromGrid(x - 1, y);
+            neighbor = grid.GetPuzzleFromGrid(horizontal - 1, vertical);
             if (neighbor != null)
             {
                 if (!CanConnect(connections[LEFT], neighbor.connections[RIGHT]))
@@ -90,9 +152,9 @@ public class Puzzle : MonoBehaviour
         }
 
         //right
-        if (x <= gridSizeX - 2)
+        if (horizontal <= gridSizeHorizontal - 2)
         {
-            neighbor = grid.GetPuzzleFromGrid(x + 1, y);
+            neighbor = grid.GetPuzzleFromGrid(horizontal + 1, vertical);
             if (neighbor != null)
             {
                 if (!CanConnect(connections[RIGHT], neighbor.connections[LEFT]))
@@ -101,9 +163,9 @@ public class Puzzle : MonoBehaviour
         }
 
         //up
-        if (y <= gridSizeX - 2)
+        if (vertical <= gridSizeVertical - 2)
         {
-            neighbor = grid.GetPuzzleFromGrid(x, y + 1);
+            neighbor = grid.GetPuzzleFromGrid(horizontal, vertical + 1);
             if (neighbor != null)
             {
                 if (!CanConnect(connections[UP], neighbor.connections[DOWN]))
@@ -112,9 +174,9 @@ public class Puzzle : MonoBehaviour
         }
 
         //down
-        if (y >= 1)
+        if (vertical >= 1)
         {
-            neighbor = grid.GetPuzzleFromGrid(x, y - 1);
+            neighbor = grid.GetPuzzleFromGrid(horizontal, vertical - 1);
             if (neighbor != null)
             {
                 if (!CanConnect(connections[DOWN], neighbor.connections[UP]))
@@ -142,7 +204,7 @@ public class Puzzle : MonoBehaviour
     {
         int rotation = Mathf.RoundToInt(transform.rotation.eulerAngles.z);
         int amount = rotation / 90;
-        
+
         Connection[] oldConnections = (Connection[])connections.Clone();
         connections[0] = oldConnections[(0 + amount) % 4];
         connections[1] = oldConnections[(1 + amount) % 4];
@@ -157,10 +219,25 @@ public class Puzzle : MonoBehaviour
 
     public void Shrink()
     {
-        transform.localScale = new Vector3(0.65f, 0.65f, 0.05f);
+        float newScale = transform.localScale.x * 0.5f;
+        transform.localScale = new Vector3(newScale, newScale, transform.localScale.z);
     }
     public void ExpandToDefaultSize()
     {
-        transform.localScale = new Vector3(1f, 1f, 1f);
+        float newScale = transform.localScale.x / 0.5f;
+        transform.localScale = new Vector3(newScale, newScale, transform.localScale.z);
+    }
+
+    public void ChangeShaderColor(bool isPlacable)
+    {
+        //can be optimized
+        if (isPlacable)
+        {
+            pickUpMaterial.SetColor("_SolidOutline", greenOutlineColor);
+        }
+        else
+        {
+            pickUpMaterial.SetColor("_SolidOutline", redOutlineColor);
+        }
     }
 }

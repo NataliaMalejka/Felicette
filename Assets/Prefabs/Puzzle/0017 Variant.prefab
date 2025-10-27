@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2930271330726527601, guid: b747d27795bf26846be0434f47f1c708, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2766b01a515d9554f9bab5286c15f66c, type: 3}
     - target: {fileID: 3212564215207476657, guid: b747d27795bf26846be0434f47f1c708, type: 3}
       propertyPath: up
       value: 1
@@ -24,7 +28,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: 0017 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6242593214255098854, guid: b747d27795bf26846be0434f47f1c708, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2766b01a515d9554f9bab5286c15f66c, type: 3}
     - target: {fileID: 6542801217451248277, guid: b747d27795bf26846be0434f47f1c708, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2766b01a515d9554f9bab5286c15f66c, type: 3}
+    - target: {fileID: 8858494074596221524, guid: b747d27795bf26846be0434f47f1c708, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 2766b01a515d9554f9bab5286c15f66c, type: 3}

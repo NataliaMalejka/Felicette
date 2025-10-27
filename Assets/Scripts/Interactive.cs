@@ -1,14 +1,43 @@
 using UnityEngine;
 
+public enum InteractiveType
+{
+    Gravity,
+    Other
+}
+
 public abstract class Interactive : MonoBehaviour
 {
+    protected Player player;
     protected bool playerCollision = false;
+    protected InteractiveType interactiveType = InteractiveType.Other;
+    [SerializeField] protected SpriteRenderer spriteRenderer; 
+    [SerializeField] private Sprite wallSprite;
+    [SerializeField] private Sprite topSprite;
+    [SerializeField] protected GridOrientation interactiveLocation = GridOrientation.Wall;
 
-    private void OnEnable()
+    protected virtual void Start()
     {
-        Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
         player.OnPlayerInteraction.AddListener(OnInteract);
+        if (spriteRenderer != null)
+            spriteRenderer.sprite = interactiveLocation == GridOrientation.Wall ? wallSprite : topSprite;
     }
+
+    // protected virtual void OnEnable()
+    // {
+    //     if (player == null)
+    //         return;
+    //     player.OnPlayerInteraction.RemoveListener(OnInteract);
+    //     player.OnPlayerInteraction.AddListener(OnInteract);
+    // }
+
+    // protected virtual void OnDisable()
+    // {
+    //     if (player == null)
+    //         return;
+    //     player.OnPlayerInteraction.RemoveListener(OnInteract);
+    // }
 
     public void OnInteract()
     {
@@ -20,20 +49,22 @@ public abstract class Interactive : MonoBehaviour
     protected abstract void ActOnInteraction();
     protected abstract void ActOnCollision();
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.transform.CompareTag("Player"))
         {
             playerCollision = true;
+            player.SetInteractionPossibility(true, interactiveType);
             ActOnCollision();
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if (other.gameObject.transform.CompareTag("Player"))
         {
             playerCollision = false;
+            player.SetInteractionPossibility(false, interactiveType);
         }
     }
 }

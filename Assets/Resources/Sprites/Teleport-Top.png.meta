@@ -1,0 +1,828 @@
+fileFormatVersion: 2
+guid: 95ec5c72ca7d72a449b4720c991f4e26
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 10
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 256
+    resizeAlgorithm: 1
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 256
+    resizeAlgorithm: 1
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Teleport-Top_0
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 872
+        width: 60
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a47e7297f9de4a54e986afd15f1b9ffe
+      internalID: 1524493070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 872
+        width: 60
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b1b5b4a1ebbd894db706d7f8af84d6c
+      internalID: -734407967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_2
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 872
+        width: 60
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 269d2e43967d9ae4baf2262e9a11f0fb
+      internalID: 1490032133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_3
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 872
+        width: 56
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56931053ffeb0d747a48637c678814c4
+      internalID: 280124955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_4
+      rect:
+        serializedVersion: 2
+        x: 824
+        y: 872
+        width: 56
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dc42ac053b857f4eab2cb012ee92df4
+      internalID: -971194992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_5
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 700
+        width: 56
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84561303c0ecd8d4baaf144cb0c38b31
+      internalID: 1234242936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_6
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 700
+        width: 60
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cf0394559eefe54985fd9530a09722a
+      internalID: -239578093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_7
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 700
+        width: 56
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77158ade3dd14aa4b8c43ea86a958714
+      internalID: 1401855345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_8
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 708
+        width: 56
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be575b13a68894a4f8d0e3964628ec97
+      internalID: 1078676370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_9
+      rect:
+        serializedVersion: 2
+        x: 824
+        y: 716
+        width: 60
+        height: 120
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acffd2c96752df64badebcb9231a8cee
+      internalID: -1650344335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_10
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 548
+        width: 52
+        height: 120
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90a0fc768f237904288eaceae200d454
+      internalID: -1180464639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_11
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 548
+        width: 52
+        height: 120
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e3e3cff54440a64682754a8d65cfd82
+      internalID: 1509210125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_12
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 552
+        width: 52
+        height: 116
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c53a3a143df8194799e12f3a187bc54
+      internalID: -245407813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_13
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 552
+        width: 52
+        height: 116
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c347a295da53d9a4fbeb227fcaf090f1
+      internalID: -19944122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_14
+      rect:
+        serializedVersion: 2
+        x: 824
+        y: 556
+        width: 52
+        height: 112
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e07e586e44f9b714a986b22f9198e7ea
+      internalID: 358655369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_15
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 388
+        width: 52
+        height: 108
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2963103dce544c7438d9d8ab31945f6f
+      internalID: 1781254522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_16
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 392
+        width: 52
+        height: 104
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4d171b5125a3f74983698750eae8439
+      internalID: -603779984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_17
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 389
+        width: 52
+        height: 107
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2d1817a810e3ca40b5857d7ccb41f0f
+      internalID: 24765199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_18
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 389
+        width: 52
+        height: 107
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2955093865093f4592c7de41cc5ef3d
+      internalID: -1612682020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_19
+      rect:
+        serializedVersion: 2
+        x: 824
+        y: 391
+        width: 52
+        height: 109
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 818f3ff66e112794ab7f0ad9d331bfad
+      internalID: 481402609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_30
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 424
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bf69ad695c822c47a0368f186a99094
+      internalID: 1734374463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_34
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 219
+        width: 48
+        height: 121
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e5aa6970e75d064eb69e4b619386053
+      internalID: 1727555516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_35
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 216
+        width: 47
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 378ce19dce56f3c46a5e643bf4540f54
+      internalID: -876527030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_36
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 221
+        width: 53
+        height: 123
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be1863bda2321b9449db9d3d8a6f3bef
+      internalID: -1912090183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_38
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 219
+        width: 46
+        height: 125
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fbc949b44e39ea42935090331a97058
+      internalID: 840092888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_39
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 216
+        width: 52
+        height: 116
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3312bbec3ed84b24da5d04d141aec832
+      internalID: -861119583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_40
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 144
+        width: 119
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: baeec9f1b47a9ba49a928e53045c8b75
+      internalID: 1207693913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_42
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 151
+        width: 97
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 437d08535a448b8459ec4960207b8823
+      internalID: -253747142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport-Top_43
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 136
+        width: 127
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6978276a364962e4ab5a416ff5e970bb
+      internalID: 1246568536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: f40baafbed64bcd4984acd72ef8fd950
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Teleport-Top_0: 1524493070
+      Teleport-Top_1: -734407967
+      Teleport-Top_10: -1180464639
+      Teleport-Top_11: 1509210125
+      Teleport-Top_12: -245407813
+      Teleport-Top_13: -19944122
+      Teleport-Top_14: 358655369
+      Teleport-Top_15: 1781254522
+      Teleport-Top_16: -603779984
+      Teleport-Top_17: 24765199
+      Teleport-Top_18: -1612682020
+      Teleport-Top_19: 481402609
+      Teleport-Top_2: 1490032133
+      Teleport-Top_20: 479813809
+      Teleport-Top_21: -1476412964
+      Teleport-Top_22: -1144106983
+      Teleport-Top_23: -59492523
+      Teleport-Top_24: -786593931
+      Teleport-Top_25: -1827246484
+      Teleport-Top_26: 4639046
+      Teleport-Top_27: -750635225
+      Teleport-Top_28: 1710066839
+      Teleport-Top_29: 164938006
+      Teleport-Top_3: 280124955
+      Teleport-Top_30: 1734374463
+      Teleport-Top_31: 936423821
+      Teleport-Top_32: 1689982575
+      Teleport-Top_33: 978463744
+      Teleport-Top_34: 1727555516
+      Teleport-Top_35: -876527030
+      Teleport-Top_36: -1912090183
+      Teleport-Top_37: -2088502816
+      Teleport-Top_38: 840092888
+      Teleport-Top_39: -861119583
+      Teleport-Top_4: -971194992
+      Teleport-Top_40: 1207693913
+      Teleport-Top_41: 867863814
+      Teleport-Top_42: -253747142
+      Teleport-Top_43: 1246568536
+      Teleport-Top_44: 1187629213
+      Teleport-Top_45: -1478137496
+      Teleport-Top_46: -1970958946
+      Teleport-Top_47: 453213839
+      Teleport-Top_48: -1979535697
+      Teleport-Top_49: 1128818156
+      Teleport-Top_5: 1234242936
+      Teleport-Top_50: 1531796629
+      Teleport-Top_51: 220457808
+      Teleport-Top_52: -1890811847
+      Teleport-Top_53: -97923710
+      Teleport-Top_54: 137093166
+      Teleport-Top_55: 2067286806
+      Teleport-Top_56: -742475654
+      Teleport-Top_57: -1755855618
+      Teleport-Top_58: 1071493411
+      Teleport-Top_59: -1603281546
+      Teleport-Top_6: -239578093
+      Teleport-Top_7: 1401855345
+      Teleport-Top_8: 1078676370
+      Teleport-Top_9: -1650344335
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

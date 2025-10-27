@@ -10,19 +10,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3212564215207476657, guid: b747d27795bf26846be0434f47f1c708, type: 3}
       propertyPath: up
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3212564215207476657, guid: b747d27795bf26846be0434f47f1c708, type: 3}
       propertyPath: down
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3212564215207476657, guid: b747d27795bf26846be0434f47f1c708, type: 3}
       propertyPath: left
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3212564215207476657, guid: b747d27795bf26846be0434f47f1c708, type: 3}
       propertyPath: right
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5610334781476057049, guid: b747d27795bf26846be0434f47f1c708, type: 3}
       propertyPath: m_Name

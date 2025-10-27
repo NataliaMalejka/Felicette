@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     private float time = 0f;
     [SerializeField] private UiLevelController uiLevelController;
     private GameState gameState = GameState.Start;
-        public GameState State
+    public GameState State
     {
         get
         {
@@ -22,11 +22,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool isPerspectiveOnWall = true;
+
     public UnityEvent OnGameStarted;
     public UnityEvent OnGameWon;
     public UnityEvent OnGameLost;
     public UnityEvent OnGamePaused;
     public UnityEvent OnGameResumed;
+    public UnityEvent<bool> OnPuzzleHint;
+
+    bool initialHintShown = false;
+    bool secondHintShown = false;
+    float halfMaxTime = 0f;
+    float percent2MaxTime = 0f;
 
     private static GameManager instance;
     public static GameManager Instance
@@ -51,8 +59,17 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        gameState = GameState.GameActive;
+        gameState = GameState.Start;
+        isPerspectiveOnWall = true;
         time = 0f;
+        halfMaxTime = maxTime/2f;
+        percent2MaxTime = maxTime*0.01f;
+
+        if (LevelManager.Instance == null)
+        {
+            Debug.LogWarning("LevelManager instance is not set. Please ensure LevelManager is initialized. Start from Menu Level");
+            return;
+        }
     }
 
     public void PauseGame()
@@ -61,8 +78,9 @@ public class GameManager : MonoBehaviour
         {
             gameState = GameState.Pause;
             SoundsManager.Instance.PlaySound(SoundsManager.Sounds.TimerStop);
-            uiLevelController.ShowGameOverPanel();
+            uiLevelController.ShowGameFinishedPanel(false);
             OnGamePaused?.Invoke();
+            Debug.LogWarning("Not implemented yet: PauseGame() in GameManager");
         }
     }
 
@@ -72,7 +90,17 @@ public class GameManager : MonoBehaviour
         {
             gameState = GameState.GameActive;
             OnGameResumed?.Invoke();
-            uiLevelController.ShowGameOverPanel(false);
+            uiLevelController.ShowGameFinishedPanel(false);
+            Debug.LogWarning("Not implemented yet: ResumeGame() in GameManager");
+        }
+    }
+
+    public void RestartLevel()
+    {
+        if (gameState == GameState.GameActive && gameState != GameState.GameLost && gameState != GameState.GameWon)
+        {
+            gameState = GameState.Pause;
+            LevelManager.Instance.LoadCurrentLevel(true);
         }
     }
 
@@ -83,7 +111,7 @@ public class GameManager : MonoBehaviour
             gameState = GameState.GameLost;
             OnGameLost?.Invoke();
             SoundsManager.Instance.PlaySound(SoundsManager.Sounds.TimerStop);
-            uiLevelController.ShowGameOverPanel();
+            uiLevelController.ShowGameFinishedPanel(false, maxTime <= time);
         }
     }
 
@@ -94,7 +122,7 @@ public class GameManager : MonoBehaviour
             gameState = GameState.GameWon;
             OnGameWon?.Invoke();
             LevelManager.Instance.BeginLoadingScene(LevelManager.Instance.GetNextLevelId());
-            uiLevelController.ShowWinPanel(time);
+            uiLevelController.ShowGameFinishedPanel(true);
         }
     }
 
@@ -108,6 +136,31 @@ public class GameManager : MonoBehaviour
 
         if (gameState == GameState.GameActive && maxTime > time)
         {
+            if(!initialHintShown)
+            {
+                if(time == 0f)
+                {
+                    OnPuzzleHint?.Invoke(true);
+                    initialHintShown = true;
+                }
+                // else if(time > 1.5f)
+                // {
+                //     OnPuzzleHint?.Invoke(false);
+                //     initialHintShown = true;
+                // }
+            }
+            // else if(!secondHintShown)
+            // {
+            //     if(time > halfMaxTime && time < halfMaxTime+percent2MaxTime)
+            //     {
+            //         OnPuzzleHint?.Invoke(true);
+            //     }
+            //     else if(time > (halfMaxTime+1.5f))
+            //     {
+            //         OnPuzzleHint?.Invoke(false);
+            //         secondHintShown = true;
+            //     }
+            // }
             time += Time.deltaTime;
             uiLevelController.UpdateTime(time, maxTime);
         }
