@@ -4,7 +4,7 @@ Game created for the [ZTGK 2025](https://gry.it.p.lodz.pl/main/index.php/pl/) co
 ![App Screenshot](gameplay_preview.png)
 
 ## How to run
-This repo does not contain any Android or Desktop releases. In order to run the game one must clone the repo and run the project in Unity editor (ver. Unity 6+)
+Go to the Releases page and download the release for your platform (Windows or Android).
 
 ## Target platforms
 - [x] Windows
